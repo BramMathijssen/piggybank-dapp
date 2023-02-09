@@ -1,22 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./components/Header";
+import piggy from "./images/piggy.png";
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="header-content">
+          <h1>Oink Piggybank-crypto</h1>
+          <h2>CRYPTO PIGGY BANK FOR KIDS</h2>
+          <button className="button">ENTER APP</button>
+          
+        </div>
+        <div className="header-image">
+          <img src={piggy} className="App-logo" alt="logo" />
+        </div>
       </header>
     </div>
   );
