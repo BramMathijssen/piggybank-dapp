@@ -1,0 +1,18 @@
+.btn {
+  background-color: #7be5ce;
+  color: var(--black);
+  border: 2px solid black;
+  box-shadow: 4px 4px 0 black;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.small {
+  padding: 14px 28px;
+  font-size: 18px;
+}
+
+.big {
+    padding: 14px 28px;
+    font-size: 18px;
+  }

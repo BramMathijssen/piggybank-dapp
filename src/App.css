@@ -20,16 +20,13 @@
   font-size: calc(10px + 2vmin);
 }
 
-.App-link {
-  color: #61dafb;
-}
 
 .button {
   background-color: #7be5ce;
   color: var(--black);
   font-size: 18px;
   font-weight: 700;
-  padding: 8px 16px;
+  padding: 14px 28px;
   border: 2px solid black;
   box-shadow: 4px 4px 0 black;
   cursor: pointer;
@@ -39,10 +36,14 @@
 h1 {
   text-transform: uppercase;
   max-width: 600px;
-  font-size: 70px;
   color: yellow;
+  font-size: 70px;
   -webkit-text-stroke: 2px black;
   filter: drop-shadow(5px 5px black);
   line-height: 1.2;
   letter-spacing: -2px;
+}
+
+h2{
+  text-transform: uppercase;
 }
