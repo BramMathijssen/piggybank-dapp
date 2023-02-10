@@ -37,9 +37,15 @@
   border: 2px solid black;
   box-shadow: 4px 4px 0 black;
   cursor: pointer;
-  transition: background-color 0.2s;
   margin-right: 2em;
   text-transform: uppercase;
+  will-change: transform;
+  transition: transform 0.25s;
+}
+
+.button:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px black;
 }
 
 .button2 {
@@ -51,8 +57,14 @@
   border: 2px solid black;
   box-shadow: 4px 4px 0 black;
   cursor: pointer;
-  transition: background-color 0.2s;
   text-transform: uppercase;
+  will-change: transform;
+  transition: transform 0.25s;
+}
+
+.button2:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px black;
 }
 
 .piggy {

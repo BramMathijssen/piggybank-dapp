@@ -1,10 +1,16 @@
-import Header from "./components/landingpage/Header";
+import { Router, Route, Routes, Navigate, Link } from "react-router-dom";
+
+import Landing from "./pages/Landing";
+import NotFound from "./pages/NotFound";
+import SelectUser from "./pages/SelectUser";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-    </div>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/select-user" element={<SelectUser />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
