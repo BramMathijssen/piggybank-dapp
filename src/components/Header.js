@@ -8,10 +8,10 @@ const Header = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>Oink Piggybank-crypto</h1>
         <h2 className={styles.subtitle}>Crypto piggybank made for children </h2>
-        <button className="button">ENTER APP</button>
+        <button className={styles.button}>ENTER APP</button>
       </div>
-      <div className="header-image">
-        <img src={piggy} className="App-logo" alt="logo" />
+      <div className={styles.headerImage}>
+        <img src={piggy} className={styles.piggy} alt="logo" />
       </div>
     </header>
   );
