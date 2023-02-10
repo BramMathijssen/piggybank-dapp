@@ -1,18 +1,49 @@
-.btn {
+.button {
   background-color: #7be5ce;
-  color: var(--black);
+  color: black;
   border: 2px solid black;
   box-shadow: 4px 4px 0 black;
   cursor: pointer;
-  transition: background-color 0.2s;
-}
+  margin-right: 2em;
+  text-transform: uppercase;
+  will-change: transform;
+  transition: transform 0.25s;
 
-.small {
-  padding: 14px 28px;
-  font-size: 18px;
-}
-
-.big {
-    padding: 14px 28px;
-    font-size: 18px;
+  /* Button Types */
+  &.danger {
+    background-color: red !important;
   }
+
+  &.confirm {
+    background-color: #7be5ce;
+  }
+
+  &.info {
+    background-color: white;
+  }
+
+  /* Button Size */
+  &.large {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 28px;
+  }
+
+  &.medium {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 12px 23px;
+  }
+
+  &.small {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 18px;
+  }
+
+  /* Button Pseudo-classes */
+  &:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px black;
+  }
+}

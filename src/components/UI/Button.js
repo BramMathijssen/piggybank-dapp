@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-import styles from './Button.module.scss'
+import styles from "./Button.module.scss";
 
-const Button = ({className, onClick}) => {
+const Button = ({ type, onClick, size, content }) => {
   return (
-    <button className={className} onClick={onClick}>Button</button>
-  )
-}
+    <button className={`${styles["button"]} ${styles[type]} ${styles[size]}`} onClick={onClick}>
+      {content}
+    </button>
+  );
+};
 
-export default Button
+export default Button;
