@@ -1,5 +1,5 @@
 import React from "react";
-import piggy from "./../assets/images/piggy.png";
+import piggy from "./../../assets/images/piggy.png";
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -8,7 +8,8 @@ const Header = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>Oink Piggybank-crypto</h1>
         <h2 className={styles.subtitle}>Crypto piggybank made for children </h2>
-        <button className={styles.button}>ENTER APP</button>
+        <button className={styles.button}>Enter App</button>
+        <button className={styles.button2}>Learn more</button>
       </div>
       <div className={styles.headerImage}>
         <img src={piggy} className={styles.piggy} alt="logo" />

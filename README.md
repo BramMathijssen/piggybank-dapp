@@ -6,6 +6,7 @@
 
 ## Conventions
 - Written classNames for the CSS modules in camelCase instead of kebab-case
+- Used a folder structure in which the components are grouped by the page/route they belong to
 
 ## Design
 - The design style is called Neubrutalism, alot of inspiration has been taken from www.dribbble.com
