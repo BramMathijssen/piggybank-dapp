@@ -6,7 +6,7 @@ import styles from "../pages/SelectUser.module.scss";
 const SelectUser = () => {
   return (
     <main className={styles.main}>
-      <div className={styles.flexContainer}>
+      <div className={styles.userContainer}>
         <User type="Parent" />
         <User type="Kid" />
       </div>

@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 50px;
+}
+
+.badgeContainer {
+  display: flex;
+  gap: 25px;
+}
+
+.panelContainer{
+    background-color: green;
+    width: 80%;
+    height: 100%;
+    margin-top: 25px;
+}
+
+
