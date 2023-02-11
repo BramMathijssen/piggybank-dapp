@@ -1,0 +1,14 @@
+@use "sass:math";
+
+//breakpoints
+$xs: 480px;
+$sm: 640px;
+$md: 768px;
+$lg: 1024px;
+$xl: 1280px;
+$xxl: 1536px;
+
+//Font-size
+$base-font-size: 16px;
+$default-min-font-size: 8px;
+$default-max-font-size: 32px;

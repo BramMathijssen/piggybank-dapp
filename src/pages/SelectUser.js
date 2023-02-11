@@ -1,5 +1,5 @@
 import React from "react";
-import User from "../components/selectuserpage/User";
+import User from "../components/SelectUserPage/User";
 
 import styles from "../pages/SelectUser.module.scss";
 
