@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./TokenCreator.sol";
 import "hardhat/console.sol";
 
+error NotOwnerOfToken();
+
 contract ParentContract {
     TokenCreator public tokenCreator;
 
@@ -12,14 +14,26 @@ contract ParentContract {
     address[] public s_createdTokenAddresses;
 
     // mapping of parent addresses to the coins they minted on this contract
-    mapping(address => Token[]) parentToTokensMapping;
+    mapping(address => Token[]) public parentToTokensMapping;
 
     // mapping of a parent address to a child struct
-    mapping(address => Child[]) parentToChildMapping;
+    mapping(address => Childv1[]) public parentToChildMapping;
 
     // mapping of a parent to a mapping of children which will be receiving the pocket money to which token they prefer to receive
-    // https://smartcontracthelper.com/solidity-mapping/
-    mapping(address => mapping(address => Child)) parentToChildToTokenMapping;
+    mapping(address => mapping(address => Childv2)) public parentToChildToTokenMapping;
+
+    struct Childv1 {
+        string name;
+        address childAddress;
+        address tokenPreference;
+        uint256 amount;
+    }
+
+    struct Childv2 {
+        string name;
+        address tokenPreference;
+        uint256 amount;
+    }
 
     struct Token {
         uint256 supply;
@@ -28,35 +42,28 @@ contract ParentContract {
         string symbol;
     }
 
-    // struct Child {
-    //     string name;
-    //     address childAddress;
-    //     address tokenPreference;
-    //     uint256 amount;
-    // }
-
-    struct Child {
-        string name;
-        address tokenPreference;
-        uint256 amount;
-    }
-
     // https://stackoverflow.com/questions/71226909/how-to-check-if-one-value-exists-in-an-array
     modifier hasMinted(address _tokenAddress) {
         Token[] memory tokens = parentToTokensMapping[msg.sender];
+        bool tokenFound = false;
 
         // Complexity: O(N)
         // Chosen for this solution because the parent realistically only owns a couple of tokens which makes an O(N) complexity acceptable
-        for(uint i = 0; i < tokens.length; i++){
-            if(tokens[i].tokenAddress == _tokenAddress){
-                _;
+        for (uint i = 0; i < tokens.length; i++) {
+            console.log("looping: ", i);
+            if (tokens[i].tokenAddress == _tokenAddress) {
+                console.log("token with address", tokens[i].tokenAddress);
+                tokenFound = true;
+                break;
             }
         }
+        if (!tokenFound) {
+            console.log("Token not found :(");
+            revert NotOwnerOfToken();
+        }
+        // executes only if a token has been found
+        _;
     }
-
-    // ------------------------------- //
-    // ------ PARENT FUNCTIONS ------- //
-    // ------------------------------- //
 
     // creates a new ERC20 Token by deploying the TokenCreator contract
     function createNewToken(uint256 _supply, string memory _contractName, string memory _contractSymbol) public {
@@ -66,31 +73,39 @@ contract ParentContract {
         parentToTokensMapping[msg.sender].push(Token({supply: _supply, tokenAddress: createdTokenAddress, name: _contractName, symbol: _contractSymbol}));
     }
 
-    // OLD -> add a child to an parent
-    // function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public  {
-    //     Child memory child = Child({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount});
-    //     parentToChildMapping[msg.sender].push(child);
-    // }
+    // OLD -> add a child to an parent (Maybe Better Solution)
+    function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public hasMinted(_tokenPreference) {
+        Childv1 memory child = Childv1({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount});
+        parentToChildMapping[msg.sender].push(child);
+    }
 
     function addChildv2(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public hasMinted(_tokenPreference) {
-        parentToChildToTokenMapping[msg.sender][_childAddress] = Child({name: _name, tokenPreference: _tokenPreference, amount: _amount});
+        parentToChildToTokenMapping[msg.sender][_childAddress] = Childv2({name: _name, tokenPreference: _tokenPreference, amount: _amount});
         //parentToChildMapping[msg.sender].push(child);
     }
 
-    // ------------------------------- //
-    // ------ CHILD FUNCTIONS -------  //
-    // ------------------------------- //
-
-    // TODO
-
-    // function changeTokenPreference(address _tokenPreference, address _parentAddress) public {
-    //     Child[] memory child = parentToChildMapping[_parentAddress];
-
-    //     if (child.childAddress == msg.sender) {
-    //         child.tokenPreference = _tokenPreference;
-    //         parentToChildMapping[_parentAddress] = child;
-    //     }
-    // }
-
-    // configure which token to send to the child in a certain timeframe
+    function test(address _tokenPreference) public hasMinted(_tokenPreference) {
+        console.log("Hello World");
+    }
 }
+
+// ------------------------------- //
+// ------ CHILD FUNCTIONS -------  //
+// ------------------------------- //
+
+// TODO
+
+// function changeTokenPreference(address _tokenPreference, address _parentAddress) public {
+//     Child[] memory child = parentToChildMapping[_parentAddress];
+
+//     if (child.childAddress == msg.sender) {
+//         child.tokenPreference = _tokenPreference;
+//         parentToChildMapping[_parentAddress] = child;
+//     }
+// }
+
+// configure which token to send to the child in a certain timeframe
+
+// ------------------------------- //
+// ------      GETTERS      -------//
+// ------------------------------- //
