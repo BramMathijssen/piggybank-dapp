@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./TokenCreator.sol";
 import "hardhat/console.sol";
 
@@ -9,28 +10,37 @@ error NotOwnerOfToken();
 
 contract ParentContract {
     TokenCreator public tokenCreator;
+    uint public currentTime;
+    uint public contractDeployedTime;
+
+    // global contractwide claim times based on the childs preference: daily, weekly or monthly
+    // TO DO: We want to automatically go to the next claim moment after the claim moment has been reached
+    // Maybe use Chainlink keepers?
+    uint256 public claimMomentDaily;
+    uint256 public claimMomentWeekly;
+    uint256 public claimMomentMonthly;
 
     // list of all the created token addresses
     address[] public s_createdTokenAddresses;
 
+
+    // NOTE: Check if we can make this a address to address maping where a parent has multiple token addresses
+    // NOTE: So this way we could save gas, since we dont want to loop over our token list when we claim
     // mapping of parent addresses to the coins they minted on this contract
     mapping(address => Token[]) public parentToTokensMapping;
 
+    // NOTE: Possibly convert this to a nested mapping like in the v2 version of this contract.
     // mapping of a parent address to a child struct
-    mapping(address => Childv1[]) public parentToChildMapping;
+    mapping(address => Child[]) public parentToChildMapping;
 
-    // mapping of a parent to a mapping of children which will be receiving the pocket money to which token they prefer to receive
-    mapping(address => mapping(address => Childv2)) public parentToChildToTokenMapping;
+    // https://ethereum.stackexchange.com/questions/4272/getting-key-from-solidity-mapping-by-value
+    // mapping of a child to a parent address -> Bidirectional relation
+    mapping(address => address) public childToParentMapping;
 
-    struct Childv1 {
+
+    struct Child {
         string name;
         address childAddress;
-        address tokenPreference;
-        uint256 amount;
-    }
-
-    struct Childv2 {
-        string name;
         address tokenPreference;
         uint256 amount;
     }
@@ -42,6 +52,15 @@ contract ParentContract {
         string symbol;
     }
 
+    // on contract deployment we want to set the claim times
+    constructor(){
+        contractDeployedTime = getCurrentTime();
+        claimMomentDaily = setClaimMomentDaily();
+        claimMomentWeekly = setClaimMomentWeekly();
+        claimMomentMonthly = setClaimMomentMonthly();
+    }
+
+
     // https://stackoverflow.com/questions/71226909/how-to-check-if-one-value-exists-in-an-array
     modifier hasMinted(address _tokenAddress) {
         Token[] memory tokens = parentToTokensMapping[msg.sender];
@@ -49,15 +68,15 @@ contract ParentContract {
 
         // Complexity: O(N)
         // Chosen for this solution because the parent realistically only owns a couple of tokens which makes an O(N) complexity acceptable
-        for (uint i = 0; i < tokens.length; i++) {
+        for(uint i = 0; i < tokens.length; i++){
             console.log("looping: ", i);
-            if (tokens[i].tokenAddress == _tokenAddress) {
+            if(tokens[i].tokenAddress == _tokenAddress){
                 console.log("token with address", tokens[i].tokenAddress);
                 tokenFound = true;
                 break;
-            }
+            }           
         }
-        if (!tokenFound) {
+        if(!tokenFound){
             console.log("Token not found :(");
             revert NotOwnerOfToken();
         }
@@ -75,37 +94,93 @@ contract ParentContract {
 
     // OLD -> add a child to an parent (Maybe Better Solution)
     function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public hasMinted(_tokenPreference) {
-        Childv1 memory child = Childv1({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount});
+        Child memory child = Child({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount}); 
+
+        // bidirectional mapping: a parent is linked to (multiple) childs, and a child can be linked to only 1 dad.
         parentToChildMapping[msg.sender].push(child);
+        childToParentMapping[_childAddress] = msg.sender;
     }
 
-    function addChildv2(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public hasMinted(_tokenPreference) {
-        parentToChildToTokenMapping[msg.sender][_childAddress] = Childv2({name: _name, tokenPreference: _tokenPreference, amount: _amount});
-        //parentToChildMapping[msg.sender].push(child);
+    // this function will be called by the child
+    function claim(IERC20 token, address _tokenToBeClaimed, uint256 _amount) public {
+        bool tokenExists = false;
+
+        // gets the address of the child's parent (so the parent of whom calls this contract)
+        address childsParent = childToParentMapping[msg.sender];
+
+        // check if the token which is being claimed exists in the mapping of the child's parent
+        Token[] memory tokens = parentToTokensMapping[childsParent];
+        for(uint i = 0; i < tokens.length; i++){
+            if(tokens[i].tokenAddress == _tokenToBeClaimed){
+                address addy1 = tokens[i].tokenAddress; // for testing purpose
+                address addy2 = _tokenToBeClaimed; // for testing purpose
+                console.log("addy1: ", addy1, "addy2:", addy2); // for testing purpose
+                console.log("Token Found!"); // for testing purpose
+                tokenExists = true;
+            }
+        }
+
+        require(tokenExists == true, "Token is not owned by your parent");
+
+        // TODO check if the claim period is valid
+
+
+        // send the token to the msg.sender
+        token.transfer(msg.sender, _amount);
     }
 
-    function test(address _tokenPreference) public hasMinted(_tokenPreference) {
-        console.log("Hello World");
+    function getBalanceTest(IERC20 token) public view returns(uint256){
+        uint256 erc20balance = token.balanceOf(msg.sender);
+
+        return erc20balance;
     }
+
+
+    // this should be an internal function which can only be called by an public function 
+    function _claim() internal {
+
+    }
+
+    // TO DO: Possibly move all Timer functions to a seperate (lib) contract
+    // getters
+    function getCurrentTime() public view returns(uint256){
+        return block.timestamp;
+    }
+
+    // constructor functions
+    function setClaimMomentDaily() public view returns(uint256){
+        uint current = getCurrentTime();
+        return current + 1 days;
+    }
+
+
+    function setClaimMomentWeekly() public view returns(uint256) {
+        uint current = getCurrentTime();
+        return current + 1 weeks;
+    }
+
+
+    function setClaimMomentMonthly() public view returns(uint256) {
+        uint current = getCurrentTime();
+        return current + 4 weeks;
+    }
+
+    // setter functions
+    function setClaimMomentDaily2() public {
+        uint current = getCurrentTime();
+        claimMomentDaily =  current + 1 days;
+    }
+
+
+    function setClaimMomentWeekly2() public   {
+        uint current = getCurrentTime();
+        claimMomentWeekly = current + 1 weeks;
+    }
+
+
+    function setClaimMomentMonthly2() public {
+        uint current = getCurrentTime();
+        claimMomentMonthly = current + 4 weeks;
+    }
+
 }
-
-// ------------------------------- //
-// ------ CHILD FUNCTIONS -------  //
-// ------------------------------- //
-
-// TODO
-
-// function changeTokenPreference(address _tokenPreference, address _parentAddress) public {
-//     Child[] memory child = parentToChildMapping[_parentAddress];
-
-//     if (child.childAddress == msg.sender) {
-//         child.tokenPreference = _tokenPreference;
-//         parentToChildMapping[_parentAddress] = child;
-//     }
-// }
-
-// configure which token to send to the child in a certain timeframe
-
-// ------------------------------- //
-// ------      GETTERS      -------//
-// ------------------------------- //
