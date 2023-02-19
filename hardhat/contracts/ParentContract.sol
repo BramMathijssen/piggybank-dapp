@@ -8,6 +8,10 @@ import "hardhat/console.sol";
 
 error NotOwnerOfToken();
 
+/// @title A contract for parents to supply (pocket) money as a stream to their child(ren)
+/// @author Bram Mathijssen
+/// @notice This contract is used by both the parent as the children
+/// @dev Currently under construction
 contract ParentContract {
     TokenCreator public tokenCreator;
     uint public currentTime;
