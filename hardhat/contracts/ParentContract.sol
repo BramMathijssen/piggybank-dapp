@@ -64,7 +64,8 @@ contract ParentContract {
         string name;
         address childAddress;
         address tokenPreference;
-        uint256 amount;
+        uint256 baseAmount; // the base amount of tokens to be claimed
+        uint256 claimableAmount; // the amount which can be claimed, based on the claim period: daily, weekly, monthly
         bool claimValid;
         ClaimPeriod claimPeriod;
         uint nextClaimPeriod;
@@ -77,6 +78,8 @@ contract ParentContract {
         string name;
         string symbol;
     }
+
+    // TODO: Add Events
 
     // NOTE: Possibly redundant since we dont use global claim times
     // on contract deployment we want to set the claim times
@@ -120,7 +123,7 @@ contract ParentContract {
     }
 
 
-    function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public hasMinted(_tokenPreference) {
+    function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _baseAmount) public hasMinted(_tokenPreference) {
         // TO DO: Make the next claim period based on the childs claim period preference: daily, weekly, monthly
 
         // next claim period = next day
@@ -128,18 +131,20 @@ contract ParentContract {
 
         // for testing: next claim period is 90 seconds later;
         uint _nextClaimPeriod = getCurrentTime() + 90;
+        uint256 _claimAbleAmount = calculateClaimableAmount(_baseAmount, ClaimPeriod.WEEKLY);
 
         Child memory child = Child({
             name: _name, 
             childAddress: _childAddress, 
             tokenPreference: _tokenPreference, 
-            amount: _amount, 
+            baseAmount: _baseAmount, 
+            claimableAmount: _claimAbleAmount,
             claimValid: false, 
             claimPeriod: ClaimPeriod.WEEKLY, 
             nextClaimPeriod: _nextClaimPeriod
         }); 
 
-        // bidirectional mapping: a parent is linked to (multiple) childs, and a child can be linked to only 1 dad.
+        // bidirectional mapping: a parent is linked to (multiple) childs, and a child can be linked to only 1 parent.
         parentToChildMapping[msg.sender].push(child);
         childToParentMapping[_childAddress] = msg.sender;
 
@@ -149,8 +154,7 @@ contract ParentContract {
     }
 
     // this function will be called by the child
-    function claim(IERC20 token, address _tokenToBeClaimed, uint256 _amount) public {
-        bool claimIsValid = false;
+    function claim(IERC20 token, address _tokenToBeClaimed /* uint256 _amount */) public {
         bool tokenExists = false;
         uint _currentTime = getCurrentTime();
 
@@ -189,10 +193,32 @@ contract ParentContract {
         // NOTE: We should make this dynamic so the nextClaimPeriod is set to 1 day/ 1 week or 1 month
         child.claimValid = false;   // re-entrancy guard to set it back to false BEFORE sending the tokens.
         child.nextClaimPeriod = child.nextClaimPeriod + 1 days;
+        
         // send the token to the msg.sender
         console.log("Transfering...");
-        token.transfer(msg.sender, _amount);
+
+        // sends the amount which has been specified
+        token.transfer(msg.sender, child.claimableAmount);
     }
+
+    // NOTE: Should be internal 
+    // with this function we calculate the claimable amount based on the base amount,
+    // daily = -10%
+    // weekly = base
+    // monthly = +10%
+    function calculateClaimableAmount(uint256 _baseAmount, ClaimPeriod _claimPeriod) public pure returns(uint256){
+        uint256 _claimAbleAmount;
+        if(_claimPeriod == ClaimPeriod.DAILY){
+            _claimAbleAmount = _baseAmount - ((_baseAmount / 100) * 10);
+        } else if(_claimPeriod == ClaimPeriod.WEEKLY){
+            _claimAbleAmount = _baseAmount;
+        } else if(_claimPeriod == ClaimPeriod.MONTHLY){
+            _claimAbleAmount = _baseAmount + ((_baseAmount / 100) * 10);
+        }
+
+        return _claimAbleAmount;
+    }
+
 
     function getBalanceTest(IERC20 token) public view returns(uint256){
         uint256 erc20balance = token.balanceOf(msg.sender);
