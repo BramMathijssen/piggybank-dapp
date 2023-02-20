@@ -27,7 +27,6 @@ contract ParentContract {
     // list of all the created token addresses
     address[] public s_createdTokenAddresses;
 
-
     // NOTE: Check if we can make this a address to address maping where a parent has multiple token addresses
     // NOTE: So this way we could save gas, since we dont want to loop over our token list when we claim
     // mapping of parent addresses to the coins they minted on this contract
@@ -37,9 +36,22 @@ contract ParentContract {
     // mapping of a parent address to a child struct
     mapping(address => Child[]) public parentToChildMapping;
 
+    // TESTING: ❌ This wil just replace the current child when we add a new one
+    mapping(address => Child) public parentToChildMappingTest;
+
+    // TESTING: 
+    // parents address mapped to a mapping of the childs address mapped to the child struct. 
+    // this way a parent can have multiple children linked to it instead of an array which makes it more easy/cheap to retrieve the data
+    // instead of using a for loop
+    mapping(address => mapping(address => Child)) public parentToChildMappingTestNested;
+
     // https://ethereum.stackexchange.com/questions/4272/getting-key-from-solidity-mapping-by-value
     // mapping of a child to a parent address -> Bidirectional relation
     mapping(address => address) public childToParentMapping;
+
+    // NOTE: Can we also add this to the Child struct?
+    // child address mapped to abilty to claim
+    mapping(address => bool) public childToClaimValid;
 
 
     struct Child {
@@ -47,6 +59,9 @@ contract ParentContract {
         address childAddress;
         address tokenPreference;
         uint256 amount;
+        bool claimValid;
+        uint nextClaimPeriod;
+        // TO DO: Add claimPeriod: daily, montly, weekly
     }
 
     struct Token {
@@ -96,18 +111,32 @@ contract ParentContract {
         parentToTokensMapping[msg.sender].push(Token({supply: _supply, tokenAddress: createdTokenAddress, name: _contractName, symbol: _contractSymbol}));
     }
 
-    // OLD -> add a child to an parent (Maybe Better Solution)
+
     function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _amount) public hasMinted(_tokenPreference) {
-        Child memory child = Child({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount}); 
+        // TO DO: Make the next claim period based on the childs claim period preference: daily, weekly, monthly
+
+        // next claim period = next day
+        // uint _nextClaimPeriod = getCurrentTime() + 1 days;
+
+        // for testing: next claim period is 90 seconds later;
+        uint _nextClaimPeriod = getCurrentTime() + 90;
+
+        Child memory child = Child({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount, claimValid: false, nextClaimPeriod: _nextClaimPeriod}); 
 
         // bidirectional mapping: a parent is linked to (multiple) childs, and a child can be linked to only 1 dad.
         parentToChildMapping[msg.sender].push(child);
         childToParentMapping[_childAddress] = msg.sender;
+
+        // testing
+        parentToChildMappingTest[msg.sender] = child;
+        parentToChildMappingTestNested[msg.sender][_childAddress] = child;
     }
 
     // this function will be called by the child
     function claim(IERC20 token, address _tokenToBeClaimed, uint256 _amount) public {
+        bool claimIsValid = false;
         bool tokenExists = false;
+        uint _currentTime = getCurrentTime();
 
         // gets the address of the child's parent (so the parent of whom calls this contract)
         address childsParent = childToParentMapping[msg.sender];
@@ -124,12 +153,28 @@ contract ParentContract {
             }
         }
 
+        // if the child's parent owns the token we can continue, else revert
         require(tokenExists == true, "Token is not owned by your parent");
 
         // TODO check if the claim period is valid
+        // NOTE: Not sure if should be memory/calldata/storage
+        Child storage child = parentToChildMappingTestNested[childsParent][msg.sender];
 
+        console.log("current time:", _currentTime, ". Next Claim period is: ", child.nextClaimPeriod );
+        // current date is 1000, 1 day later = 1250. 
+        if(_currentTime >= child.nextClaimPeriod){
+            console.log("Claim Valid! ");
+            child.claimValid = true;
+        }
 
+        require(child.claimValid == true, "Sorry your claim period is not valid");
+
+        // after we pass the require we should reset the child's claim to the next period
+        // NOTE: We should make this dynamic so the nextClaimPeriod is set to 1 day/ 1 week or 1 month
+        child.claimValid = false;   // re-entrancy guard to set it back to false BEFORE sending the tokens.
+        child.nextClaimPeriod = child.nextClaimPeriod + 1 days;
         // send the token to the msg.sender
+        console.log("Transfering...");
         token.transfer(msg.sender, _amount);
     }
 
@@ -140,7 +185,7 @@ contract ParentContract {
     }
 
 
-    // this should be an internal function which can only be called by an public function 
+    // TODO: this should be an internal function which can only be called by an public function 
     function _claim() internal {
 
     }
