@@ -17,6 +17,7 @@ contract ParentContract {
     uint public currentTime;
     uint public contractDeployedTime;
 
+    // NOTE: Possible Redundant to keep claim moments daily since we use scoped claim moments for each child
     // global contractwide claim times based on the childs preference: daily, weekly or monthly
     // TO DO: We want to automatically go to the next claim moment after the claim moment has been reached
     // Maybe use Chainlink keepers?
@@ -53,6 +54,11 @@ contract ParentContract {
     // child address mapped to abilty to claim
     mapping(address => bool) public childToClaimValid;
 
+    enum ClaimPeriod{
+        DAILY,
+        WEEKLY,
+        MONTHLY
+    }
 
     struct Child {
         string name;
@@ -60,6 +66,7 @@ contract ParentContract {
         address tokenPreference;
         uint256 amount;
         bool claimValid;
+        ClaimPeriod claimPeriod;
         uint nextClaimPeriod;
         // TO DO: Add claimPeriod: daily, montly, weekly
     }
@@ -71,6 +78,7 @@ contract ParentContract {
         string symbol;
     }
 
+    // NOTE: Possibly redundant since we dont use global claim times
     // on contract deployment we want to set the claim times
     constructor(){
         contractDeployedTime = getCurrentTime();
@@ -121,7 +129,15 @@ contract ParentContract {
         // for testing: next claim period is 90 seconds later;
         uint _nextClaimPeriod = getCurrentTime() + 90;
 
-        Child memory child = Child({name: _name, childAddress: _childAddress, tokenPreference: _tokenPreference, amount: _amount, claimValid: false, nextClaimPeriod: _nextClaimPeriod}); 
+        Child memory child = Child({
+            name: _name, 
+            childAddress: _childAddress, 
+            tokenPreference: _tokenPreference, 
+            amount: _amount, 
+            claimValid: false, 
+            claimPeriod: ClaimPeriod.WEEKLY, 
+            nextClaimPeriod: _nextClaimPeriod
+        }); 
 
         // bidirectional mapping: a parent is linked to (multiple) childs, and a child can be linked to only 1 dad.
         parentToChildMapping[msg.sender].push(child);
@@ -196,6 +212,19 @@ contract ParentContract {
         return block.timestamp;
     }
 
+    // gets the parent of the msg.sender
+    function getChildsParent() public view returns(address){
+        address childsParent = childToParentMapping[msg.sender];
+        return childsParent;
+    }
+
+    function getChildsNextClaimPeriod() public view returns(uint256){
+        address childsParent = getChildsParent();
+        Child memory child = parentToChildMappingTestNested[childsParent][msg.sender];
+
+        return child.nextClaimPeriod;
+    }
+
     // constructor functions
     function setClaimMomentDaily() public view returns(uint256){
         uint current = getCurrentTime();
@@ -203,6 +232,7 @@ contract ParentContract {
     }
 
 
+    // GETTER Functions
     function setClaimMomentWeekly() public view returns(uint256) {
         uint current = getCurrentTime();
         return current + 1 weeks;
@@ -214,22 +244,60 @@ contract ParentContract {
         return current + 4 weeks;
     }
 
-    // setter functions
-    function setClaimMomentDaily2() public {
-        uint current = getCurrentTime();
-        claimMomentDaily =  current + 1 days;
+    // SETTER Functions
+    // with these functions a child is able to change their individual claim periods: hourly (?), daily, weekly or monthly
+    function setChildClaimMomentDaily() public {
+        address childsParent = getChildsParent();
+
+        // NOTE: We made this storage so the value is saved
+        Child storage child = parentToChildMappingTestNested[childsParent][msg.sender];
+        child.claimPeriod = ClaimPeriod.DAILY;
+
+        // sets the next claim period to 1 day
+        child.nextClaimPeriod = getCurrentTime() + 1 days;
     }
 
 
-    function setClaimMomentWeekly2() public   {
-        uint current = getCurrentTime();
-        claimMomentWeekly = current + 1 weeks;
+    function setChildClaimMomentWeekly() public   {
+        address childsParent = getChildsParent();
+
+        // NOTE: We made this storage so the value is saved to storage
+        // sets the ClaimPeriod to weekly
+        Child storage child = parentToChildMappingTestNested[childsParent][msg.sender];
+        child.claimPeriod = ClaimPeriod.WEEKLY;
+
+        // sets the next claim period to 1 week
+        child.nextClaimPeriod = getCurrentTime() + 1 weeks;
     }
 
 
-    function setClaimMomentMonthly2() public {
-        uint current = getCurrentTime();
-        claimMomentMonthly = current + 4 weeks;
+    function setChildClaimMomentMonthly() public {
+        address childsParent = getChildsParent();
+
+        // NOTE: We made this storage so the value is saved to storage
+        Child storage child = parentToChildMappingTestNested[childsParent][msg.sender];
+        child.claimPeriod = ClaimPeriod.MONTHLY;
+
+        // sets the next claim period to 4 week
+        child.nextClaimPeriod = getCurrentTime() + 4 weeks;
     }
+
+    // OLD SETTERS (For Global Timers)
+    //function setChildClaimMomentDaily() public {
+    //     uint current = getCurrentTime();
+    //     claimMomentDaily =  current + 1 days;
+    // }
+
+
+    // function setChildClaimMomentWeekly() public   {
+    //     uint current = getCurrentTime();
+    //     claimMomentWeekly = current + 1 weeks;
+    // }
+
+
+    // function setChildClaimMomentMonthly() public {
+    //     uint current = getCurrentTime();
+    //     claimMomentMonthly = current + 4 weeks;
+    // }
 
 }
