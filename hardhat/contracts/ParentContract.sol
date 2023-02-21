@@ -102,6 +102,8 @@ contract ParentContract {
         parentToTokensMapping[msg.sender].push(Token({supply: _supply, tokenAddress: createdTokenAddress, name: _contractName, symbol: _contractSymbol}));
     }
 
+    // add an require that tests if the child's address which is being added doesn't appear in the childToParentMapping already
+    // this would mean the child is already added by another parent, and a child can only be mapped to 1 parent.
     function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _baseAmount) public hasMinted(_tokenPreference) {
         // TO DO: Make the next claim period based on the childs claim period preference: daily, weekly, monthly
 
@@ -173,11 +175,13 @@ contract ParentContract {
     function calculateClaimableAmount(uint256 _baseAmount, ClaimPeriod _claimPeriod) public pure returns (uint256) {
         uint256 _claimAbleAmount;
         if (_claimPeriod == ClaimPeriod.DAILY) {
-            _claimAbleAmount = _baseAmount - ((_baseAmount / 100) * 10);
+            uint256 dailyAmount = _baseAmount - ((_baseAmount / 100) * 10);
+            _claimAbleAmount = dailyAmount / 7;
         } else if (_claimPeriod == ClaimPeriod.WEEKLY) {
             _claimAbleAmount = _baseAmount;
         } else if (_claimPeriod == ClaimPeriod.MONTHLY) {
-            _claimAbleAmount = _baseAmount + ((_baseAmount / 100) * 10);
+            uint256 monthlyAmount = _claimAbleAmount = _baseAmount + ((_baseAmount / 100) * 10);
+            _claimAbleAmount = monthlyAmount * 4;
         }
 
         return _claimAbleAmount;
@@ -210,7 +214,6 @@ contract ParentContract {
 
         return child.nextClaimPeriod;
     }
-
 
     // SETTER Functions
 

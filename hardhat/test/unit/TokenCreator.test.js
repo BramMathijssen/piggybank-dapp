@@ -7,7 +7,6 @@ describe("Token Creator", function () {
 
     beforeEach(async () => {
         deployer = (await getNamedAccounts()).deployer
-        console.log(deployer)
         tokenCreatorFactory = await ethers.getContractFactory("TokenCreator")
         tokenCreator = await tokenCreatorFactory.deploy(SUPPLY, "Brenk Token", "BRE")
     })
