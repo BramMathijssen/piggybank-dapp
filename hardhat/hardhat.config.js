@@ -1,6 +1,7 @@
-require("@nomiclabs/hardhat-ethers");
+require("@nomiclabs/hardhat-ethers")
+require("@nomiclabs/hardhat-waffle")
 require("hardhat-deploy")
-require("dotenv").config();
+require("dotenv").config()
 
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL
 const PRIVATE_KEY = process.env.PRIVATE_KEY
@@ -23,6 +24,17 @@ module.exports = {
         localhost: {
             url: "http://127.0.0.1:8545/",
             chainId: 31337,
+        },
+    },
+    namedAccounts: {
+        deployer: {
+            default: 0,
+        },
+        parent: {
+            default: 1,
+        },
+        child: {
+            default: 2,
         },
     },
     etherscan: {
