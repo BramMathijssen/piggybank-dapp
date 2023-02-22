@@ -13,6 +13,7 @@ error NotOwnerOfToken();
 /// @notice This contract is used by both the parent as the children
 /// @dev Currently under construction
 contract ParentContract {
+    address public owner;
     TokenCreator public tokenCreator;
     uint public currentTime;
     uint public contractDeployedTime;
@@ -67,7 +68,7 @@ contract ParentContract {
     // TODO: Add Events
 
     constructor() {
-        contractDeployedTime = getCurrentTime();
+        owner = msg.sender;
     }
 
     // https://stackoverflow.com/questions/71226909/how-to-check-if-one-value-exists-in-an-array
@@ -250,5 +251,10 @@ contract ParentContract {
 
         // sets the next claim period to 4 week
         child.nextClaimPeriod = getCurrentTime() + 4 weeks;
+    }
+
+    /// testing
+    function test() public view returns (address) {
+        return msg.sender;
     }
 }

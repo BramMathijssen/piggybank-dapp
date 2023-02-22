@@ -32,7 +32,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 // 2. Test the setter functions which set the childs claim moment daily, weekly, monthly
 
 describe("Parent Contract", function () {
-    let deployer, parentContract
+    let deployer, parent, child, parentContract, parentConnectedContract
 
     beforeEach(async () => {
         deployer = (await getNamedAccounts()).deployer
@@ -61,17 +61,37 @@ describe("Parent Contract", function () {
             })
         })
     })
-    // describe("Parent Functions", async function () {
-    //     describe("Contract deployment", async function () {
-    //         it("sends the correct amount of tokens to the deployer", async function () {
-    //             console.log(parentContract.address)
-    //         })
-    //     })
+    describe("Parent Functions", async function () {
+        const TOKEN_NAME = "Test Token"
+        const TOKEN_SYMBOL = "TT"
+        const TOTAL_SUPPLY = ethers.utils.parseEther("1000") // = 1000000000000000000000 wei
+        beforeEach(async () => {
+            parent = (await getNamedAccounts()).parent
+            child = (await getNamedAccounts()).child
+            parentConnectedContract = await ethers.getContract("ParentContract", parent)
+            childConnectedContract = await ethers.getContract("ParentContract", child)
+        })
+        describe("createNewToken", async function () {
+            it("tests if the total supply is sent to the parentContract", async function () {
+                const owner = await parentConnectedContract.owner()
+                const deployerTest = await parentContract.test()
+                const parentTest = await parentConnectedContract.test()
+                const childtest = await childConnectedContract.test()
+                console.log(`deployer address is ${deployer}`)
+                console.log(`parent address is ${parent}`)
+                console.log(`child address is ${child}`)
 
-    //     it("sends the correct amount of tokens to the deployer", async function () {
-    //         console.log(parentContract.address)
-    //     })
-    // })
+                console.log(`owner is ${owner}`)
+                console.log(`message sender parent func is: ${deployerTest}`)
+                console.log(`message sender parent func is: ${parentTest}`)
+                console.log(`message sender child func is: ${childtest}`)
+            })
+        })
+
+        it("sends the correct amount of tokens to the deployer", async function () {
+            console.log(parentContract.address)
+        })
+    })
     // describe("Child Functions", async function () {
     //     describe("Contract deployment", async function () {
     //         it("sends the correct amount of tokens to the deployer", async function () {
