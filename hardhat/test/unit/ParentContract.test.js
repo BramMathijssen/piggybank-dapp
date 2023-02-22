@@ -32,7 +32,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 // 2. Test the setter functions which set the childs claim moment daily, weekly, monthly
 
 describe("Parent Contract", function () {
-    let deployer, parent, child, parentContract, parentConnectedContract, childConnectedContract
+    let deployer, parent, child, parentContract, parentConnectedContract, childConnectedContract, tokenCreatorContract
 
     beforeEach(async () => {
         deployer = (await getNamedAccounts()).deployer
@@ -62,25 +62,42 @@ describe("Parent Contract", function () {
         })
     })
     describe("Parent Functions", async function () {
+        let tokenAddress
         const TOKEN_NAME = "Test Token"
         const TOKEN_SYMBOL = "TT"
         const TOTAL_SUPPLY = ethers.utils.parseEther("1000") // = 1000000000000000000000 wei
         beforeEach(async () => {
             parent = (await getNamedAccounts()).parent
             parentConnectedContract = await ethers.getContract("ParentContract", parent)
+
+            const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_SYMBOL)
+            const receipt = await tx.wait(1)
+            tokenAddress = receipt.events[0].address
+            tokenCreatorContract = await ethers.getContractAt("TokenCreator", tokenAddress)
         })
         describe("createNewToken", async function () {
-            it.only("transfers the total supply is sent to the parentContract", async function () {
-                const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_SYMBOL)
-                const receipt = await tx.wait(1)
-                const tokenAddress = receipt.events[0].address;
-                const tokenCreatorContract = await ethers.getContractAt("TokenCreator", tokenAddress);
-
+            it("after creating a new token transfers the total amount to the parentContract", async function () {
                 const parentContractBalance = await tokenCreatorContract.balanceOf(parentContract.address)
 
                 // checks if the total supply of the newly created token is transfered to the parentContract
                 expect(parentContractBalance).to.equal(TOTAL_SUPPLY)
+            })
+            it("parent's address is mapped to the token address after having created it", async function () {
+                const tokenFromMapping = await parentConnectedContract.parentToTokensMapping(parent, 0)
 
+                expect(tokenFromMapping.tokenAddress).to.equal(tokenAddress)
+            
+            })
+            it("parent's address is able to hold multiple tokens in it's mapping", async function () {
+                const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, "TOKEN2", "T2")
+                const receipt = await tx.wait(1)
+                const tokenAddress2 = receipt.events[0].address
+
+                const tokenFromMapping1 = await parentConnectedContract.parentToTokensMapping(parent, 0)
+                const tokenFromMapping2 = await parentConnectedContract.parentToTokensMapping(parent, 1)
+                
+                expect(tokenFromMapping1.tokenAddress).to.equal(tokenAddress)
+                expect(tokenFromMapping2.tokenAddress).to.equal(tokenAddress2)
             })
         })
 
