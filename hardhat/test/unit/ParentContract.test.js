@@ -32,7 +32,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 // 2. Test the setter functions which set the childs claim moment daily, weekly, monthly
 
 describe("Parent Contract", function () {
-    let deployer, parent, child, parentContract, parentConnectedContract
+    let deployer, parent, child, parentContract, parentConnectedContract, childConnectedContract
 
     beforeEach(async () => {
         deployer = (await getNamedAccounts()).deployer
@@ -67,24 +67,20 @@ describe("Parent Contract", function () {
         const TOTAL_SUPPLY = ethers.utils.parseEther("1000") // = 1000000000000000000000 wei
         beforeEach(async () => {
             parent = (await getNamedAccounts()).parent
-            child = (await getNamedAccounts()).child
             parentConnectedContract = await ethers.getContract("ParentContract", parent)
-            childConnectedContract = await ethers.getContract("ParentContract", child)
         })
         describe("createNewToken", async function () {
-            it("tests if the total supply is sent to the parentContract", async function () {
-                const owner = await parentConnectedContract.owner()
-                const deployerTest = await parentContract.test()
-                const parentTest = await parentConnectedContract.test()
-                const childtest = await childConnectedContract.test()
-                console.log(`deployer address is ${deployer}`)
-                console.log(`parent address is ${parent}`)
-                console.log(`child address is ${child}`)
+            it.only("transfers the total supply is sent to the parentContract", async function () {
+                const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_SYMBOL)
+                const receipt = await tx.wait(1)
+                const tokenAddress = receipt.events[0].address;
+                const tokenCreatorContract = await ethers.getContractAt("TokenCreator", tokenAddress);
 
-                console.log(`owner is ${owner}`)
-                console.log(`message sender parent func is: ${deployerTest}`)
-                console.log(`message sender parent func is: ${parentTest}`)
-                console.log(`message sender child func is: ${childtest}`)
+                const parentContractBalance = await tokenCreatorContract.balanceOf(parentContract.address)
+
+                // checks if the total supply of the newly created token is transfered to the parentContract
+                expect(parentContractBalance).to.equal(TOTAL_SUPPLY)
+
             })
         })
 
