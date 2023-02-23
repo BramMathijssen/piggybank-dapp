@@ -33,8 +33,14 @@ module.exports = {
         parent: {
             default: 1,
         },
-        child: {
+        parent2: {
             default: 2,
+        },
+        child: {
+            default: 3,
+        },
+        child2: {
+            default: 4,
         },
     },
     etherscan: {

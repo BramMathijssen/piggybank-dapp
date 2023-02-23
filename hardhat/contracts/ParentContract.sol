@@ -105,6 +105,7 @@ contract ParentContract {
 
     // add an require that tests if the child's address which is being added doesn't appear in the childToParentMapping already
     // this would mean the child is already added by another parent, and a child can only be mapped to 1 parent.
+    // also if child already exists then revert
     function addChild(string memory _name, address _childAddress, address _tokenPreference, uint256 _baseAmount) public hasMinted(_tokenPreference) {
         // TO DO: Make the next claim period based on the childs claim period preference: daily, weekly, monthly
 

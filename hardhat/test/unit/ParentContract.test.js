@@ -32,7 +32,7 @@ const { developmentChains, networkConfig } = require("../../helper-hardhat-confi
 // 2. Test the setter functions which set the childs claim moment daily, weekly, monthly
 
 describe("Parent Contract", function () {
-    let deployer, parent, child, parentContract, parentConnectedContract, childConnectedContract, tokenCreatorContract
+    let deployer, parent, parent2, child, child2, parentContract, parentConnectedContract, parent2ConnectedContract, childConnectedContract, tokenCreatorContract
 
     beforeEach(async () => {
         deployer = (await getNamedAccounts()).deployer
@@ -66,9 +66,18 @@ describe("Parent Contract", function () {
         const TOKEN_NAME = "Test Token"
         const TOKEN_SYMBOL = "TT"
         const TOTAL_SUPPLY = ethers.utils.parseEther("1000") // = 1000000000000000000000 wei
+        const CHILD_NAME = "Bram"
+        const TOKEN_PREFERENCE = tokenAddress
+        const BASE_AMOUNT = ethers.utils.parseEther("1")
+
         beforeEach(async () => {
             parent = (await getNamedAccounts()).parent
+            parent2 = (await getNamedAccounts()).parent2
+            child = (await getNamedAccounts()).child
+            child2 = (await getNamedAccounts()).child2
+
             parentConnectedContract = await ethers.getContract("ParentContract", parent)
+            parent2ConnectedContract = await ethers.getContract("ParentContract", parent2)
 
             const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_SYMBOL)
             const receipt = await tx.wait(1)
@@ -78,7 +87,7 @@ describe("Parent Contract", function () {
         describe("createNewToken", async function () {
             it("after creating a new token transfers the total amount to the parentContract", async function () {
                 const parentContractBalance = await tokenCreatorContract.balanceOf(parentContract.address)
-
+                           
                 // checks if the total supply of the newly created token is transfered to the parentContract
                 expect(parentContractBalance).to.equal(TOTAL_SUPPLY)
             })
@@ -86,7 +95,6 @@ describe("Parent Contract", function () {
                 const tokenFromMapping = await parentConnectedContract.parentToTokensMapping(parent, 0)
 
                 expect(tokenFromMapping.tokenAddress).to.equal(tokenAddress)
-            
             })
             it("parent's address is able to hold multiple tokens in it's mapping", async function () {
                 const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, "TOKEN2", "T2")
@@ -95,14 +103,49 @@ describe("Parent Contract", function () {
 
                 const tokenFromMapping1 = await parentConnectedContract.parentToTokensMapping(parent, 0)
                 const tokenFromMapping2 = await parentConnectedContract.parentToTokensMapping(parent, 1)
-                
+
                 expect(tokenFromMapping1.tokenAddress).to.equal(tokenAddress)
                 expect(tokenFromMapping2.tokenAddress).to.equal(tokenAddress2)
             })
         })
+        describe("addChild", async function () {
+            it("reverts if a parent creates a new child with a token it hasn't minted", async function () {
+                const tx = await parent2ConnectedContract.createNewToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_SYMBOL)
+                const receipt = await tx.wait(1)
+                const tokenAddress2 = receipt.events[0].address
 
-        it("sends the correct amount of tokens to the deployer", async function () {
-            console.log(parentContract.address)
+                // reverts if the parent tries to add a child with a token which has been minted by parent2
+                await expect(parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress2, BASE_AMOUNT)).to.be.revertedWith(`NotOwnerOfToken`)
+            })
+            it("Test if a child is added to the parentToChildMappingNested with the input given as arguments", async function () {
+                await parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress, BASE_AMOUNT)
+
+                const createdChild = await parentConnectedContract.parentToChildMappingNested(parent, child)
+
+                expect(createdChild.name).to.equal(CHILD_NAME);
+                expect(createdChild.childAddress).to.equal(child);
+                expect(createdChild.tokenPreference).to.equal(tokenAddress);
+                expect(createdChild.baseAmount).to.equal(BASE_AMOUNT);
+            })
+            it("Test if a child is added to the parentToChildMappingNested with the correct: nextclaimperiod + nextclaimamount", async function () {
+                // todo
+            })
+            it.only("Test if it's possible for a parent to hold multiple children", async function () {
+                await parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress, BASE_AMOUNT)
+                await parentConnectedContract.addChild(CHILD_NAME, child2, tokenAddress, BASE_AMOUNT)
+
+                const createdChild = await parentConnectedContract.parentToChildMappingNested(parent, child)
+                const createdChild2 = await parentConnectedContract.parentToChildMappingNested(parent, child2)
+
+                expect(createdChild.childAddress).to.equal(child)
+                expect(createdChild2.childAddress).to.equal(child2)
+            })
+            it("Test if the child is added to the childToParentMapping", async function () {
+                await parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress, BASE_AMOUNT)
+                const parentsChild = await parentConnectedContract.childToParentMapping(child);
+
+                expect(parentsChild).to.equal(parent)
+            })
         })
     })
     // describe("Child Functions", async function () {
