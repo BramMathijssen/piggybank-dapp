@@ -121,6 +121,7 @@ contract ParentContract {
     }
 
     // this function will be called by the child
+    // add check which makes sure only the token which has been saved as tokenPreference is able to be claimed
     function claim(IERC20 token, address _tokenToBeClaimed) public {
         bool tokenExists = false;
         uint _currentTime = getCurrentTime();
@@ -210,11 +211,22 @@ contract ParentContract {
         return childsParent;
     }
 
-    function getChildsNextClaimPeriod() public view returns (uint256) {
+    // safe to delete
+    // function getChildsNextClaimPeriod() public view returns (uint256) {
+    //     address childsParent = getChildsParent();
+    //     Child memory child = parentToChildMappingNested[childsParent][msg.sender];
+
+    //     return child.nextClaimPeriod;
+    // }
+
+    // helper function to get next claimperiod (unix) and claimperiod(enum)
+    function getChildsNextClaimPeriod() public view returns (uint256, ClaimPeriod) {
         address childsParent = getChildsParent();
         Child memory child = parentToChildMappingNested[childsParent][msg.sender];
 
-        return child.nextClaimPeriod;
+        uint256 nextClaimPeriod = child.nextClaimPeriod;
+        ClaimPeriod claimPeriod = child.claimPeriod;
+        return (nextClaimPeriod, claimPeriod);
     }
 
     // SETTER Functions
@@ -254,8 +266,14 @@ contract ParentContract {
         child.nextClaimPeriod = getCurrentTime() + 4 weeks;
     }
 
-    /// testing
+    /// testing -> safe to delete
     function test() public view returns (address) {
         return msg.sender;
+    }
+    /// testing -> safe to delete
+    uint256 public nextWeek;
+    /// testing -> safe to delete
+    function setNextWeek() public {
+        nextWeek = block.timestamp + 1 weeks;
     }
 }

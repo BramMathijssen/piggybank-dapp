@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-ethers")
 require("@nomiclabs/hardhat-waffle")
+require("@nomicfoundation/hardhat-network-helpers")
 require("hardhat-deploy")
 require("dotenv").config()
 
