@@ -2,7 +2,12 @@
 @import "./../../assets/styles/mixins";
 
 .badge {
-  width: 200px;
-  height: 200px;
   background-color: orange;
+  color: purple;
+  width: 150px;
+
+  p{
+    margin: 0;
+  }
 }
+
