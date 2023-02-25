@@ -43,11 +43,9 @@ const Parent = () => {
                         <Badge />
                     </div>
                 ) : null}
-                <div className={styles.panelContainer}>
-                    {home ? <HomePanel /> : null}
-                    {addChild ? <AddChildPanel /> : null}
-                    {createToken ? <CreateTokenPanel /> : null}
-                </div>
+                {home ? (<div className={styles.panelContainer}> <HomePanel /> </div>) : null }
+                {addChild ? <AddChildPanel /> : null}
+                {createToken ? <CreateTokenPanel /> : null}
             </div>
         </main>
     );

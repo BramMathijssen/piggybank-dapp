@@ -2,13 +2,14 @@ import React from "react";
 
 import styles from "./AddChildPanel.module.scss";
 
-const HomePanel = () => {
+const AddChildPanel = () => {
     return (
         <>
-            <h2 className={styles.title}>Add Child Panel</h2>
-            <div className={styles.rowContainer}></div>
+        <h2 className={styles.title}>Add New Child</h2>
+            <div className={styles.addChildPanel}>
+            </div>
         </>
     );
 };
 
-export default HomePanel;
+export default AddChildPanel;

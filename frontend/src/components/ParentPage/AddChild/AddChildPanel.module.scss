@@ -1,0 +1,13 @@
+@import "./../../../assets/styles/variables";
+@import "./../../../assets/styles/mixins";
+
+.title{
+    margin-top: 0;
+    margin-bottom: 0;
+    color: $primary-orange;
+}
+
+.addChildPanel {
+    background-color: blue;
+    height: 50vh;
+}
