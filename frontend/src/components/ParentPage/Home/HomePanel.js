@@ -1,9 +1,9 @@
 import React from "react";
 
-import styles from "./Panel.module.scss";
+import styles from "./HomePanel.module.scss";
 import Row from "./Row";
 
-const Panel = () => {
+const HomePanel = () => {
     return (
         <>
             <h2 className={styles.title}>Panel Content</h2>
@@ -24,4 +24,4 @@ const Panel = () => {
     );
 };
 
-export default Panel;
+export default HomePanel;

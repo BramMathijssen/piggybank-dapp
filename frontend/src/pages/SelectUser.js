@@ -12,7 +12,7 @@ const SelectUser = () => {
                     <User type="Parent" />
                 </Card>
                 <Card>
-                    <User type="Kid" />
+                    <User type="Child" />
                 </Card>
             </div>
         </main>
