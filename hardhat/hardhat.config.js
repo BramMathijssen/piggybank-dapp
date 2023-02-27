@@ -13,7 +13,7 @@ const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY
 module.exports = {
     solidity: "0.8.17",
     defaultNetwork: "hardhat",
-    networkds: {
+    networks: {
         hardhat: {
             chainId: 31337,
         },
