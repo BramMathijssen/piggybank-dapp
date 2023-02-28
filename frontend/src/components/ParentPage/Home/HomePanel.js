@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
+import Badge from "./Badge";
 
 import styles from "./HomePanel.module.scss";
 import Row from "./Row";
@@ -7,9 +8,9 @@ import Row from "./Row";
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
 
-    useEffect(() => {
-        ethersCtx.onReConnect();
-    }, []);
+    // useEffect(() => {
+    //     ethersCtx.onReConnect();
+    // }, []);
 
     return (
         <>

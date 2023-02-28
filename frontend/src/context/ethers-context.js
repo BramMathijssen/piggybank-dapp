@@ -12,7 +12,6 @@ const EthersContext = React.createContext({
     chainId: null,
     isConnected: null,
     storage: null,
-    onReConnect: () => {},
     setUserAddress: () => {},
     onConnect: () => {},
     onDisconnect: () => {},
@@ -27,22 +26,42 @@ export const EthersContextProvider = (props) => {
     const [storageContainer, setStorageContainer] = useState(localStorage?.getItem("isWalletConnected"));
     const navigate = useNavigate();
 
+    const pageReload = () => {
+        console.log(`reloading page`);
+        window.location.reload();
+        console.log(`after reload`);
+    };
+
+    // const removeGlobalListeners = () => {
+    //     window.ethereum?.removeListener("chainChanged", pageReload);
+    //     window.ethereum?.removeListener("accountsChanged", handleAccount);
+    //   }
+
     useEffect(() => {
-        const setGlobalListeners = () => {
+        const setGlobalListeners = async () => {
             window.ethereum.on("chainChanged", async function () {
                 console.log(`chain changed`);
-                connectWalletHandler();
+                pageReload();
+                //setTimeout(() => console.log(`timeout yo`), 5000);
+                //connectWalletHandler();
             });
             window.ethereum.on("accountsChanged", async function () {
                 console.log(`account changed`);
+
                 connectWalletHandler();
             });
+            window.onload = async () => {
+                console.log(`page loaded`);
+                if (storageContainer) {
+                    connectWalletHandler();
+                }
+            };
         };
         setGlobalListeners();
     }, []);
 
     const connectWalletHandler = async () => {
-        console.log(`clicky`);
+        console.log(`clicky2`);
         console.log(contractAddresses[31337]["ParentContract"][0]);
         if (window.ethereum) {
             try {
@@ -54,7 +73,6 @@ export const EthersContextProvider = (props) => {
                 localStorage.setItem("isWalletConnected", true);
                 const storage = localStorage?.getItem("isWalletConnected");
                 setStorageContainer(storage);
-
                 console.log(contractAddresses);
                 console.log(accounts[0]);
             } catch (error) {
@@ -69,7 +87,11 @@ export const EthersContextProvider = (props) => {
         console.log(`disconnecting`);
         localStorage.setItem("isWalletConnected", false);
         navigate("/select-user");
-        window.location.reload();
+        setProvider(null);
+        setSigner(null)
+        setChainId(null)
+        setContract(null)
+        //window.location.reload();
     };
 
     const updateEthers = async () => {
@@ -90,26 +112,7 @@ export const EthersContextProvider = (props) => {
         setContract(tempContract);
     };
 
-    // const reConnectHandler = async () => {
-    //     console.log(`reconnecting`);
-    //     console.log(storageContainer);
 
-    //     if (storageContainer) {
-    //         console.log(`storage is true`);
-    //         const accounts = await window.ethereum.request({ method: "eth_accounts" });
-    //         if (accounts.length) {
-    //             console.log(`You're connected to: ${accounts[0]}`);
-    //             setUserAddress(accounts[0]);
-    //         } else {
-    //             console.log("Metamask is not connected");
-    //         }
-    //     }
-    // };
-    const reConnectHandler = async () => {
-        if (storageContainer) {
-            connectWalletHandler();
-        }
-    };
 
     return (
         <EthersContext.Provider
@@ -123,7 +126,6 @@ export const EthersContextProvider = (props) => {
                 setUserAddress: setUserAddress,
                 onConnect: connectWalletHandler,
                 onDisconnect: disconnectWalletHandler,
-                onReConnect: reConnectHandler,
             }}
         >
             {props.children}

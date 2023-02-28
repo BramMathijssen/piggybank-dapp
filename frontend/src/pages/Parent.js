@@ -6,6 +6,7 @@ import Sidebar from "../components/ParentPage/Sidebar";
 
 import styles from "./Parent.module.scss";
 import CreateTokenPanel from "../components/ParentPage/CreateToken/CreateTokenPanel";
+import ConnectWallet from "../components/ParentPage/Layout/ConnectWallet";
 
 const Parent = () => {
     const [home, setHome] = useState(true);
@@ -35,7 +36,9 @@ const Parent = () => {
     return (
         <main className={styles.main}>
             <Sidebar setHomePanel={setHomePanel} setAddChildPanel={setAddChildPanel} setCreateTokenPanel={setCreateTokenPanel} />
+            
             <div className={styles.content}>
+            <ConnectWallet />
                 {home ? (
                     <div className={styles.badgeContainer}>
                         <Badge />

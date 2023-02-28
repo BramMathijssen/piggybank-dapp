@@ -19,3 +19,8 @@
 ## Design
 
 - The design style is called Neubrutalism, alot of inspiration has been taken from www.dribbble.com
+
+## Features
+
+- Wallet connection persists on page reload
+- Account or chain switching is being handled without having to reload the page
