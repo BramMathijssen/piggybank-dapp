@@ -220,7 +220,7 @@ describe("Parent Contract", function () {
 
                 await expect(childConnectedContract.claim(tokenAddressNotPrefered, tokenAddressNotPrefered)).to.revertedWith("The claimed token is not your selected token")
             })
-            it.only("reverts after trying to claim again after just having claimed", async function () {
+            it("reverts after trying to claim again after just having claimed", async function () {
                 await helpers.time.increase(ONE_WEEK_UNIX)
                 await childConnectedContract.claim(tokenAddress, tokenAddress);
 

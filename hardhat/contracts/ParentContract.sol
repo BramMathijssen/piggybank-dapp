@@ -66,6 +66,8 @@ contract ParentContract {
     }
 
     // TODO: Add Events
+    event ChildAdded(Child child, address childAddress, address parentAddress);
+    event TokenCreated(address parentAddress, address tokenAddress, Token token);
 
     constructor() {
         owner = msg.sender;
@@ -100,7 +102,9 @@ contract ParentContract {
         address createdTokenAddress = address(new TokenCreator(_supply, _contractName, _contractSymbol));
 
         s_createdTokenAddresses.push(createdTokenAddress);
+        Token memory token = Token({supply: _supply, tokenAddress: createdTokenAddress, name: _contractName, symbol: _contractSymbol});
         parentToTokensMapping[msg.sender].push(Token({supply: _supply, tokenAddress: createdTokenAddress, name: _contractName, symbol: _contractSymbol}));
+        emit TokenCreated(msg.sender, createdTokenAddress, token);
     }
 
     // add an require that tests if the child's address which is being added doesn't appear in the childToParentMapping already
@@ -118,6 +122,8 @@ contract ParentContract {
         parentToChildMapping[msg.sender].push(child);
         parentToChildMappingNested[msg.sender][_childAddress] = child;
         childToParentMapping[_childAddress] = msg.sender;
+
+        emit ChildAdded(child, _childAddress, msg.sender);
     }
 
     // this function will be called by the child
@@ -270,8 +276,10 @@ contract ParentContract {
     function test() public view returns (address) {
         return msg.sender;
     }
+
     /// testing -> safe to delete
     uint256 public nextWeek;
+
     /// testing -> safe to delete
     function setNextWeek() public {
         nextWeek = block.timestamp + 1 weeks;

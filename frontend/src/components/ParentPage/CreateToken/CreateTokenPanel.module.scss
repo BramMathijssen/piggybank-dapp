@@ -1,13 +1,21 @@
 .createTokenPanel {
     padding: 25px;
-    background-color: blue;
+    background-color: lightblue;
     height: 50vh;
+    display: flex;
+
 }
 
-.form {
+.createContainer{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.formContainer {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    flex: 1;
 }
 
 .action {

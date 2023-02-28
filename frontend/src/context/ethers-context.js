@@ -112,8 +112,6 @@ export const EthersContextProvider = (props) => {
         setContract(tempContract);
     };
 
-
-
     return (
         <EthersContext.Provider
             value={{
