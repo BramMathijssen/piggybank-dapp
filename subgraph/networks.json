@@ -1,0 +1,8 @@
+{
+  "goerli": {
+    "ParentContract": {
+      "address": "0x0F4f5ea1331D018483Bd1D8870a5d99A9D211378",
+      "startBlock": 0
+    }
+  }
+}

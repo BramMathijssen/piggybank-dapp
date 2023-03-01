@@ -1,0 +1,29 @@
+type ChildAdded @entity(immutable: true) {
+  id: Bytes!
+  child_name: String! # string
+  child_childAddress: Bytes! # address
+  child_tokenPreference: Bytes! # address
+  child_baseAmount: BigInt! # uint256
+  child_claimableAmount: BigInt! # uint256
+  child_claimValid: Boolean! # bool
+  child_claimPeriod: Int! # uint8
+  child_nextClaimPeriod: BigInt! # uint256
+  childAddress: Bytes! # address
+  parentAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenCreated @entity(immutable: true) {
+  id: Bytes!
+  parentAddress: Bytes! # address
+  tokenAddress: Bytes! # address
+  token_supply: BigInt! # uint256
+  token_tokenAddress: Bytes! # address
+  token_name: String! # string
+  token_symbol: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
