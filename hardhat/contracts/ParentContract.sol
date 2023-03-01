@@ -66,7 +66,7 @@ contract ParentContract {
     }
 
     // TODO: Add Events
-    event ChildAdded(Child child, address childAddress, address parentAddress);
+    event ChildAdded(address indexed parentAddress, address childAddress, Child child);
     event TokenCreated(address indexed parentAddress, address tokenAddress, Token token);
 
     constructor() {
@@ -123,7 +123,7 @@ contract ParentContract {
         parentToChildMappingNested[msg.sender][_childAddress] = child;
         childToParentMapping[_childAddress] = msg.sender;
 
-        emit ChildAdded(child, _childAddress, msg.sender);
+        emit ChildAdded(msg.sender, _childAddress, child); 
     }
 
     // this function will be called by the child

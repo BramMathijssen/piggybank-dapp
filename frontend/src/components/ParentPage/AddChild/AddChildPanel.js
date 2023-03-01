@@ -3,6 +3,7 @@ import networksMapping from "../../../constants/networksMapping";
 
 import styles from "./AddChildPanel.module.scss";
 import EthersContext from "../../../context/ethers-context";
+import ChildOverview from "./ChildOverview";
 
 const AddChildPanel = () => {
     const childNameRef = useRef();
@@ -17,9 +18,11 @@ const AddChildPanel = () => {
 
     const addChild = async (e) => {
         e.preventDefault();
-        console.log(`Creating token`);
+        console.log(`Adding new child`);
+        console.log(childAddressRef.current.value)
         const tx = await ethersCtx.contract.addChild(childNameRef.current.value, childAddressRef.current.value, tokenPreferenceRef.current.value, baseAmountRef.current.value);
         await tx.wait(1);
+        console.log(tx)
         setChanged((current) => !current); // toggle boolean to force a re-render on TokenOverview
     };
 
@@ -32,8 +35,10 @@ const AddChildPanel = () => {
             const tokenList = [];
 
             for (let i = 0; i < events.length; i++) {
-                const { name } = events[i].args[2];
-                const obj = { tokenName: name };
+                const { name, tokenAddress } = events[i].args[2];
+                const tokens = events[i].args[2];
+                console.log(tokens)
+                const obj = { tokenName: name, tokenAddress: tokenAddress};
                 tokenList.push(obj);
             }
 
@@ -48,8 +53,8 @@ const AddChildPanel = () => {
     return (
         <>
             <h2 className={styles.title}>Add Child</h2>
-            <div className={styles.AddChildPanel}>
-                <div className={styles.AddChildPanel}>
+            <div className={styles.createTokenPanel}>
+                <div className={styles.createContainer}>
                     <form onSubmit={addChild}>
                         <div className={styles.formContainer}>
                             <label>Name</label>
@@ -59,15 +64,16 @@ const AddChildPanel = () => {
                             <label>Token Preference</label>
                             <select name="languages" id="lang" ref={tokenPreferenceRef}>
                                 {tokens && tokens.map(token => {
-                                    return <option key={Math.random()} value={token.tokenName}>{token.tokenName}</option>
+                                    return <option key={Math.random()} value={token.tokenAddress}>{token.tokenName}</option>
                                 })}
                             </select>
                             <label>Base Amount</label>
                             <input type="number" ref={baseAmountRef}></input>
-                            <button className={styles.button}> deploy</button>
+                            <button className={styles.button}>Add</button>
                         </div>
                     </form>
                 </div>
+                <ChildOverview />
             </div>
         </>
     );
