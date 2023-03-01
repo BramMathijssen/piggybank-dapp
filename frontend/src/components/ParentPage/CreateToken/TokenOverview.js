@@ -20,7 +20,6 @@ const TokenOverview = ({ tokenAdded }) => {
                 const { name, symbol, supply } = events[i].args[2];
                 const obj = { tokenName: name, symbol: symbol, totalSupply: supply };
                 tokenList.push(obj)
-                setTokens((prev) => [...prev, obj]);
             }
 
             setTokens(tokenList);

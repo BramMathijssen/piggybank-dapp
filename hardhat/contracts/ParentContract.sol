@@ -67,7 +67,7 @@ contract ParentContract {
 
     // TODO: Add Events
     event ChildAdded(Child child, address childAddress, address parentAddress);
-    event TokenCreated(address parentAddress, address tokenAddress, Token token);
+    event TokenCreated(address indexed parentAddress, address tokenAddress, Token token);
 
     constructor() {
         owner = msg.sender;
