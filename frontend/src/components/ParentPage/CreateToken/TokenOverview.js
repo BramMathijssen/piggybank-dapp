@@ -4,22 +4,41 @@ import EthersContext from "../../../context/ethers-context";
 
 import styles from "./TokenOverview.module.scss";
 
-const TokenOverview = () => {
+const TokenOverview = ({ tokenAdded }) => {
     const ethersCtx = useContext(EthersContext);
-    const [events, setEvents] = useState([]);
-    const [changed, setChanged] = useState();
+    const [tokens, setTokens] = useState([{ tokenName: "", symbol: "", totalSupply: "" }]);
 
     useEffect(() => {
+        console.log(`running useEffect`);
         const getEvents = async () => {
             const eventFilter = ethersCtx.contract.filters.TokenCreated();
             const events = await ethersCtx.contract.queryFilter(eventFilter);
 
-            setEvents(events);
+            const tokenList = []
+
+            for (let i = 0; i < events.length; i++) {
+                const { name, symbol, supply } = events[i].args[2];
+                const obj = { tokenName: name, symbol: symbol, totalSupply: supply };
+                tokenList.push(obj)
+                setTokens((prev) => [...prev, obj]);
+            }
+
+            setTokens(tokenList);
         };
         getEvents();
-    }, [changed]);
+    }, [tokenAdded]);
 
-    return <div className={styles.overviewContainer}>TokenOverview</div>;
+
+    return (
+        <div className={styles.overviewContainer}>
+            <ul>
+                {tokens  && tokens.map(token => {
+                    return <li>{token.tokenName} {token.symbol} </li>
+                })}
+            </ul>
+            TokenOverview
+        </div>
+    );
 };
 
 export default TokenOverview;

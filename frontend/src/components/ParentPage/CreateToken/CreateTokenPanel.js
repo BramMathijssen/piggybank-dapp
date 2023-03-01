@@ -9,8 +9,8 @@ const CreateTokenPanel = () => {
     const contractNameRef = useRef();
     const contractSymbolRef = useRef();
     const contractSupplyRef = useRef();
-    const [events, setEvents] = useState([{ "name ": "bla"}]);
-    const [changed, setChanged] = useState();
+
+    const [changed, setChanged] = useState(false);
 
     const ethersCtx = useContext(EthersContext);
 
@@ -19,29 +19,8 @@ const CreateTokenPanel = () => {
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.createNewToken(contractSupplyRef.current.value, contractNameRef.current.value, contractSymbolRef.current.value);
         await tx.wait(1);
-        console.log(tx);
-        setChanged("1");
+        setChanged(current => !current); // toggle boolean to force a re-render on TokenOverview
     };
-
-    const getStorage = () => {
-        const storage = ethersCtx.storage;
-        //const storage = localStorage.getItem("isWalletConnected");
-        console.log(storage);
-    };
-
-    useEffect(() => {
-        console.log(`running events getters`);
-        const getEvents = async () => {
-            const eventFilter = ethersCtx.contract.filters.TokenCreated();
-            const eventsFiltered = await ethersCtx.contract.queryFilter(eventFilter);
-
-            // setEvents(oldArray => [...oldArray, {eventsFiltered}]);
-            setEvents([eventsFiltered]);
-        };
-        getEvents();
-    }, [changed]);
-
-    console.log(events);
 
     return (
         <>
@@ -60,7 +39,7 @@ const CreateTokenPanel = () => {
                         </div>
                     </form>
                 </div>
-                <TokenOverview />
+                <TokenOverview tokenAdded={changed} />
             </div>
         </>
     );
