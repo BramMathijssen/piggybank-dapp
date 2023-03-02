@@ -11,7 +11,7 @@ const ChildOverview = ({ tokenAdded }) => {
     useEffect(() => {
         console.log(`running useEffect`);
         const getEvents = async () => {
-            const eventFilter = ethersCtx.contract.filters.ChildAdded();
+            const eventFilter = ethersCtx.contract.filters.ChildAdded(ethersCtx.userAddress, null, null);
             const events = await ethersCtx.contract.queryFilter(eventFilter);
 
             console.log(events);
@@ -27,7 +27,7 @@ const ChildOverview = ({ tokenAdded }) => {
             setChildren(childList);
         };
         getEvents();
-    }, [tokenAdded]);
+    }, [tokenAdded, ethersCtx]);
 
     return (
         <div className={styles.overviewContainer}>
@@ -36,7 +36,7 @@ const ChildOverview = ({ tokenAdded }) => {
                 {children &&
                     children.map((child) => {
                         return (
-                            <li>
+                            <li key={Math.random()}>
                                 {child.childName} {child.tokenPreference}{" "}
                             </li>
                         );

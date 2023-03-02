@@ -45,7 +45,7 @@ const AddChildPanel = () => {
             setTokens(tokenList);
         };
         getEvents();
-    }, []);
+    }, [ethersCtx]);
 
     console.log(tokens);
 

@@ -11,7 +11,7 @@ const TokenOverview = ({ tokenAdded }) => {
     useEffect(() => {
         console.log(`running useEffect`);
         const getEvents = async () => {
-            const eventFilter = ethersCtx.contract.filters.TokenCreated();
+            const eventFilter = ethersCtx.contract.filters.TokenCreated(ethersCtx.userAddress, null, null);
             const events = await ethersCtx.contract.queryFilter(eventFilter);
 
             const tokenList = []
@@ -25,14 +25,14 @@ const TokenOverview = ({ tokenAdded }) => {
             setTokens(tokenList);
         };
         getEvents();
-    }, [tokenAdded]);
+    }, [tokenAdded, ethersCtx]);
 
 
     return (
         <div className={styles.overviewContainer}>
             <ul>
                 {tokens  && tokens.map(token => {
-                    return <li>{token.tokenName} {token.symbol} </li>
+                    return <li key={Math.random()}>{token.tokenName} {token.symbol} </li>
                 })}
             </ul>
             TokenOverview
