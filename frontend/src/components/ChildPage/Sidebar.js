@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 
 import styles from "./Sidebar.module.scss";
 
-const Sidebar = ({setHomePanel, setAddChildPanel, setCreateTokenPanel}) => {
+const Sidebar = ({setHomePanel, setEditClaimPanel}) => {
   console.log()
 
   const doSomething = (props) => {
@@ -18,8 +18,8 @@ const Sidebar = ({setHomePanel, setAddChildPanel, setCreateTokenPanel}) => {
             <nav>
                 <ul className={styles.ul}>
                     <li><button onClick={setHomePanel}>Home</button></li>
-                    <li><button onClick={setAddChildPanel}>Add Child</button></li>
-                    <li><button onClick={setCreateTokenPanel}>Create Token</button></li>
+                    <li><button onClick={setEditClaimPanel}>Edit Claim</button></li>
+                    {/* <li><button onClick={setCreateTokenPanel}>Create Token</button></li> */}
                 </ul>
             </nav>
         </div>
