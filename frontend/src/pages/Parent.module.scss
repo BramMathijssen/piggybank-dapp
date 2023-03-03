@@ -1,7 +1,7 @@
 .main {
     display: flex;
     max-height: 100vh;
-    background-color: yellow;
+    background-color: #F2F5F1;
 }
 
 .content {
@@ -14,21 +14,21 @@
 
 .badgeContainer {
     display: flex;
-    gap: 25px;
+    gap: 50px;
     min-height: 150px;
 }
 
-.badgeContainer > :first-child {
-    background-color: red;
-}
+// .badgeContainer > :first-child {
+//     background-color: red;
+// }
 
-.badgeContainer > :nth-child(2) {
-    background-color: green;
-}
+// .badgeContainer > :nth-child(2) {
+//     background-color: green;
+// }
 
-.badgeContainer > :nth-child(3) {
-    background-color: blue;
-}
+// .badgeContainer > :nth-child(3) {
+//     background-color: blue;
+// }
 
 .panelContainer {
     display: flex;
