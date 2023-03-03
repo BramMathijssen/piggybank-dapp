@@ -28,6 +28,16 @@ const HomePanel = () => {
         getMyParentAndClaim();
     }, [ethersCtx]);
 
+    useEffect(() => {
+        const getMyParentAndClaim = async () => {
+            if (!ethersCtx.contract) return;
+
+            const currentTime = await ethersCtx.contract.getCurrentTime();
+            console.log(`✅Current Time: ${currentTime}`);
+        };
+        getMyParentAndClaim();
+    }, [ethersCtx]);
+
     const convertTimestampToDate = (timestamp) => {
         const date = new Date(timestamp * 1000); // multiply by 1000 to convert from seconds to milliseconds
         const options = { day: "numeric", month: "numeric", year: "numeric" };
