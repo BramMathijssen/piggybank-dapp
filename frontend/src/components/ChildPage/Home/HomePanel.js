@@ -46,6 +46,10 @@ const HomePanel = () => {
         return formattedDate;
     };
 
+    const claim = async () => {
+        const claimTx = await ethersCtx.contract.claim(myClaim.tokenPreference, myClaim.tokenPreference);
+    };
+
     console.log(myClaim);
 
     return (
@@ -65,6 +69,7 @@ const HomePanel = () => {
                 )}
                 <div className={styles.myParentContainer}></div>
                 <div className={styles.myClaims}></div>
+                {timeLeft < 0 ? <button onClick={claim}>Claim</button> : null}
             </div>
         </>
     );
