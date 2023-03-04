@@ -8,10 +8,12 @@ import { Users, Coins, ArrowsLeftRight } from "phosphor-react";
 import styles from "./HomePanel.module.scss";
 import Panel from "./Panel";
 import Row from "./Row";
+import { useEvent } from "../../../hooks/useEvent";
 
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
-    const myChildren = useChildAddedEvents(ethersCtx);
+    // const myChildren = useChildAddedEvents(ethersCtx);
+    const myChildren = useEvent("ChildAdded", ethersCtx.userAddress)
     const [parentAddress, setParentAddress] = useState();
     const [myClaim, setMyClaim] = useState();
     // const [myChildren, setMyChildren] = useState();
@@ -38,14 +40,10 @@ const HomePanel = () => {
             <div className={styles.childContainer}>
                 {myChildren
                     ? myChildren.map((child, index) => {
-                          return <Child name={child.childName} address={child.childAddress} />;
+                          return <Child name={child.name} address={child.childAddress} />;
                       })
                     : null}
-                {/* <Child />
-                <Child />
-                <Child /> */}
             </div>
-
             <div className={styles.panelContainer}>
                 <div className={styles.transactionsPanel}>
                     <h2 className={styles.transactionsTitle}>Recent Transactions</h2>
