@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import EthersContext from "../context/ethers-context";
 
-export const useEvent = (eventName, ...args) => {
+export const useEvent = (eventName, changed, ...args) => {
     const ethersCtx = useContext(EthersContext);
     const [events, setEvents] = useState([]);
 
@@ -24,7 +24,7 @@ export const useEvent = (eventName, ...args) => {
         };
 
         getEvents();
-    }, [ethersCtx, eventName, ...args]);
+    }, [ethersCtx, eventName, changed]);
 
     return events;
 };

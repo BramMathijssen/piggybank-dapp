@@ -39,6 +39,7 @@ const CreateTokenPanel = () => {
                         </div>
                     </form>
                 </div>
+                {/* <TokenOverview tokenAdded={changed} /> */}
                 <TokenOverview tokenAdded={changed} />
             </div>
         </>
