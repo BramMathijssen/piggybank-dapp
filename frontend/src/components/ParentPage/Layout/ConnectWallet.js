@@ -17,11 +17,11 @@ const ConnectWallet = () => {
                 <>
                     <p>{ethersCtx.userAddress}</p>
                     <p>{ethersCtx.chainId?.name}</p>
-                    <Button onClick={clickHandler} content="Connected" size="medium"></Button>
+                    <Button onClick={clickHandler} content="Connected" size="small"></Button>
                 </>
             ) : (
                 <>
-                    <Button onClick={ethersCtx.onConnect} content="Connect" size="medium"></Button>
+                    <Button onClick={ethersCtx.onConnect} content="Connect" size="small"></Button>
                 </>
             )}
         </div>

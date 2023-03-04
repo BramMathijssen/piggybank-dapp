@@ -26,17 +26,17 @@ $default-max-font-size: 32px;
     margin-top: 0;
 }
 
-h1 {
+h1.styled {
     @include heading-style;
     font-size: 70px;
 }
 
-h2 {
+h2.styled {
     @include heading-style;
     font-size: 45px;
 }
 
-h3 {
+h3.styled {
     @include heading-style;
     font-size: 25px;
 }

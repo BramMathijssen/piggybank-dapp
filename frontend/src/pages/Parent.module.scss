@@ -8,33 +8,10 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    margin: 50px;
+    margin: 0px 50px 50px 50px;
     gap: 25px;
 }
 
-.badgeContainer {
-    display: flex;
-    gap: 50px;
-    min-height: 150px;
-}
 
-// .badgeContainer > :first-child {
-//     background-color: red;
-// }
 
-// .badgeContainer > :nth-child(2) {
-//     background-color: green;
-// }
 
-// .badgeContainer > :nth-child(3) {
-//     background-color: blue;
-// }
-
-.panelContainer {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 50px;
-    overflow: auto;
-    background-color: green;
-}

@@ -3,10 +3,11 @@
 
 .container{
     display: flex;
-    background-color: blue;
+    background-color: #00FFC3;
     flex-direction: column;
     height: 100vh;
     width: 15%;
+    border-right: 4px solid black;
 }
 
 .avatarContainer{
