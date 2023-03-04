@@ -3,6 +3,7 @@ import EthersContext from "../../../context/ethers-context";
 import { useChildAddedEvents } from "../../../hooks/useChildAddedEvent";
 import Badge from "./Badge";
 import Child from "./Child";
+import { Users, Coins, ArrowsLeftRight } from "phosphor-react";
 
 import styles from "./HomePanel.module.scss";
 import Panel from "./Panel";
@@ -29,9 +30,9 @@ const HomePanel = () => {
     return (
         <>
             <div className={styles.badgeContainer}>
-                <Badge />
-                <Badge />
-                <Badge />
+                <Badge type="children" amount={myChildren.length} icon={<Users size={50}/>} />
+                <Badge type="tokens" amount={2} icon={<Coins size={50}/>}/>
+                <Badge type="transactions" amount={212} icon={<ArrowsLeftRight size={50}/>}/>
             </div>
             <h2 className={styles.childTitle}>Your Children</h2>
             <div className={styles.childContainer}>
