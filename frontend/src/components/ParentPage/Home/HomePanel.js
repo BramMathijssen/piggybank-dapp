@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
+import { useChildAddedEvents } from "../../../hooks/useChildAddedEvent";
 import Badge from "./Badge";
 import Child from "./Child";
 
@@ -9,8 +10,10 @@ import Row from "./Row";
 
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
+    const myChildren = useChildAddedEvents(ethersCtx);
     const [parentAddress, setParentAddress] = useState();
     const [myClaim, setMyClaim] = useState();
+    // const [myChildren, setMyChildren] = useState();
 
     console.log(ethersCtx.userAddress);
 
@@ -21,6 +24,8 @@ const HomePanel = () => {
     //     ethersCtx.onReConnect();
     // }, []);
 
+    console.log(myChildren);
+
     return (
         <>
             <div className={styles.badgeContainer}>
@@ -30,9 +35,14 @@ const HomePanel = () => {
             </div>
             <h2 className={styles.childTitle}>Your Children</h2>
             <div className={styles.childContainer}>
+                {myChildren
+                    ? myChildren.map((child, index) => {
+                          return <Child name={child.childName} address={child.childAddress} />;
+                      })
+                    : null}
+                {/* <Child />
                 <Child />
-                <Child />
-                <Child />
+                <Child /> */}
             </div>
 
             <div className={styles.panelContainer}>
@@ -41,7 +51,7 @@ const HomePanel = () => {
                     <Panel />
                 </div>
                 <div className={styles.tokensPanel}>
-                <h2 className={styles.tokensTitle}>My Tokens</h2>
+                    <h2 className={styles.tokensTitle}>My Tokens</h2>
                     <Panel />
                 </div>
                 {/* <div className={styles.rowContainer}>
