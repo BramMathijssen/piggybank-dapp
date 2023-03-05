@@ -32,13 +32,17 @@
   &.medium {
     font-size: 14px;
     font-weight: 700;
-    padding: 12px 22px;
+    padding: 8px 25px;
   }
 
   &.small {
     font-size: 12px;
     font-weight: 700;
     padding: 0px 13px;
+  }
+
+  &.round{
+    border-radius: 25px;
   }
 
   /* Button Pseudo-classes */

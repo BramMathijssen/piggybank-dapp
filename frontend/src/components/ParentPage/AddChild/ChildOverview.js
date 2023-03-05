@@ -11,7 +11,6 @@ const ChildOverview = ({ childAdded }) => {
 
     return (
         <div className={styles.overview}>
-            <p>Children</p>
             <ul>
                 {children &&
                     children.map((child, index) => {

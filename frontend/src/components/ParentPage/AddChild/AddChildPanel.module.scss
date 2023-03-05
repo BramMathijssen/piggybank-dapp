@@ -3,20 +3,20 @@
 
 .flexContainer {
     display: flex;
-    gap: 60px;
+    gap: 100px;
     margin-bottom: 50px;
 }
 
 .addChildContainer {
     display: flex;
     flex-direction: column;
-    flex: 0.6;
+    flex: 0.4;
 }
 
 .infoContainer {
     display: flex;
     flex-direction: column;
-    flex: 0.4;
+    flex: 0.6;
 }
 
 .childOverviewContainer {

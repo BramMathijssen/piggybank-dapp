@@ -1,3 +1,7 @@
+.label{
+    margin-bottom: 5px;
+}
+
 .dropdown {
     padding: 8px;
     width: 400px;
@@ -5,6 +9,7 @@
     border: 2px solid #000000;
     box-shadow: 2px 2px 0px #000000;
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 .dropdown:hover{

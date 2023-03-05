@@ -44,6 +44,7 @@ const AddChildPanel = () => {
                 </div>
             </div>
             <div className={styles.childOverviewContainer}>
+                <h2 className={styles.title}>My Children</h2>
                 <ChildOverview childAdded={changed} />
             </div>
         </>
