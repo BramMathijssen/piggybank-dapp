@@ -1,28 +1,23 @@
 @import "./../../../assets/styles/variables";
 @import "./../../../assets/styles/mixins";
 
-
-
-.createTokenPanel {
-    padding: 25px;
-    background-color: lightblue;
-    height: 50vh;
+.flexContainer {
     display: flex;
-
+    gap: 60px;
+    margin-bottom: 50px;
 }
 
-.createContainer{
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-}
-
-.formContainer {
+.addChildContainer {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 0.6;
 }
 
-.action {
-    margin-top: 25px;
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 0.4;
+}
+
+.childOverviewContainer {
 }

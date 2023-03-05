@@ -5,6 +5,8 @@ import styles from "./AddChildPanel.module.scss";
 import EthersContext from "../../../context/ethers-context";
 import ChildOverview from "./ChildOverview";
 import { useEvent } from "../../../hooks/useEvent";
+import Form from "./Form";
+import Info from "./Info";
 
 const AddChildPanel = () => {
     const childNameRef = useRef();
@@ -15,7 +17,7 @@ const AddChildPanel = () => {
     const [changed, setChanged] = useState(false);
 
     const ethersCtx = useContext(EthersContext);
-    
+
     //const [tokens, setTokens] = useState();
     const tokens = useEvent("TokenCreated", changed, ethersCtx.userAddress);
 
@@ -31,33 +33,18 @@ const AddChildPanel = () => {
 
     return (
         <>
-            <h2 className={styles.title}>Add Child</h2>
-            <div className={styles.createTokenPanel}>
-                <div className={styles.createContainer}>
-                    <form onSubmit={addChild}>
-                        <div className={styles.formContainer}>
-                            <label>Name</label>
-                            <input type="text" ref={childNameRef}></input>
-                            <label>Child Address</label>
-                            <input type="text" ref={childAddressRef}></input>
-                            <label>Token Preference</label>
-                            <select name="languages" id="lang" ref={tokenPreferenceRef}>
-                                {tokens &&
-                                    tokens.map((token,index) => {
-                                        return (
-                                            <option key={index} value={token.tokenAddress}>
-                                                {token.name}
-                                            </option>
-                                        );
-                                    })}
-                            </select>
-                            <label>Base Amount</label>
-                            <input type="number" ref={baseAmountRef}></input>
-                            <button className={styles.button}>Add</button>
-                        </div>
-                    </form>
+            <div className={styles.flexContainer}>
+                <div className={styles.addChildContainer}>
+                    <h2 className={styles.title}>Add Child</h2>
+                    <Form />
                 </div>
-                <ChildOverview childAdded={changed}/>
+                <div className={styles.infoContainer}>
+                    <h2 className={styles.title}>Info</h2>
+                    <Info />
+                </div>
+            </div>
+            <div className={styles.childOverviewContainer}>
+                <ChildOverview childAdded={changed} />
             </div>
         </>
     );

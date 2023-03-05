@@ -10,7 +10,7 @@ const ChildOverview = ({ childAdded }) => {
     const children = useEvent("ChildAdded", childAdded, ethersCtx.userAddress);
 
     return (
-        <div className={styles.overviewContainer}>
+        <div className={styles.overview}>
             <p>Children</p>
             <ul>
                 {children &&
