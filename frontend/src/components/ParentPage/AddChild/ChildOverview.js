@@ -2,6 +2,7 @@ import { poll } from "ethers/lib/utils";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import { useEvent } from "../../../hooks/useEvent";
+import Table from "../../UI/Table";
 
 import styles from "./ChildOverview.module.scss";
 
@@ -11,7 +12,8 @@ const ChildOverview = ({ childAdded }) => {
 
     return (
         <div className={styles.overview}>
-            <ul>
+            <Table />
+            {/* <ul>
                 {children &&
                     children.map((child, index) => {
                         return (
@@ -20,7 +22,7 @@ const ChildOverview = ({ childAdded }) => {
                             </li>
                         );
                     })}
-            </ul>
+            </ul> */}
         </div>
     );
 };

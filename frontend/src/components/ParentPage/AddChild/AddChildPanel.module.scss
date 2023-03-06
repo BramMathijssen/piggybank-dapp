@@ -15,9 +15,13 @@
 
 .infoContainer {
     display: flex;
+    height: 500px;
     flex-direction: column;
     flex: 0.6;
 }
 
 .childOverviewContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }

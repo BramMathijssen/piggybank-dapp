@@ -14,6 +14,7 @@ const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
     // const myChildren = useChildAddedEvents(ethersCtx);
     const myChildren = useEvent("ChildAdded", ethersCtx.userAddress)
+    const myTokens = useEvent("TokenCreated",ethersCtx.userAddress)
     const [parentAddress, setParentAddress] = useState();
     const [myClaim, setMyClaim] = useState();
     // const [myChildren, setMyChildren] = useState();
@@ -23,17 +24,13 @@ const HomePanel = () => {
     console.log(parentAddress);
     console.log(myClaim);
 
-    // useEffect(() => {
-    //     ethersCtx.onReConnect();
-    // }, []);
-
     console.log(myChildren);
 
     return (
         <>
             <div className={styles.badgeContainer}>
                 <Badge type="children" amount={myChildren.length} icon={<Users size={50}/>} />
-                <Badge type="tokens" amount={2} icon={<Coins size={50}/>}/>
+                <Badge type="tokens" amount={myTokens.length} icon={<Coins size={50}/>}/>
                 <Badge type="transactions" amount={212} icon={<ArrowsLeftRight size={50}/>}/>
             </div>
             <h2 className={styles.childTitle}>Your Children</h2>
