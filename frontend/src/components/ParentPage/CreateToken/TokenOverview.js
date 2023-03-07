@@ -1,14 +1,21 @@
-import { poll } from "ethers/lib/utils";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
+import EventsContext from "../../../context/events-context";
 import { useEvent } from "../../../hooks/useEvent";
 
 import styles from "./TokenOverview.module.scss";
 
 const TokenOverview = ({ tokenAdded }) => {
     const ethersCtx = useContext(EthersContext);
+    const eventsCtx = useContext(EventsContext);
     const tokens = useEvent("TokenCreated", tokenAdded, ethersCtx.userAddress);
 
+    useEffect(()=> {
+        eventsCtx.setTokens(tokens);
+    },[tokens])
+
+    console.log(`rendering tokenoverview`)
+    console.log(tokens)
     return (
         <div className={styles.overviewContainer}>
             <ul>

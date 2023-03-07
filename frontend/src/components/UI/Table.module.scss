@@ -15,6 +15,17 @@
     margin: 2px;
 }
 
+.token{
+    display: flex;
+    flex-direction: column;
+}
+
+.token p {
+    color: grey;
+    font-size: 12px;
+    margin: 2px;
+}
+
 .flexContainer {
     display: flex;
     flex-direction: column;
@@ -23,5 +34,5 @@
 .flexContainer p {
     color: grey;
     font-size: 12px;
-    margin: 0;
+    margin: 2px;
 }

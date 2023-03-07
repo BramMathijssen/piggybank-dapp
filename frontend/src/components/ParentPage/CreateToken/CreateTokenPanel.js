@@ -22,6 +22,7 @@ const CreateTokenPanel = () => {
         setChanged(current => !current); // toggle boolean to force a re-render on TokenOverview
     };
 
+    console.log(`rendering createTokenPanel`)
     return (
         <>
             <h2 className={styles.title}>Create New Token</h2>

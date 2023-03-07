@@ -7,6 +7,7 @@ import ChildOverview from "./ChildOverview";
 import { useEvent } from "../../../hooks/useEvent";
 import Form from "./Form";
 import Info from "./Info";
+import EventsContext from "../../../context/events-context";
 
 const AddChildPanel = () => {
     const childNameRef = useRef();
@@ -17,6 +18,7 @@ const AddChildPanel = () => {
     const [changed, setChanged] = useState(false);
 
     const ethersCtx = useContext(EthersContext);
+    const eventsCtx = useContext(EventsContext)
 
     //const [tokens, setTokens] = useState();
     const tokens = useEvent("TokenCreated", changed, ethersCtx.userAddress);

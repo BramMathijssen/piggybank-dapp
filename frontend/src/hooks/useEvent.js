@@ -9,6 +9,7 @@ export const useEvent = (eventName, changed, ...args) => {
         if (!ethersCtx.userAddress) return;
 
         const getEvents = async () => {
+            console.log('running effect in useEvent')
             const eventFilter = ethersCtx.contract.filters[eventName](...args);
             const events = await ethersCtx.contract.queryFilter(eventFilter);
 

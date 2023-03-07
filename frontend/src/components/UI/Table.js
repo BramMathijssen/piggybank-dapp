@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 
-import styles from "./Table4.module.scss";
+import styles from "./Table.module.scss";
 import { getClaimPeriodString } from "../../helpers/getClaimPeriodString";
 import { unixTimestampToReadable } from "../../helpers/UnixToDate";
+import EventsContext from "../../context/events-context";
+import { getNameByAddress, getSymbolByAddress } from "../../helpers/getTokenDetailsbyAddress";
 
-const Table4 = ({ children }) => {
+const Table = ({ children }) => {
+    const eventsCtx = useContext(EventsContext);
+
     const avatarBodyTemplate = (rowData) => {
         console.log(rowData);
         return (
@@ -30,9 +34,11 @@ const Table4 = ({ children }) => {
     };
 
     const baseAmountBodyTemplate = (rowData) => {
+        const tokenSymbol = getSymbolByAddress(eventsCtx.tokens, rowData.tokenPreference);
         return (
             <div className={styles.nameBody}>
-                <p>{rowData.baseAmount.toString()}</p>
+                <p>{rowData.baseAmount.toString()} </p>
+                <p>{tokenSymbol}</p>
             </div>
         );
     };
@@ -57,8 +63,11 @@ const Table4 = ({ children }) => {
     };
 
     const tokenBodyTemplate = (rowData) => {
+        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.tokenPreference);
+        console.log(eventsCtx.tokens);
         return (
-            <div>
+            <div className={styles.token}>
+                <span>{tokenName}</span>
                 <p>{rowData.tokenPreference}</p>
             </div>
         );
@@ -78,4 +87,4 @@ const Table4 = ({ children }) => {
     );
 };
 
-export default Table4;
+export default Table;
