@@ -68,6 +68,7 @@ contract ParentContract {
     // TODO: Add Events
     event ChildAdded(address indexed parentAddress, address childAddress, Child child);
     event TokenCreated(address indexed parentAddress, address tokenAddress, Token token);
+    event AllowanceClaimed(address indexed parentAddress, address childAddress, Child child, address tokenAddress, uint timestamp);
 
     constructor() {
         owner = msg.sender;
@@ -123,7 +124,7 @@ contract ParentContract {
         parentToChildMappingNested[msg.sender][_childAddress] = child;
         childToParentMapping[_childAddress] = msg.sender;
 
-        emit ChildAdded(msg.sender, _childAddress, child); 
+        emit ChildAdded(msg.sender, _childAddress, child);
     }
 
     // this function will be called by the child
@@ -174,6 +175,7 @@ contract ParentContract {
 
         // sends the amount which has been specified
         token.transfer(msg.sender, child.claimableAmount);
+        emit AllowanceClaimed(childsParent, msg.sender, child, _tokenToBeClaimed, getCurrentTime());
     }
 
     // NOTE: Should be internal

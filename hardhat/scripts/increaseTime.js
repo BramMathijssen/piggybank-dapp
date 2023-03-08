@@ -12,7 +12,7 @@ async function increaseTime() {
     const blockNumber = await provider.getBlockNumber()
     console.log(`Current block number: ${blockNumber}`)
 
-    await provider.send("evm_increaseTime", [150]);
+    await provider.send("evm_increaseTime", [ONE_WEEK_UNIX]);
     await provider.send("evm_mine");
 
 }
