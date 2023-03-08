@@ -11,13 +11,16 @@ import Row from "./Row";
 import { useEvent } from "../../../hooks/useEvent";
 import EventsContext from "../../../context/events-context";
 import TransactionsTable from "./TransactionsTable";
+import ChildContext from "../../../context/child-context";
 
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
     const eventsCtx = useContext(EventsContext);
+    const childCtx = useContext(ChildContext);
     // const myChildren = useChildAddedEvents(ethersCtx);
     const myChildren = useEvent("ChildAdded", ethersCtx.userAddress);
     const myTokens = useEvent("TokenCreated", ethersCtx.userAddress);
+    const chil = childCtx.children;
     const [parentAddress, setParentAddress] = useState();
     const [myClaim, setMyClaim] = useState();
     // const [myChildren, setMyChildren] = useState();
@@ -32,6 +35,10 @@ const HomePanel = () => {
 
     console.log(eventsCtx.transactions);
     //console.log(seedDataTransactions)
+
+    console.log(chil)
+    console.log(`childbil`)
+    // console.log(chil[0].nextClaimPeriod.toString())
 
     return (
         <>
