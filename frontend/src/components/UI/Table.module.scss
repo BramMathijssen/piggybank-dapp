@@ -1,0 +1,42 @@
+.card{
+    height: 100%;
+}
+
+.nameBody {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.claimPeriod {
+    display: flex;
+    flex-direction: column;
+}
+
+.claimPeriod p {
+    font-size: 14px;
+    color: grey;
+    margin: 2px;
+}
+
+.token{
+    display: flex;
+    flex-direction: column;
+}
+
+.token p {
+    color: grey;
+    font-size: 12px;
+    margin: 2px;
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.flexContainer p {
+    color: grey;
+    font-size: 12px;
+    margin: 2px;
+}

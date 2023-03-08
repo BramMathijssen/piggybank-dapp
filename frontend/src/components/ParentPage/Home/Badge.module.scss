@@ -1,23 +1,12 @@
 @import "./../../../assets/styles/variables";
 @import "./../../../assets/styles/mixins";
 
-// .badge {
-//   border-radius: 25px;
-//   background-color: orange;
-//   color: purple;
-//   width: 150px;
-
-//   p{
-//     margin: 0;
-//   }
-// }
-
 .badge {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     gap: 30px;
     width: 210px;
     height: 90px;
@@ -25,4 +14,24 @@
     border: 2px solid #000000;
     box-shadow: 8px 8px 0px #000000;
     border-radius: 12px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.content p:first-child {
+    margin: 0;
+    font-weight: 600;
+    font-size: 35px;
+}
+
+.content p:last-child {
+    margin: 0;
+}
+
+.icon{
+
 }

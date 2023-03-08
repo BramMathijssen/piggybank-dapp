@@ -4,12 +4,12 @@ import EthersContext from "../../../context/ethers-context";
 import styles from "./Panel.module.scss";
 
 
-const Panel = () => {
+const Panel = (props) => {
     const ethersCtx = useContext(EthersContext);
 
 
     return <div className={styles.panel}>
-
+        {props.children}
     </div>;
 };
 

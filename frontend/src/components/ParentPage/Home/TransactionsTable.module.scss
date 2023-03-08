@@ -1,0 +1,16 @@
+.amountClaimed{
+    font-size: 16px;
+    color: rgb(230, 61, 49);
+    font-weight: 600;
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.flexContainer p {
+    color: grey;
+    font-size: 12px;
+    margin: 2px;
+}

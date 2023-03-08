@@ -1,39 +1,32 @@
-import { poll } from "ethers/lib/utils";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
+import EventsContext from "../../../context/events-context";
+import { useEvent } from "../../../hooks/useEvent";
 
 import styles from "./TokenOverview.module.scss";
 
 const TokenOverview = ({ tokenAdded }) => {
     const ethersCtx = useContext(EthersContext);
-    const [tokens, setTokens] = useState([{ tokenName: "", symbol: "", totalSupply: "" }]);
+    const eventsCtx = useContext(EventsContext);
+    const tokens = useEvent("TokenCreated", tokenAdded, ethersCtx.userAddress);
 
-    useEffect(() => {
-        console.log(`running useEffect`);
-        const getEvents = async () => {
-            const eventFilter = ethersCtx.contract.filters.TokenCreated(ethersCtx.userAddress, null, null);
-            const events = await ethersCtx.contract.queryFilter(eventFilter);
+    useEffect(()=> {
+        eventsCtx.setTokens(tokens);
+    },[tokens])
 
-            const tokenList = []
-
-            for (let i = 0; i < events.length; i++) {
-                const { name, symbol, supply } = events[i].args[2];
-                const obj = { tokenName: name, symbol: symbol, totalSupply: supply };
-                tokenList.push(obj)
-            }
-
-            setTokens(tokenList);
-        };
-        getEvents();
-    }, [tokenAdded, ethersCtx]);
-
-
+    console.log(`rendering tokenoverview`)
+    console.log(tokens)
     return (
         <div className={styles.overviewContainer}>
             <ul>
-                {tokens  && tokens.map(token => {
-                    return <li key={Math.random()}>{token.tokenName} {token.symbol} </li>
-                })}
+                {tokens &&
+                    tokens.map((token, index) => {
+                        return (
+                            <li key={index}>
+                                {token.name} {token.symbol}{" "}
+                            </li>
+                        );
+                    })}
             </ul>
             TokenOverview
         </div>

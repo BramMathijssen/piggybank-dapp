@@ -3,15 +3,17 @@ import Card from "../../UI/Card";
 
 import styles from "./Badge.module.scss";
 
-const Badge = () => {
+const Badge = ({ type, amount, icon }) => {
     return (
-        <>
-            {/* <Card> */}
-            <div className={styles.badge}>
-                <p>I'm a Badge :)</p>
+        <div className={styles.badge}>
+            <div className={styles.content}>
+                <p>{amount}</p>
+                <p>{type}</p>
             </div>
-            {/* </Card> */}
-        </>
+            <div className={styles.icon}>
+                <p>{icon}</p>
+            </div>
+        </div>
     );
 };
 

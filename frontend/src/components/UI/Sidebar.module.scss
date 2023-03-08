@@ -6,14 +6,14 @@
     background-color: #00FFC3;
     flex-direction: column;
     height: 100vh;
-    width: 15%;
+    width: 13%;
     border-right: 4px solid black;
 }
 
 .avatarContainer{
     display: flex;
     justify-content: center;
-    margin: 25px;
+    margin: 60px;
 }
 
 .ul{
@@ -21,5 +21,14 @@
     flex-direction: column;
     list-style: none;
     padding: 0;
-    background-color: red;
+    justify-content: center;
+}
+
+.li{
+    display: flex;
+    justify-content: center;
+}
+
+.link{
+    cursor: pointer;
 }
