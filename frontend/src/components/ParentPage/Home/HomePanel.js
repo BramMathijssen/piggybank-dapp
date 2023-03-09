@@ -12,33 +12,14 @@ import { useEvent } from "../../../hooks/useEvent";
 import EventsContext from "../../../context/events-context";
 import TransactionsTable from "./TransactionsTable";
 import ChildContext from "../../../context/child-context";
+import TransactionContext from "../../../context/transaction-context";
 
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
-    const eventsCtx = useContext(EventsContext);
-    const childCtx = useContext(ChildContext);
-    // const myChildren = useChildAddedEvents(ethersCtx);
+    const transactionCtx = useContext(TransactionContext);
+
     const myChildren = useEvent("ChildAdded", ethersCtx.userAddress);
     const myTokens = useEvent("TokenCreated", ethersCtx.userAddress);
-    const chil = childCtx.children;
-    const [parentAddress, setParentAddress] = useState();
-    const [myClaim, setMyClaim] = useState();
-    // const [myChildren, setMyChildren] = useState();
-
-    // console.log(ethersCtx.userAddress);
-
-    // console.log(parentAddress);
-    // console.log(myClaim);
-
-    // console.log(myChildren);
-    //const seedDataTransactions = useEvent("AllowanceClaimed", null, ethersCtx.userAddress);
-
-    console.log(eventsCtx.transactions);
-    //console.log(seedDataTransactions)
-
-    console.log(chil)
-    console.log(`childbil`)
-    // console.log(chil[0].nextClaimPeriod.toString())
 
     return (
         <>
@@ -59,7 +40,8 @@ const HomePanel = () => {
                 <div className={styles.transactionsPanel}>
                     <h2 className={styles.transactionsTitle}>Recent Transactions</h2>
                     <Panel>
-                        <TransactionsTable transactions={eventsCtx.transactions}/>
+                        {/* <TransactionsTable transactions={eventsCtx.transactions} /> */}
+                        {transactionCtx.transactions && <TransactionsTable transactions={transactionCtx.transactions} /> }
                     </Panel>
                 </div>
                 <div className={styles.tokensPanel}>

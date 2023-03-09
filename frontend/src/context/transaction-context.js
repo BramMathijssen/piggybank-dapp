@@ -1,26 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "./ethers-context";
 
-const TokenContext = React.createContext({
-    tokens: null,
-    children: null,
-    setTokens: () => {},
+const TransactionContext = React.createContext({
+    transactions: null,
+    setTransactions: () => {},
 });
 
-export const TokenContextProvider = (props) => {
+export const TransactionContextProvider = (props) => {
     const ethersCtx = useContext(EthersContext);
 
     const [transactions, setTransactions] = useState();
 
     useEffect(() => {
-        console.log(`useEFFECTING`)
         if (!ethersCtx.userAddress) return;
 
         const getEvents = async () => {
-            console.log("running effect in transaction context");
             const eventFilter = ethersCtx.contract.filters.AllowanceClaimed(ethersCtx.userAddress);
             const events = await ethersCtx.contract.queryFilter(eventFilter);
-            console.log(`AFTERRR`)
 
             setTransactions(events);
         };
@@ -29,14 +25,14 @@ export const TokenContextProvider = (props) => {
     }, [ethersCtx]);
 
     return (
-        <TokenContext.Provider
+        <TransactionContext.Provider
             value={{
                 transactions: transactions,
             }}
         >
             {props.children}
-        </TokenContext.Provider>
+        </TransactionContext.Provider>
     );
 };
 
-export default TokenContext;
+export default TransactionContext;

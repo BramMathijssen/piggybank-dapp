@@ -13,11 +13,11 @@ import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenD
 const TransactionsTable = ({ transactions }) => {
     const eventsCtx = useContext(EventsContext);
 
+
     const avatarBodyTemplate = (rowData) => {
-        console.log(rowData);
         return (
             <div>
-                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.childAddress)} />
+                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.args[2].childAddress)} />
             </div>
         );
     };
@@ -26,15 +26,15 @@ const TransactionsTable = ({ transactions }) => {
         return (
             <div className={styles.nameBody}>
                 <div className={styles.flexContainer}>
-                    <span>{rowData.name}</span>
-                    <p>{rowData.childAddress}</p>
+                    <span>{rowData.args.child.name}</span>
+                    <p>{rowData.args.child.childAddress}</p>
                 </div>
             </div>
         );
     };
 
     const claimPeriodBodyTemplate = (rowData) => {
-        const claimPeriod = getClaimPeriodString(rowData.claimPeriod);
+        const claimPeriod = getClaimPeriodString(rowData.args.child.claimPeriod);
         return (
             <div className={styles.nameBody}>
                 <p>{claimPeriod}</p>
@@ -42,20 +42,20 @@ const TransactionsTable = ({ transactions }) => {
         );
     };
 
-
     const tokenBodyTemplate = (rowData) => {
-        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.tokenPreference);
-        console.log(eventsCtx.tokens);
+        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.args.child.tokenPreference);
+        const {formattedDate, formattedTime} = unixTimestampToReadable(rowData.args.timestamp.toString())
         return (
             <div className={styles.amountClaimed}>
-                <p>-{rowData.claimableAmount.toString()} {tokenName}</p>
+                <p>-{rowData.args.child.claimableAmount.toString()} {tokenName}</p>
+                <p>{formattedDate} {formattedTime}</p>
             </div>
         );
     };
 
     return (
         <div className="card">
-            <DataTable value={transactions} scrollable scrollHeight="350px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem"}}>
+            <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem"}}>
                 <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
                 <Column field="" header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
                 <Column field="period" header="Claim Moment" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
