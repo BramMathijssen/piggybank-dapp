@@ -9,6 +9,7 @@ import "primereact/resources/primereact.min.css";
 import { EventsContextProvider } from "./context/events-context";
 import { ChildContextProvider } from "./context/child-context";
 import { TransactionContextProvider } from "./context/transaction-context";
+import { TokenContextProvider } from "./context/token-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,9 +18,11 @@ root.render(
             <EthersContextProvider>
                 <EventsContextProvider>
                     <ChildContextProvider>
-                        <TransactionContextProvider>
-                            <App />
-                        </TransactionContextProvider>
+                        <TokenContextProvider>
+                            <TransactionContextProvider>
+                                <App />
+                            </TransactionContextProvider>
+                        </TokenContextProvider>
                     </ChildContextProvider>
                 </EventsContextProvider>
             </EthersContextProvider>

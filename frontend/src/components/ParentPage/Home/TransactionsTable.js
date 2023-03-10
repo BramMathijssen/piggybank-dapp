@@ -6,13 +6,12 @@ import { jsNumberForAddress } from "react-jazzicon";
 
 import styles from "./TransactionsTable.module.scss";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
-import { unixTimestampToReadable } from "../../../helpers/UnixToDate";
+import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import EventsContext from "../../../context/events-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
 const TransactionsTable = ({ transactions }) => {
     const eventsCtx = useContext(EventsContext);
-
 
     const avatarBodyTemplate = (rowData) => {
         return (
@@ -44,18 +43,22 @@ const TransactionsTable = ({ transactions }) => {
 
     const tokenBodyTemplate = (rowData) => {
         const tokenName = getNameByAddress(eventsCtx.tokens, rowData.args.child.tokenPreference);
-        const {formattedDate, formattedTime} = unixTimestampToReadable(rowData.args.timestamp.toString())
+        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData.args.timestamp.toString());
         return (
             <div className={styles.amountClaimed}>
-                <p>-{rowData.args.child.claimableAmount.toString()} {tokenName}</p>
-                <p>{formattedDate} {formattedTime}</p>
+                <p>
+                    -{rowData.args.child.claimableAmount.toString()} {tokenName}
+                </p>
+                <p>
+                    {formattedDate} {formattedTime}
+                </p>
             </div>
         );
     };
 
     return (
         <div className="card">
-            <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem"}}>
+            <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
                 <Column field="" header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
                 <Column field="period" header="Claim Moment" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
