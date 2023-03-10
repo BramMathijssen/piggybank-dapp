@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import styles from "./CountdownTimer.module.scss";
+import ProgressBar from "./ProgressBar";
 
 const CountdownTimer = ({ timeLeft }) => {
     const [timeRemaining, setTimeRemaining] = useState(timeLeft);
@@ -21,16 +22,21 @@ const CountdownTimer = ({ timeLeft }) => {
     };
 
     return (
-        <div className={styles.gridContainer}>
-            <p className={styles.countdown}>{formatTime(days)}</p>
-            <p className={styles.countdown}>{formatTime(hours)}</p>
-            <p className={styles.countdown}>{formatTime(minutes)}</p>
-            <p className={styles.countdown}>{formatTime(seconds)}</p>
-            <p className={styles.timeUnit}>Days</p>
-            <p className={styles.timeUnit}>Hours</p>
-            <p className={styles.timeUnit}>Minutes</p>
-            <p className={styles.timeUnit}>Seconds</p>
-        </div>
+        <>
+            <div className={styles.gridContainer}>
+                <p className={styles.countdown}>{formatTime(days)}</p>
+                <p className={styles.countdown}>{formatTime(hours)}</p>
+                <p className={styles.countdown}>{formatTime(minutes)}</p>
+                <p className={styles.countdown}>{formatTime(seconds)}</p>
+                <p className={styles.timeUnit}>Days</p>
+                <p className={styles.timeUnit}>Hours</p>
+                <p className={styles.timeUnit}>Minutes</p>
+                <p className={styles.timeUnit}>Seconds</p>
+            </div>
+            <div className={styles.progressContainer}>
+                <ProgressBar />
+            </div>
+        </>
     );
 };
 

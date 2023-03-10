@@ -1,0 +1,15 @@
+.progressBar{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 350px;
+    height: 34px;
+    border: 4px solid black;
+}
+
+.inner{
+    background-color: #CEFFB7;
+    width: 100%;
+    height: 78%;
+    margin: 3px;
+}
