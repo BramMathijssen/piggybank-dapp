@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import useCountdown from "../../../hooks/useCountdown";
+import Button from "../../UI/Button";
 import CountdownTimer from "../CountdownTimer";
 
 import styles from "./ClaimCountdown.module.scss";
@@ -36,10 +37,8 @@ const ClaimCountdown = ({ childAdded }) => {
 
     return (
         <div className={styles.claimCountdown}>
-            <div className={styles.countDown}>
-                {timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={myClaim.claimPeriod} /> : null}
-                </div>
-            {timeLeft < 0 ? <button onClick={claim}>Claim</button> : null}
+            <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={myClaim.claimPeriod} /> : null}</div>
+            <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claim} size="medium" content="claim"></Button> : null}</div>
         </div>
     );
 };

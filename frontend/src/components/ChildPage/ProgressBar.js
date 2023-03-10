@@ -37,7 +37,6 @@ const ProgressBar = ({ timeRemaining, claimPeriod }) => {
     return (
         <div className={styles.progressBar}>
             <div className={styles.inner} style={progressBarStyle}>
-                <p>{timeRemaining}</p>
             </div>
         </div>
     );
