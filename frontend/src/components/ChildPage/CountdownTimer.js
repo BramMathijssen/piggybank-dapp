@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./CountdownTimer.module.scss";
 import ProgressBar from "./ProgressBar";
 
-const CountdownTimer = ({ timeLeft }) => {
+const CountdownTimer = ({ timeLeft, claimPeriod }) => {
     const [timeRemaining, setTimeRemaining] = useState(timeLeft);
     const days = Math.floor(timeRemaining / (24 * 60 * 60));
     const hours = Math.floor((timeRemaining / (60 * 60)) % 24);
@@ -34,7 +34,7 @@ const CountdownTimer = ({ timeLeft }) => {
                 <p className={styles.timeUnit}>Seconds</p>
             </div>
             <div className={styles.progressContainer}>
-                <ProgressBar />
+                <ProgressBar timeRemaining={timeRemaining} claimPeriod={claimPeriod}/>
             </div>
         </>
     );
