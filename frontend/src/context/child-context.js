@@ -47,6 +47,25 @@ export const ChildContextProvider = (props) => {
         getChildren();
     }, [seedData, childAddressList]);
 
+    // with this effect we get the child's parrent address, this way we can get the claim details
+    // for the child claim page
+    // useEffect(() => {
+    //     const getMyParentAndClaim = async () => {
+    //         if (!ethersCtx.contract) return;
+
+    //         const parentAddress = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
+    //         // setParentAddress(parentTx);
+
+    //         const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentAddress, ethersCtx?.userAddress);
+    //         setMyClaim(claimTx);
+
+    //         const currentTime = await ethersCtx.contract.getCurrentTime();
+    //         const leftTime = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
+    //         setTimeLeft(leftTime);
+    //     };
+    //     getMyParentAndClaim();
+    // }, [ethersCtx]);
+
     console.log(childAddressList);
 
     console.log(`HERE WE GO`);

@@ -1,0 +1,21 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 90px);
+    grid-template-rows: repeat(2, 85px);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-content: center;
+    align-content: center;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.timeUnit {
+    display: flex;
+    justify-content: center;
+}

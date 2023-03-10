@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import styles from "./CountdownTimer.module.scss";
+
 const CountdownTimer = ({ timeLeft }) => {
     const [timeRemaining, setTimeRemaining] = useState(timeLeft);
     const days = Math.floor(timeRemaining / (24 * 60 * 60));
@@ -15,12 +17,19 @@ const CountdownTimer = ({ timeLeft }) => {
     }, [timeLeft]);
 
     const formatTime = (time) => {
-        return time < 10 ? `0${time}` : time;
+        return time <= 0 ? "00 " : time < 10 ? `0${time}` : time;
     };
 
     return (
-        <div>
-            <h2>{`${formatTime(days)}:${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`}</h2>
+        <div className={styles.gridContainer}>
+            <p className={styles.countdown}>{formatTime(days)}</p>
+            <p className={styles.countdown}>{formatTime(hours)}</p>
+            <p className={styles.countdown}>{formatTime(minutes)}</p>
+            <p className={styles.countdown}>{formatTime(seconds)}</p>
+            <p className={styles.timeUnit}>Days</p>
+            <p className={styles.timeUnit}>Hours</p>
+            <p className={styles.timeUnit}>Minutes</p>
+            <p className={styles.timeUnit}>Seconds</p>
         </div>
     );
 };
