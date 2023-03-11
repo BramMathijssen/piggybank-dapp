@@ -32,8 +32,9 @@ const Transactions = () => {
             // setTimeLeft(timeLeftTemp);
         };
         getMyParentAndClaim();
-    }, [ethersCtx]);
+    }, [ethersCtx, ethersCtx.userAddress]);
 
+    // TODO: use useEvent Custom to get this data (child data + timestamp)
     useEffect(() => {
         if (!ethersCtx.userAddress && !parentAddress) {
             console.log(`no user address or parent address found, aborting`);
@@ -48,7 +49,7 @@ const Transactions = () => {
         };
 
         getEvents();
-    }, [ethersCtx]);
+    }, [ethersCtx, ethersCtx.userAddress, parentAddress]);
 
     console.log(transactions);
 
