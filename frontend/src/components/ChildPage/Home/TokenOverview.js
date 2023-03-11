@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 import EthersContext from "../../../context/ethers-context";
@@ -8,6 +9,7 @@ import styles from "./TokenOverview.module.scss";
 const TokenOverview = () => {
     const ethersCtx = useContext(EthersContext);
     const [parentAddress, setParentAddress] = useState();
+    const [tokenBalanceList, setTokenBalanceList] = useState();
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
     useEffect(() => {
@@ -20,7 +22,28 @@ const TokenOverview = () => {
         getMyParentAddress();
     }, [ethersCtx]);
 
-    console.log(tokens);
+    // possibly move this to an seperate hook
+    useEffect(() => {
+        const getBalanceOfTokens = async () => {
+            if (!ethersCtx.contract) return;
+
+            const promises = tokens.map(async (token) => {
+                const amount = await ethersCtx.contract.getBalanceTest(token.tokenAddress);
+                return {
+                    name: token.name,
+                    address: token.tokenAddress,
+                    amount: amount.toString(),
+                };
+            });
+            const resolvedTokenList = await Promise.all(promises);
+
+            setTokenBalanceList(resolvedTokenList);
+        };
+        getBalanceOfTokens();
+    }, [ethersCtx, ethersCtx.userAddress, tokens]);
+
+    // console.log(tokens);
+    console.log(tokenBalanceList);
 
     const data = [
         { name: "Group A", value: 400 },
@@ -38,10 +61,14 @@ const TokenOverview = () => {
     return (
         <div className={styles.tokenOverview}>
             <div className={styles.tokensContainer}>
-                <p>Token 1</p>
-                <p>Token 1</p>
-                <p>Token 1</p>
-
+                {tokenBalanceList && tokenBalanceList.map((token) => {
+                    return (
+                        <>
+                            <p>{token.name}</p>
+                            <p>{token.amount}</p>
+                        </>
+                    );
+                })}
             </div>
             <div className={styles.pieChartContainer}>
                 <PieChart width={300} height={300}>
