@@ -32,7 +32,7 @@ const TokenOverview = () => {
                 return {
                     name: token.name,
                     address: token.tokenAddress,
-                    amount: amount.toString(),
+                    amount: amount.toNumber(),
                 };
             });
             const resolvedTokenList = await Promise.all(promises);
@@ -61,18 +61,26 @@ const TokenOverview = () => {
     return (
         <div className={styles.tokenOverview}>
             <div className={styles.tokensContainer}>
-                {tokenBalanceList && tokenBalanceList.map((token) => {
-                    return (
-                        <>
-                            <p>{token.name}</p>
-                            <p>{token.amount}</p>
-                        </>
-                    );
-                })}
+                <h3>My Tokens</h3>
+                {tokenBalanceList &&
+                    tokenBalanceList.map((token) => {
+                        return (
+                            <div className={styles.flexContainer}>
+                                <div className={styles.tokenName}>
+                                    <p>{token.name}</p>
+                                    <p>{token.address}</p>
+                                </div>
+                                <div className={styles.tokenAmount}>
+                                    <p>{token.amount}</p>
+                                    <p>percentage</p>
+                                </div>
+                            </div>
+                        );
+                    })}
             </div>
             <div className={styles.pieChartContainer}>
                 <PieChart width={300} height={300}>
-                    <Pie data={data} label={renderLabel} cx={120} cy={200} innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={1} dataKey="value">
+                    <Pie data={tokenBalanceList} label={renderLabel} cx={120} cy={200} innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={1} dataKey="amount">
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
