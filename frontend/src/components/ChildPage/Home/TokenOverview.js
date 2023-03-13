@@ -1,7 +1,10 @@
 import { ethers } from "ethers";
 import React, { useContext, useRef, useState, useEffect } from "react";
+import { jsNumberForAddress } from "react-jazzicon";
+import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 import EthersContext from "../../../context/ethers-context";
+import { truncateAddress } from "../../../helpers/truncateAddress";
 import { useEvent } from "../../../hooks/useEvent";
 
 import styles from "./TokenOverview.module.scss";
@@ -66,21 +69,25 @@ const TokenOverview = () => {
                     tokenBalanceList.map((token) => {
                         return (
                             <div className={styles.flexContainer}>
-                                <div className={styles.tokenName}>
-                                    <p>{token.name}</p>
-                                    <p>{token.address}</p>
+                                <div className={styles.tokenInfo}>
+                                    <div className={styles.tokenIcon}>
+                                        <Jazzicon diameter={35} seed={jsNumberForAddress(token.address)} />
+                                    </div>
+                                    <div className={styles.tokenName}>
+                                        <p>{token.name}</p>
+                                        <p>{truncateAddress(token.address)}</p>
+                                    </div>
                                 </div>
                                 <div className={styles.tokenAmount}>
                                     <p>{token.amount}</p>
-                                    <p>percentage</p>
                                 </div>
                             </div>
                         );
                     })}
             </div>
             <div className={styles.pieChartContainer}>
-                <PieChart width={300} height={300}>
-                    <Pie data={tokenBalanceList} label={renderLabel} cx={120} cy={200} innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={1} dataKey="amount">
+                <PieChart width={300} height={400}>
+                    <Pie data={tokenBalanceList} label={renderLabel} cx={200} cy={200} innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={1} dataKey="amount">
                         {data.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}

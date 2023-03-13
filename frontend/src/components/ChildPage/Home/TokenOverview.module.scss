@@ -11,7 +11,55 @@
 }
 
 .tokensContainer {
-    flex:1;
+    flex: 0.6;
+}
+
+.flexContainer {
+    display: flex;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.tokenInfo {
+    display: flex;
+    align-items: center;
+}
+
+.tokenIcon {
+    margin-right: 10px;
+}
+
+.tokenName p {
+    margin: 0;
+}
+
+.tokenName p:first-child {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.tokenName p:last-child {
+    color: rgb(155, 155, 155);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tokenAmount {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.tokenAmount p {
+    margin: 0;
+}
+
+.tokenAmount p:first-child {
+    font-size: 17px;
+    font-weight: 600;
 }
 
 .pieChartContainer {
