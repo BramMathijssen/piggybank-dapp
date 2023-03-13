@@ -1,21 +1,22 @@
 .tokenOverview {
     display: flex;
+    flex: 1; // sets height of the panel
     flex-direction: row;
-    flex: 1;
     background: #ffffff;
     border: 2px solid #000000;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 8px 8px 0px #000000;
     border-radius: 12px;
-    height: 200px;
+    height: 300px;
     padding: 20px;
 }
 
 .tokensContainer {
-    flex: 0.6;
+    flex: 0.6; // sets width of the token information
 }
 
 .flexContainer {
     display: flex;
+    flex: 1; // does nothing?
     background-color: aliceblue;
     padding: 10px;
     border-radius: 10px;
@@ -65,6 +66,4 @@
 .pieChartContainer {
     display: flex;
     flex: 1;
-    justify-content: center;
-    align-items: center;
 }

@@ -18,7 +18,9 @@ const ConnectWallet = () => {
                 <>
                     <div className={styles.connectionDetailsContainer}>
                         <p>{ethersCtx.userAddress}</p>
-                        <p>{ethersCtx.chainId?.name}</p>
+                        <div className={styles.chain}>
+                            <p>{ethersCtx.chainId?.name}</p>
+                        </div>
                     </div>
                     <div className={styles.connectContainer}>
                         <a className={styles.connect} onClick={clickHandler}>

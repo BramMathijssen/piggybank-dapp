@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend } from "recharts";
 import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { useEvent } from "../../../hooks/useEvent";
@@ -55,11 +55,15 @@ const TokenOverview = () => {
         { name: "Group D", value: 200 },
     ];
 
+    const renderColorfulLegendText = (value, entry) => {
+        return <span style={{ color: "#596579", fontWeight: 500, padding: "10px" }}>{value}</span>;
+    };
+
     let renderLabel = function (entry) {
         return entry.name;
     };
 
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+    const COLORS = ["#00FFC3", "#26547C", "#EF476F", "#FF8042"];
 
     return (
         <div className={styles.tokenOverview}>
@@ -86,13 +90,16 @@ const TokenOverview = () => {
                     })}
             </div>
             <div className={styles.pieChartContainer}>
-                <PieChart width={300} height={400}>
-                    <Pie data={tokenBalanceList} label={renderLabel} cx={200} cy={200} innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={1} dataKey="amount">
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                    </Pie>
-                </PieChart>
+                <ResponsiveContainer>
+                    <PieChart width={100} height={200}>
+                        <Pie data={tokenBalanceList} width={"100"} cx="50%" cy="50%" innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={2} dataKey="amount" label={renderLabel} stroke={1}>
+                            {data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                        </Pie>
+                        {/* <Legend height={50} width={500} iconType="circle" layout="vertical" verticalAlign="middle" iconSize={10} padding={5} formatter={renderColorfulLegendText} /> */}
+                    </PieChart>
+                </ResponsiveContainer>
             </div>
         </div>
     );
