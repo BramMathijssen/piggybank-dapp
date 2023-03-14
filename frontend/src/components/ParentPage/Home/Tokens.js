@@ -57,7 +57,6 @@ const Tokens = () => {
         try {
             for (let i = 0; i < tokenBalanceList.length; i++) {
                 if (tokenBalanceList[i].tokenAddress === tokenAddress) {
-                    console.log(tokenBalanceList[i].balance);
                     return tokenBalanceList[i].balance;
                 }
             }
@@ -66,16 +65,6 @@ const Tokens = () => {
         }
     };
 
-    const getBalanceForToken2 = (tokenAddress) => {
-        try {
-            const res = tokenBalanceList.filter((token) => {
-                return token.tokenAddress === tokenAddress;
-            });
-            return res;
-        } catch {
-            console.log("error");
-        }
-    };
 
     const getTotalSupplyForToken = (tokenAddress) => {
         try {
@@ -89,9 +78,6 @@ const Tokens = () => {
         }
     };
 
-    console.log(tokens);
-    console.log(tokenBalanceList);
-    console.log(getBalanceForToken2("0xa16E02E87b7454126E5E10d957A927A7F5B5d2be"));
 
     return (
         <div className={styles.tokens}>
