@@ -19,8 +19,8 @@ const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
     const transactionCtx = useContext(TransactionContext);
 
-    const myChildren = useEvent("ChildAdded", ethersCtx.userAddress);
-    const myTokens = useEvent("TokenCreated", ethersCtx.userAddress);
+    const myChildren = useEvent("ChildAdded", ethersCtx.userAddress, ethersCtx.userAddress);
+    const myTokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
 
     return (
         <>
@@ -47,23 +47,8 @@ const HomePanel = () => {
                 </div>
                 <div className={styles.tokensPanel}>
                     <h2 className={styles.tokensTitle}>My Tokens</h2>
-                    <Panel>
-                        {ethersCtx.contract && <Tokens />}
-                    </Panel>
+                    <Panel>{ethersCtx.contract && <Tokens />}</Panel>
                 </div>
-                {/* <div className={styles.rowContainer}>
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                    <Row />
-                </div> */}
             </div>
         </>
     );
