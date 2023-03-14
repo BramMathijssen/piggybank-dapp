@@ -5,41 +5,60 @@ import EthersContext from "../../../context/ethers-context";
 import { useEvent } from "../../../hooks/useEvent";
 
 import styles from "./Tokens.module.scss";
+import { truncateAddress } from "../../../helpers/truncateAddress";
+import Jazzicon from "react-jazzicon/dist/Jazzicon";
+import { jsNumberForAddress } from "react-jazzicon";
 
 const Tokens = () => {
     const ethersCtx = useContext(EthersContext);
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
-    const [balance, setBalance] = useState();
+    const [tokenBalanceList, setTokenBalanceList] = useState([]);
 
     useEffect(() => {
-        if (!ethersCtx.contract) return;
-        if (!tokens) return;
-        try {
-            for (let i = 0; i < tokens.length; i++) {
-                const erc20Contract = new ethers.Contract(tokens[i].tokenAddress, abi, ethersCtx.signer);
+        // if (!ethersCtx.contract) {
+        //     console.log(`contract empty, returning...`);
+        //     return;
+        // }
+        // if (!tokens) {
+        //     console.log(`no tokens found, returning..`);
+        //     return;
+        // }
 
-                const getTokens = async () => {
-                    const contractAddress = await ethersCtx.contract.contractAddress();
-                    const bal = await erc20Contract.balanceOf(contractAddress);
-                    const totalSupply = await erc20Contract.totalSupply();
+        // if (tokens === []) {
+        //     console.log(`empty list..`);
 
-                    // create key-value pair of tokenAddress + current balance
-                    setBalance((prev) => [prev, { tokenAddress: tokens[i].tokenAddress, balance: bal.toString(), totalSupply: totalSupply.toString() }]);
-                };
+        // }
+        // if (tokens) {
+        //     console.log(`true list??..`);
+        //     return;
+        // }
 
-                getTokens();
-            }
-        } catch {
-            console.log("error");
+        console.log("tokens found, goin!");
+        console.log(tokens);
+        for (let i = 0; i < tokens.length; i++) {
+            console.log(tokens[i]);
+
+            const erc20Contract = new ethers.Contract(tokens[i].tokenAddress, abi, ethersCtx.signer);
+
+            const getTokens = async () => {
+                const contractAddress = await ethersCtx.contract.contractAddress();
+                const bal = await erc20Contract.balanceOf(contractAddress);
+                const totalSupply = await erc20Contract.totalSupply();
+
+                // create key-value pair of tokenAddress + current balance
+                setTokenBalanceList((prev) => [...prev, { tokenAddress: tokens[i].tokenAddress, balance: bal.toString(), totalSupply: totalSupply.toString() }]);
+            };
+
+            getTokens();
         }
     }, [tokens, ethersCtx.contract, ethersCtx.userAddress]);
 
     const getBalanceForToken = (tokenAddress) => {
         try {
-            for (let i = 0; i < balance.length; i++) {
-                if (balance[i].tokenAddress === tokenAddress) {
-                    console.log(balance[i].balance);
-                    return balance[i].balance;
+            for (let i = 0; i < tokenBalanceList.length; i++) {
+                if (tokenBalanceList[i].tokenAddress === tokenAddress) {
+                    console.log(tokenBalanceList[i].balance);
+                    return tokenBalanceList[i].balance;
                 }
             }
         } catch {
@@ -47,11 +66,22 @@ const Tokens = () => {
         }
     };
 
+    const getBalanceForToken2 = (tokenAddress) => {
+        try {
+            const res = tokenBalanceList.filter((token) => {
+                return token.tokenAddress === tokenAddress;
+            });
+            return res;
+        } catch {
+            console.log("error");
+        }
+    };
+
     const getTotalSupplyForToken = (tokenAddress) => {
         try {
-            for (let i = 0; i < balance.length; i++) {
-                if (balance[i].tokenAddress === tokenAddress) {
-                    return balance[i].totalSupply;
+            for (let i = 0; i < tokenBalanceList.length; i++) {
+                if (tokenBalanceList[i].tokenAddress === tokenAddress) {
+                    return tokenBalanceList[i].totalSupply;
                 }
             }
         } catch {
@@ -60,7 +90,8 @@ const Tokens = () => {
     };
 
     console.log(tokens);
-    console.log(balance);
+    console.log(tokenBalanceList);
+    console.log(getBalanceForToken2("0xa16E02E87b7454126E5E10d957A927A7F5B5d2be"));
 
     return (
         <div className={styles.tokens}>
@@ -68,12 +99,19 @@ const Tokens = () => {
                 tokens.map((token) => {
                     console.log(token);
                     return (
-                        <>
-                            <p>{token.name}</p>
-                            <p>{token.tokenAddress}</p>
-                            <p>balance: {getBalanceForToken(token.tokenAddress)}</p>
-                            <p>Total Supply: {getTotalSupplyForToken(token.tokenAddress)}</p>
-                        </>
+                        <div className={styles.flexContainer}>
+                            <div className={styles.avatar}>
+                                <Jazzicon diameter={35} seed={jsNumberForAddress(token.tokenAddress)} />
+                            </div>
+                            <div className={styles.tokenInfo}>
+                                <p className={styles.name}>{token.name}</p>
+                                <p className={styles.address}>{truncateAddress(token.tokenAddress)}</p>
+                            </div>
+                            <div className={styles.tokenAmounts}>
+                                <p className={styles.balance}>balance: {getBalanceForToken(token.tokenAddress)}</p>
+                                <p className={styles.totalSupply}>Total Supply: {getTotalSupplyForToken(token.tokenAddress)}</p>
+                            </div>
+                        </div>
                     );
                 })}
         </div>
