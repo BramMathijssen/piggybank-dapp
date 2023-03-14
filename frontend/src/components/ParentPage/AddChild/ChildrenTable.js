@@ -4,11 +4,11 @@ import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 
-import styles from "./Table.module.scss";
-import { getClaimPeriodString } from "../../helpers/getClaimPeriodString";
-import { unixTimestampToReadable } from "../../helpers/unixToDate";
-import EventsContext from "../../context/events-context";
-import { getNameByAddress, getSymbolByAddress } from "../../helpers/getTokenDetailsbyAddress";
+import styles from "./ChildrenTable.module.scss";
+import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
+import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import EventsContext from "../../../context/events-context";
+import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
 const Table = ({ children }) => {
     const eventsCtx = useContext(EventsContext);
@@ -78,7 +78,7 @@ const Table = ({ children }) => {
             <DataTable value={children} scrollable scrollHeight="350px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "5%" }} body={avatarBodyTemplate}></Column>
                 <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
-                <Column field="amount" header="Amount" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
+                <Column field="amount" header="Allowance" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
                 <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
                 <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimBodyTemplate}></Column>
                 <Column field="token" header="Token" style={{ width: "25%" }} body={tokenBodyTemplate}></Column>

@@ -6,9 +6,9 @@ import Button from "../../UI/Button";
 import Dropdown from "../../UI/Dropdown";
 import Input from "../../UI/Input";
 
-import styles from "./Form.module.scss";
+import styles from "./AddChildForm.module.scss";
 
-const Form = ({ childAdded }) => {
+const AddChildForm = ({ childAdded }) => {
     const childNameRef = useRef();
     const childAddressRef = useRef();
     const baseAmountRef = useRef();
@@ -47,4 +47,4 @@ const Form = ({ childAdded }) => {
     );
 };
 
-export default Form;
+export default AddChildForm;

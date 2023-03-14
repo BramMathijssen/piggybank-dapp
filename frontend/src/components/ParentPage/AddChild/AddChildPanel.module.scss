@@ -5,6 +5,7 @@
     display: flex;
     gap: 100px;
     margin-bottom: 50px;
+    flex: 0.6;
 }
 
 .addChildContainer {
@@ -13,15 +14,10 @@
     flex: 0.4;
 }
 
-.infoContainer {
+.overviewContainer {
     display: flex;
-    height: 500px;
+    // height: 500px; //hardcoded height
     flex-direction: column;
     flex: 0.6;
 }
 
-.childOverviewContainer {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}

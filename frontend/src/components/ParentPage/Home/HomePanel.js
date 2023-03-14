@@ -5,7 +5,7 @@ import Child from "./Child";
 import { Users, Coins, ArrowsLeftRight } from "phosphor-react";
 
 import styles from "./HomePanel.module.scss";
-import Panel from "./Panel";
+import Panel from "../../UI/Panel";
 import { useEvent } from "../../../hooks/useEvent";
 import EventsContext from "../../../context/events-context";
 import TransactionsTable from "./TransactionsTable";
@@ -16,7 +16,7 @@ import { useEventCustom } from "../../../hooks/useEventCustom";
 
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
-    const transactionCtx = useContext(TransactionContext);
+    // const transactionCtx = useContext(TransactionContext);
 
     const myChildren = useEvent("ChildAdded", ethersCtx.userAddress, ethersCtx.userAddress);
     const myTokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
@@ -35,7 +35,7 @@ const HomePanel = () => {
             <div className={styles.childContainer}>
                 {myChildren
                     ? myChildren.map((child, index) => {
-                          return <Child name={child.name} address={child.childAddress} />;
+                          return <Child key={index} name={child.name} address={child.childAddress} />;
                       })
                     : null}
             </div>
@@ -44,7 +44,7 @@ const HomePanel = () => {
                     <h2 className={styles.transactionsTitle}>Recent Transactions</h2>
                     <Panel>
                         {/* <TransactionsTable transactions={eventsCtx.transactions} /> */}
-                        {transactionCtx.transactions && <TransactionsTable transactions={myTransactions} />}
+                        {myTransactions && <TransactionsTable transactions={myTransactions} />}
                     </Panel>
                 </div>
                 <div className={styles.tokensPanel}>

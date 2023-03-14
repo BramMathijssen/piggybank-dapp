@@ -1,9 +1,7 @@
-.overview {
+.childrenOverview {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    height: 100%;
-    padding: 50px;
+    flex: 1; // doet niks
     overflow: auto;
     background: #ffffff;
     border: 2px solid #000000;

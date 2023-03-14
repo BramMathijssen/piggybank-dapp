@@ -15,6 +15,7 @@ export const ChildContextProvider = (props) => {
     const [childAddressList, setChildAddressList] = useState();
     const [children, setChildren] = useState();
 
+    // first get all the children's addresses
     useEffect(() => {
         try {
             setChildren(seedData);
@@ -30,6 +31,7 @@ export const ChildContextProvider = (props) => {
         }
     }, [seedData]);
 
+    // second use all the children addresses to loop over the parent to child mapping
     useEffect(() => {
         const getChildren = async () => {
             try {
@@ -45,7 +47,7 @@ export const ChildContextProvider = (props) => {
         };
 
         getChildren();
-    }, [seedData, childAddressList]);
+    }, [seedData, childAddressList, ethersCtx.userAddress]);
 
     // with this effect we get the child's parrent address, this way we can get the claim details
     // for the child claim page
