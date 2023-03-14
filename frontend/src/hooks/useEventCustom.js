@@ -27,5 +27,5 @@ export const useEventCustom = (eventName, changed, indices, ...args) => {
         getEvents();
     }, [ethersCtx, eventName, changed]);
 
-    return [events, ];
+    return events;
 };

@@ -9,14 +9,20 @@ import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import EventsContext from "../../../context/events-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
+import { useEvent } from "../../../hooks/useEvent";
+import EthersContext from "../../../context/ethers-context";
 
 const TransactionsTable = ({ transactions }) => {
-    const eventsCtx = useContext(EventsContext);
+    // const eventsCtx = useContext(EventsContext);
+    const ethersCtx = useContext(EthersContext);
+    const tokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
+
+    console.log(transactions);
 
     const avatarBodyTemplate = (rowData) => {
         return (
             <div>
-                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.args[2].childAddress)} />
+                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData[0].childAddress)} />
             </div>
         );
     };
@@ -25,15 +31,15 @@ const TransactionsTable = ({ transactions }) => {
         return (
             <div className={styles.nameBody}>
                 <div className={styles.flexContainer}>
-                    <span>{rowData.args.child.name}</span>
-                    <p>{rowData.args.child.childAddress}</p>
+                    <span>{rowData[0].name}</span>
+                    <p>{rowData[0].childAddress}</p>
                 </div>
             </div>
         );
     };
 
     const claimPeriodBodyTemplate = (rowData) => {
-        const claimPeriod = getClaimPeriodString(rowData.args.child.claimPeriod);
+        const claimPeriod = getClaimPeriodString(rowData[0].claimPeriod);
         return (
             <div className={styles.nameBody}>
                 <p>{claimPeriod}</p>
@@ -42,12 +48,12 @@ const TransactionsTable = ({ transactions }) => {
     };
 
     const tokenBodyTemplate = (rowData) => {
-        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.args.child.tokenPreference);
-        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData.args.timestamp.toString());
+        const tokenName = getNameByAddress(tokens, rowData[0].tokenPreference);
+        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData[1].toString());
         return (
             <div className={styles.amountClaimed}>
                 <p>
-                    -{rowData.args.child.claimableAmount.toString()} {tokenName}
+                    -{rowData[0].claimableAmount.toString()} {tokenName}
                 </p>
                 <p>
                     {formattedDate} {formattedTime}

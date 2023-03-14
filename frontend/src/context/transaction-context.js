@@ -13,6 +13,7 @@ export const TransactionContextProvider = (props) => {
 
     useEffect(() => {
         if (!ethersCtx.userAddress) return;
+        console.log(`in transaction context`)
 
         const getEvents = async () => {
             const eventFilter = ethersCtx.contract.filters.AllowanceClaimed(ethersCtx.userAddress);
