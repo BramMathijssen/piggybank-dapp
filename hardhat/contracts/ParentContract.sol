@@ -17,6 +17,7 @@ contract ParentContract {
     TokenCreator public tokenCreator;
     uint public currentTime;
     uint public contractDeployedTime;
+    address public contractAddress;
 
     // list of all the created token addresses
     address[] public s_createdTokenAddresses;
@@ -68,10 +69,11 @@ contract ParentContract {
     // TODO: Add Events
     event ChildAdded(address indexed parentAddress, address childAddress, Child child);
     event TokenCreated(address indexed parentAddress, address tokenAddress, Token token);
-    event AllowanceClaimed(address indexed parentAddress, address childAddress, Child child, address tokenAddress, uint timestamp);
+    event AllowanceClaimed(address indexed parentAddress, address indexed childAddress, Child child, address tokenAddress, uint timestamp);
 
     constructor() {
         owner = msg.sender;
+        contractAddress = address(this);
     }
 
     // https://stackoverflow.com/questions/71226909/how-to-check-if-one-value-exists-in-an-array

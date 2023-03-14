@@ -1,7 +1,40 @@
+.connectWalletContainer p{
+    margin: 7px;
+}
+
 .connectWalletContainer{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin-top: 10px;
-
+    background-color: white;
+    margin-bottom: 15px;
+    width: auto;
+    margin-left: -50px;
+    margin-right: -50px;
+    border-bottom: 2px solid black;
+    font-size: 14px;
 }
+
+.connectContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00FFC3;
+    padding: 0 40px 0 40px;
+    border: 1px solid black;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.connectionDetailsContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.chain{
+    border: 1px solid black;
+    padding: 0 20px 0 20px;
+}
+

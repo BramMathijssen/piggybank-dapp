@@ -7,6 +7,9 @@ import { EthersContextProvider } from "./context/ethers-context";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import { EventsContextProvider } from "./context/events-context";
+import { ChildContextProvider } from "./context/child-context";
+import { TransactionContextProvider } from "./context/transaction-context";
+import { TokenContextProvider } from "./context/token-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +17,13 @@ root.render(
         <BrowserRouter>
             <EthersContextProvider>
                 <EventsContextProvider>
-                    <App />
+                    <ChildContextProvider>
+                        <TokenContextProvider>
+                            <TransactionContextProvider>
+                                <App />
+                            </TransactionContextProvider>
+                        </TokenContextProvider>
+                    </ChildContextProvider>
                 </EventsContextProvider>
             </EthersContextProvider>
         </BrowserRouter>

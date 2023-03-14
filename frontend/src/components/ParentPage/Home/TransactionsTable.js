@@ -6,18 +6,23 @@ import { jsNumberForAddress } from "react-jazzicon";
 
 import styles from "./TransactionsTable.module.scss";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
-import { unixTimestampToReadable } from "../../../helpers/UnixToDate";
+import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import EventsContext from "../../../context/events-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
+import { useEvent } from "../../../hooks/useEvent";
+import EthersContext from "../../../context/ethers-context";
 
 const TransactionsTable = ({ transactions }) => {
-    const eventsCtx = useContext(EventsContext);
+    // const eventsCtx = useContext(EventsContext);
+    const ethersCtx = useContext(EthersContext);
+    const tokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
+
+    console.log(transactions);
 
     const avatarBodyTemplate = (rowData) => {
-        console.log(rowData);
         return (
             <div>
-                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.childAddress)} />
+                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData[0].childAddress)} />
             </div>
         );
     };
@@ -26,15 +31,15 @@ const TransactionsTable = ({ transactions }) => {
         return (
             <div className={styles.nameBody}>
                 <div className={styles.flexContainer}>
-                    <span>{rowData.name}</span>
-                    <p>{rowData.childAddress}</p>
+                    <span>{rowData[0].name}</span>
+                    <p>{rowData[0].childAddress}</p>
                 </div>
             </div>
         );
     };
 
     const claimPeriodBodyTemplate = (rowData) => {
-        const claimPeriod = getClaimPeriodString(rowData.claimPeriod);
+        const claimPeriod = getClaimPeriodString(rowData[0].claimPeriod);
         return (
             <div className={styles.nameBody}>
                 <p>{claimPeriod}</p>
@@ -42,20 +47,24 @@ const TransactionsTable = ({ transactions }) => {
         );
     };
 
-
     const tokenBodyTemplate = (rowData) => {
-        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.tokenPreference);
-        console.log(eventsCtx.tokens);
+        const tokenName = getNameByAddress(tokens, rowData[0].tokenPreference);
+        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData[1].toString());
         return (
             <div className={styles.amountClaimed}>
-                <p>-{rowData.claimableAmount.toString()} {tokenName}</p>
+                <p>
+                    -{rowData[0].claimableAmount.toString()} {tokenName}
+                </p>
+                <p>
+                    {formattedDate} {formattedTime}
+                </p>
             </div>
         );
     };
 
     return (
         <div className="card">
-            <DataTable value={transactions} scrollable scrollHeight="350px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem"}}>
+            <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
                 <Column field="" header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
                 <Column field="period" header="Claim Moment" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>

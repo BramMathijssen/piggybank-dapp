@@ -1,0 +1,30 @@
+.flexContainer {
+    display: flex;
+    gap: 75px;
+    margin-bottom: 50px;
+    height: 500px;
+}
+
+.claimCountdownContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.transactionsContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.tokenOverviewContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}

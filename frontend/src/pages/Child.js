@@ -5,6 +5,7 @@ import Sidebar from "../components/UI/Sidebar";
 import styles from "./Child.module.scss";
 import ConnectWallet from "../components/ParentPage/Layout/ConnectWallet";
 import EditClaimPanel from "../components/ChildPage/EditClaim/EditClaimPanel";
+import HomePanelNew from "../components/ChildPage/Home/HomePanelNew";
 
 const Child = () => {
     const [home, setHome] = useState(true);
@@ -33,11 +34,7 @@ const Child = () => {
             <Sidebar links={childLinks} />
             <div className={styles.content}>
                 <ConnectWallet />
-                {home ? (
-                    <div className={styles.panelContainer}>
-                        <HomePanel />
-                    </div>
-                ) : null}
+                {home ? <HomePanelNew /> : null}
                 {editClaim ? <EditClaimPanel /> : null}
             </div>
         </main>
