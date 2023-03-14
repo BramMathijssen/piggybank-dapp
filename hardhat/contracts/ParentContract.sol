@@ -17,6 +17,7 @@ contract ParentContract {
     TokenCreator public tokenCreator;
     uint public currentTime;
     uint public contractDeployedTime;
+    address public contractAddress;
 
     // list of all the created token addresses
     address[] public s_createdTokenAddresses;
@@ -72,6 +73,7 @@ contract ParentContract {
 
     constructor() {
         owner = msg.sender;
+        contractAddress = address(this);
     }
 
     // https://stackoverflow.com/questions/71226909/how-to-check-if-one-value-exists-in-an-array

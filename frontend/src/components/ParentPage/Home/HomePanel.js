@@ -13,6 +13,7 @@ import EventsContext from "../../../context/events-context";
 import TransactionsTable from "./TransactionsTable";
 import ChildContext from "../../../context/child-context";
 import TransactionContext from "../../../context/transaction-context";
+import Tokens from "./Tokens";
 
 const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
@@ -41,12 +42,14 @@ const HomePanel = () => {
                     <h2 className={styles.transactionsTitle}>Recent Transactions</h2>
                     <Panel>
                         {/* <TransactionsTable transactions={eventsCtx.transactions} /> */}
-                        {transactionCtx.transactions && <TransactionsTable transactions={transactionCtx.transactions} /> }
+                        {transactionCtx.transactions && <TransactionsTable transactions={transactionCtx.transactions} />}
                     </Panel>
                 </div>
                 <div className={styles.tokensPanel}>
                     <h2 className={styles.tokensTitle}>My Tokens</h2>
-                    <Panel />
+                    <Panel>
+                        {ethersCtx.contract && <Tokens />}
+                    </Panel>
                 </div>
                 {/* <div className={styles.rowContainer}>
                     <Row />
