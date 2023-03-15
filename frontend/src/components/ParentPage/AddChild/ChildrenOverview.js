@@ -7,7 +7,7 @@ import ChildrenTable from "./ChildrenTable";
 
 import styles from "./ChildrenOverview.module.scss";
 
-const ChildrenOverview = () => {
+const ChildrenOverview = (props) => {
     // const ethersCtx = useContext(EthersContext);
     // const eventsCtx = useContext(EventsContext);
 
@@ -19,6 +19,8 @@ const ChildrenOverview = () => {
 
     // console.log(`---from info----`);
     // console.log(eventsCtx.tokens);
+
+    console.log('in children overview')
 
     return (
         <div className={styles.childrenOverview}>

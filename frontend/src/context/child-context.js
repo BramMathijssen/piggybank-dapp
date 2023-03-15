@@ -5,18 +5,23 @@ import EthersContext from "./ethers-context";
 const ChildContext = React.createContext({
     childAddressList: null,
     children: null,
+    childAdded: null,
     setChildren: () => {},
     setChildAddressList: () => {},
+    setChildAdded: () => {},
 });
 
 export const ChildContextProvider = (props) => {
     const ethersCtx = useContext(EthersContext);
-    const seedData = useEvent("ChildAdded", ethersCtx.address, ethersCtx.userAddress);
+    // const seedData = useEvent("ChildAdded", ethersCtx.address, ethersCtx.userAddress); // before refactor
     const [childAddressList, setChildAddressList] = useState();
     const [children, setChildren] = useState();
+    const [childAdded, setChildAdded] = useState(false);
+    const seedData = useEvent("ChildAdded", childAdded, ethersCtx.userAddress);
 
     // first get all the children's addresses
     useEffect(() => {
+        console.log('getting child addresses')
         try {
             setChildren(seedData);
 
@@ -29,10 +34,11 @@ export const ChildContextProvider = (props) => {
         } catch (e) {
             console.log(`no children`);
         }
-    }, [seedData]);
+    }, [seedData, childAdded]);
 
     // second use all the children addresses to loop over the parent to child mapping
     useEffect(() => {
+        console.log('getting children from mapping')
         const getChildren = async () => {
             try {
                 let list = [];
@@ -47,7 +53,7 @@ export const ChildContextProvider = (props) => {
         };
 
         getChildren();
-    }, [seedData, childAddressList, ethersCtx.userAddress]);
+    }, [seedData, childAddressList, ethersCtx.userAddress, ethersCtx.contract, childAdded]);
 
     // with this effect we get the child's parrent address, this way we can get the claim details
     // for the child claim page
@@ -74,7 +80,6 @@ export const ChildContextProvider = (props) => {
     console.log(children);
     console.log(`claim momento`);
 
-    children && console.log(children[0])
 
     // if (children) {
     //     console.log(children[0].nextClaimPeriod.toString());
@@ -86,8 +91,10 @@ export const ChildContextProvider = (props) => {
             value={{
                 setChildAddressList: setChildAddressList,
                 setChildren: setChildren,
+                setChildAdded: setChildAdded,
                 children: children,
                 childAddressList: childAddressList,
+                childAdded: childAdded,
             }}
         >
             {props.children}

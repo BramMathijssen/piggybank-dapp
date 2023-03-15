@@ -3,18 +3,20 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
-
-import styles from "./ChildrenTable.module.scss";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import EventsContext from "../../../context/events-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
+import styles from "./ChildrenTable.module.scss";
+
 const Table = ({ children }) => {
     const eventsCtx = useContext(EventsContext);
 
+    console.log(`rendering table`)
+
     const avatarBodyTemplate = (rowData) => {
-        console.log(rowData);
+        // console.log(rowData);
         return (
             <div>
                 <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.childAddress)} />
@@ -64,7 +66,7 @@ const Table = ({ children }) => {
 
     const tokenBodyTemplate = (rowData) => {
         const tokenName = getNameByAddress(eventsCtx.tokens, rowData.tokenPreference);
-        console.log(eventsCtx.tokens);
+        // console.log(eventsCtx.tokens);
         return (
             <div className={styles.token}>
                 <span>{tokenName}</span>
