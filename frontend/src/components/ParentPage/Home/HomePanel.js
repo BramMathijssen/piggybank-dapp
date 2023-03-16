@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
 import Badge from "./Badge";
 import Child from "./Child";
-import { Users, Coins, ArrowsLeftRight } from "phosphor-react";
+import { Users, Coins, ArrowsLeftRight, Plus } from "phosphor-react";
 import Panel from "../../UI/Panel";
 import { useEvent } from "../../../hooks/useEvent";
 import TransactionsTable from "./TransactionsTable";
@@ -15,7 +15,7 @@ const HomePanel = () => {
     const ethersCtx = useContext(EthersContext);
     const myChildren = useEvent("ChildAdded", ethersCtx.userAddress, ethersCtx.userAddress);
     const myTokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
-    
+
     // gets the 2nd and 4th index of the AllowanceClaimed event, in this case: child struct and timestamp.
     const myTransactions = useEventCustom("AllowanceClaimed", ethersCtx.userAddress, [2, 4], ethersCtx.userAddress);
 
@@ -26,7 +26,10 @@ const HomePanel = () => {
                 <Badge type="tokens" amount={myTokens.length} icon={<Coins size={50} />} />
                 <Badge type="transactions" amount={myTransactions.length} icon={<ArrowsLeftRight size={50} />} />
             </div>
-            <h2 className={styles.childTitle}>Your Children</h2>
+            <div className={styles.childTitle}>
+                <h2 className={styles.title}>Your Children</h2>
+                <Plus className={styles.iconPlus} size={22} />
+            </div>
             <div className={styles.childContainer}>
                 {myChildren
                     ? myChildren.map((child, index) => {

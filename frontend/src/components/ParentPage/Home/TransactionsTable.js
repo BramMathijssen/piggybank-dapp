@@ -36,9 +36,12 @@ const TransactionsTable = ({ transactions }) => {
 
     const claimPeriodBodyTemplate = (rowData) => {
         const claimPeriod = getClaimPeriodString(rowData[0].claimPeriod);
+        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData[1].toString());
         return (
             <div className={styles.nameBody}>
-                <p>{claimPeriod}</p>
+                <p>
+                    {formattedDate} {formattedTime}
+                </p>
             </div>
         );
     };
@@ -51,9 +54,6 @@ const TransactionsTable = ({ transactions }) => {
                 <p>
                     -{rowData[0].claimableAmount.toString()} {tokenName}
                 </p>
-                <p>
-                    {formattedDate} {formattedTime}
-                </p>
             </div>
         );
     };
@@ -62,8 +62,8 @@ const TransactionsTable = ({ transactions }) => {
         <>
             <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
-                <Column field="" header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
-                <Column field="period" header="Claim Moment" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
+                <Column field="" header="Name" style={{ width: "40%" }} body={nameAddressBodyTemplate}></Column>
+                <Column field="period" header="Claim Moment" style={{ width: "15%" }} body={claimPeriodBodyTemplate}></Column>
                 <Column field="token" header="Amount" style={{ width: "16%" }} body={tokenBodyTemplate}></Column>
             </DataTable>
         </>
