@@ -1,8 +1,5 @@
-import { ethers } from "ethers";
 import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
-import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
-import Timer from "../CountdownTimer";
 import ClaimCountdown from "./ClaimCountdown";
 import Details from "./Details";
 import TokenOverview from "./TokenOverview";

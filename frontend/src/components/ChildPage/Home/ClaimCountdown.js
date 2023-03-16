@@ -2,11 +2,11 @@ import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import useCountdown from "../../../hooks/useCountdown";
 import Button from "../../UI/Button";
-import CountdownTimer from "../CountdownTimer";
+import CountdownTimer from "./CountdownTimer";
 
 import styles from "./ClaimCountdown.module.scss";
 
-const ClaimCountdown = ({ child, setClaimed , claimed}) => {
+const ClaimCountdown = ({ child, setClaimed, claimed }) => {
     // const [parentAddress, setParentAddress] = useState();
     // const [child, setChild] = useState();
     const [timeLeft, setTimeLeft] = useState();
@@ -20,7 +20,7 @@ const ClaimCountdown = ({ child, setClaimed , claimed}) => {
     //         const tempParentAddress = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
     //         setParentAddress(tempParentAddress);
 
-    //         // gets the child's data 
+    //         // gets the child's data
     //         const tempChild = await ethersCtx.contract.parentToChildMappingNested(tempParentAddress, ethersCtx?.userAddress);
     //         setChild(tempChild);
 
@@ -34,7 +34,7 @@ const ClaimCountdown = ({ child, setClaimed , claimed}) => {
     //     initialiseChildData();
     // }, [ethersCtx]);
 
-        useEffect(() => {
+    useEffect(() => {
         const getTimeLeft = async () => {
             // get the current time of the contract in UNIX
             const currentTime = await ethersCtx.contract.getCurrentTime();
@@ -44,9 +44,9 @@ const ClaimCountdown = ({ child, setClaimed , claimed}) => {
             setTimeLeft(tempTimeLeft);
         };
         getTimeLeft();
-    }, [ethersCtx,child, claimed]);
+    }, [ethersCtx, child, claimed]);
 
-    console.log('hey')
+    console.log("hey");
 
     // const claim = async () => {
     //     const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
@@ -60,7 +60,7 @@ const ClaimCountdown = ({ child, setClaimed , claimed}) => {
         e.preventDefault();
         console.log(`claiming..`);
         const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
-        
+
         await claimTx.wait(1);
         setClaimed((current) => !current); // toggle boolean to force a re-render on ChildOverview
     };
