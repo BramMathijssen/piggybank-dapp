@@ -1,10 +1,9 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext} from "react";
 import EthersContext from "../../../context/ethers-context";
-import EventsContext from "../../../context/events-context";
 import { useEvent } from "../../../hooks/useEvent";
+import TokenTable from "./TokenTable";
 
 import styles from "./TokenOverview.module.scss";
-import TokenTable from "./TokenTable";
 
 const TokenOverview = ({ tokenAdded }) => {
     const ethersCtx = useContext(EthersContext);
