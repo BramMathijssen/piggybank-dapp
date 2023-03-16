@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
+import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
+import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
-import styles from "./Table.module.scss";
-import { getClaimPeriodString } from "../../helpers/getClaimPeriodString";
-import { unixTimestampToReadable } from "../../helpers/unixToDate";
-import EventsContext from "../../context/events-context";
-import { getNameByAddress, getSymbolByAddress } from "../../helpers/getTokenDetailsbyAddress";
+import styles from "./ChildrenTable.module.scss";
+import { useEvent } from "../../../hooks/useEvent";
+import EthersContext from "../../../context/ethers-context";
 
 const Table = ({ children }) => {
-    const eventsCtx = useContext(EventsContext);
+    const ethersCtx = useContext(EthersContext);
+    const tokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
 
     const avatarBodyTemplate = (rowData) => {
-        console.log(rowData);
         return (
             <div>
                 <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.childAddress)} />
@@ -34,7 +35,7 @@ const Table = ({ children }) => {
     };
 
     const baseAmountBodyTemplate = (rowData) => {
-        const tokenSymbol = getSymbolByAddress(eventsCtx.tokens, rowData.tokenPreference);
+        const tokenSymbol = getSymbolByAddress(tokens, rowData.tokenPreference);
         return (
             <div className={styles.nameBody}>
                 <p>{rowData.baseAmount.toString()} </p>
@@ -63,8 +64,7 @@ const Table = ({ children }) => {
     };
 
     const tokenBodyTemplate = (rowData) => {
-        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.tokenPreference);
-        console.log(eventsCtx.tokens);
+        const tokenName = getNameByAddress(tokens, rowData.tokenPreference);
         return (
             <div className={styles.token}>
                 <span>{tokenName}</span>
@@ -75,10 +75,10 @@ const Table = ({ children }) => {
 
     return (
         <div className="card">
-            <DataTable value={children} scrollable scrollHeight="350px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
+            <DataTable value={children} scrollable scrollHeight="450px" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "5%" }} body={avatarBodyTemplate}></Column>
                 <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
-                <Column field="amount" header="Amount" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
+                <Column field="amount" header="Allowance" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
                 <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
                 <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimBodyTemplate}></Column>
                 <Column field="token" header="Token" style={{ width: "25%" }} body={tokenBodyTemplate}></Column>

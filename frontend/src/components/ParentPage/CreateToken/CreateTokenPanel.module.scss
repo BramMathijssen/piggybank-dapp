@@ -1,23 +1,43 @@
-.createTokenPanel {
-    padding: 25px;
-    background-color: lightblue;
-    height: 50vh;
-    display: flex;
+// .createTokenPanel {
+//     padding: 25px;
+//     background-color: lightblue;
+//     height: 50vh;
+//     display: flex;
 
+// }
+
+// .createContainer{
+//     display: flex;
+//     flex-direction: row;
+//     flex: 1;
+// }
+
+// .formContainer {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+// }
+
+// .action {
+//     margin-top: 25px;
+// }
+
+.flexContainer {
+    display: flex;
+    gap: 100px;
+    margin-bottom: 50px;
+    flex: 0.6;
 }
 
-.createContainer{
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-}
-
-.formContainer {
+.createTokenContainer {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 0.4;
 }
 
-.action {
-    margin-top: 25px;
+.overviewContainer {
+    display: flex;
+    // height: 500px; //hardcoded height
+    flex-direction: column;
+    flex: 0.6;
 }

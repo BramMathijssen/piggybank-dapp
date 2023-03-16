@@ -1,4 +1,4 @@
-import { constants, ethers } from "ethers";
+import {ethers } from "ethers";
 import abi from "../../../constants/tokenCreator.abi.json";
 import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
@@ -15,24 +15,6 @@ const Tokens = () => {
     const [tokenBalanceList, setTokenBalanceList] = useState([]);
 
     useEffect(() => {
-        // if (!ethersCtx.contract) {
-        //     console.log(`contract empty, returning...`);
-        //     return;
-        // }
-        // if (!tokens) {
-        //     console.log(`no tokens found, returning..`);
-        //     return;
-        // }
-
-        // if (tokens === []) {
-        //     console.log(`empty list..`);
-
-        // }
-        // if (tokens) {
-        //     console.log(`true list??..`);
-        //     return;
-        // }
-
         console.log("tokens found, goin!");
         console.log(tokens);
         for (let i = 0; i < tokens.length; i++) {
@@ -77,7 +59,6 @@ const Tokens = () => {
             console.log(`error`);
         }
     };
-
 
     return (
         <div className={styles.tokens}>
