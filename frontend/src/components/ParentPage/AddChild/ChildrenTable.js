@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
-import EventsContext from "../../../context/events-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
 import styles from "./ChildrenTable.module.scss";

@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { EthersContextProvider } from "./context/ethers-context";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
-import { EventsContextProvider } from "./context/events-context";
 import { ChildContextProvider } from "./context/child-context";
 import { TransactionContextProvider } from "./context/transaction-context";
 import { TokenContextProvider } from "./context/token-context";
@@ -16,7 +15,6 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <EthersContextProvider>
-                <EventsContextProvider>
                     <ChildContextProvider>
                         <TokenContextProvider>
                             <TransactionContextProvider>
@@ -24,7 +22,6 @@ root.render(
                             </TransactionContextProvider>
                         </TokenContextProvider>
                     </ChildContextProvider>
-                </EventsContextProvider>
             </EthersContextProvider>
         </BrowserRouter>
     </React.StrictMode>

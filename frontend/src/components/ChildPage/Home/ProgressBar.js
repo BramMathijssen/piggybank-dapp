@@ -8,7 +8,6 @@ const ProgressBar = ({ timeRemaining, claimPeriod }) => {
     const WEEK_UNIX = 604800;
     const MONTH_UNIX = 2419200;
 
-
     const calcPercentage = (claimPeriod) => {
         let percentage;
         switch (claimPeriod) {

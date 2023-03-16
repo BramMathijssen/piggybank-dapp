@@ -7,7 +7,7 @@ import Transactions from "./Transactions";
 
 import styles from "./HomePanel.module.scss";
 
-const HomePanelNew = () => {
+const HomePanel = () => {
     const [parentAddress, setParentAddress] = useState();
     const [child, setChild] = useState();
     const [claimed, setClaimed] = useState(false);
@@ -54,4 +54,4 @@ const HomePanelNew = () => {
     );
 };
 
-export default HomePanelNew;
+export default HomePanel;

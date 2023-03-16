@@ -1,4 +1,4 @@
-import { constants, ethers } from "ethers";
+import {ethers } from "ethers";
 import abi from "../../../constants/tokenCreator.abi.json";
 import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
@@ -59,7 +59,6 @@ const Tokens = () => {
             console.log(`error`);
         }
     };
-
 
     return (
         <div className={styles.tokens}>

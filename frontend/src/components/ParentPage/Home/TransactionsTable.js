@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
@@ -7,7 +7,7 @@ import { jsNumberForAddress } from "react-jazzicon";
 import styles from "./TransactionsTable.module.scss";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
-import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
+import { getNameByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import { useEvent } from "../../../hooks/useEvent";
 import EthersContext from "../../../context/ethers-context";
 
