@@ -1,8 +1,7 @@
-import { ethers } from "ethers";
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { useEvent } from "../../../hooks/useEvent";
@@ -11,19 +10,8 @@ import styles from "./TokenOverview.module.scss";
 
 const TokenOverview = ({ parentAddress, claimed }) => {
     const ethersCtx = useContext(EthersContext);
-    // const [parentAddress, setParentAddress] = useState();
     const [tokenBalanceList, setTokenBalanceList] = useState();
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
-
-    // useEffect(() => {
-    //     const getMyParentAddress = async () => {
-    //         if (!ethersCtx.contract) return;
-
-    //         const parentAddressTemp = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
-    //         setParentAddress(parentAddressTemp);
-    //     };
-    //     getMyParentAddress();
-    // }, [ethersCtx]);
 
     // possibly move this to an seperate hook
     useEffect(() => {
@@ -47,9 +35,6 @@ const TokenOverview = ({ parentAddress, claimed }) => {
         };
         getBalanceOfTokens();
     }, [ethersCtx, ethersCtx.userAddress, tokens, claimed]);
-
-    // console.log(tokens);
-    console.log(tokenBalanceList);
 
     // const data = [
     //     { name: "Group A", value: 400 },

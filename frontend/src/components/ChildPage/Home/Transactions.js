@@ -1,10 +1,9 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext} from "react";
 import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import EthersContext from "../../../context/ethers-context";
-import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import { useEvent } from "../../../hooks/useEvent";
@@ -13,51 +12,11 @@ import { useEventCustom } from "../../../hooks/useEventCustom";
 import styles from "./Transactions.module.scss";
 
 const Transactions = ({parentAddress, claimed}) => {
-    // const [transactions, setTransactions] = useState();
-    // const [parentAddress, setParentAddress] = useState();
     const ethersCtx = useContext(EthersContext);
     const parentTokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
-    // const transactions = useEvent("AllowanceClaimed", ethersCtx.userAddress, parentAddress);
 
     // filters for AllowanceClaimed event, and gets the 2nd and 4th argument of the event (2= child, 4= timestamp), filters for the child's parent and the current user address
     const transactions = useEventCustom("AllowanceClaimed", claimed, [2, 4], parentAddress, ethersCtx.userAddress);
-
-    // useEffect(() => {
-    //     const getMyParentAndClaim = async () => {
-    //         if (!ethersCtx.contract) return;
-
-    //         const parentAddressTemp = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
-    //         setParentAddress(parentAddressTemp);
-
-    //         // const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentTx, ethersCtx?.userAddress);
-    //         // setMyClaim(claimTx);
-
-    //         // const currentTime = await ethersCtx.contract.getCurrentTime();
-    //         // const timeLeftTemp = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
-    //         // setTimeLeft(timeLeftTemp);
-    //     };
-    //     getMyParentAndClaim();
-    // }, [ethersCtx, ethersCtx.userAddress]);
-
-    // // TODO: use useEvent Custom to get this data (child data + timestamp)
-    // useEffect(() => {
-    //     if (!ethersCtx.userAddress && !parentAddress) {
-    //         console.log(`no user address or parent address found, aborting`);
-    //         return;
-    //     }
-
-    //     const getEvents = async () => {
-    //         const eventFilter = ethersCtx.contract.filters.AllowanceClaimed(parentAddress, ethersCtx.userAddress);
-    //         const events = await ethersCtx.contract.queryFilter(eventFilter);
-
-    //         setTransactions(events);
-    //     };
-
-    //     getEvents();
-    // }, [ethersCtx, ethersCtx.userAddress, parentAddress]);
-
-    console.log(transactions);
-
 
     const avatarBodyTemplate = (rowData) => {
         return (
