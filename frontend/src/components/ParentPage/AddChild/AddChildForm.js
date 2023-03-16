@@ -30,9 +30,9 @@ const AddChildForm = () => {
         const tx = await ethersCtx.contract.addChild(childNameRef.current.value, childAddressRef.current.value, tokenPreferenceRef.current.value, baseAmountRef.current.value);
         
         await tx.wait(1);
-        childCtx.setChildAdded((current) => !current);
+        childCtx.setChildAdded((current) => !current); // toggle boolean to force a re-render on ChildOverview
         // console.log(tx);
-        // setChanged((current) => !current); // toggle boolean to force a re-render on ChildOverview
+        // setChanged((current) => !current); 
     };
 
     return (

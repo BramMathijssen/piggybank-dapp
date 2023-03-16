@@ -20,16 +20,17 @@ const HomePanel = () => {
 
     const myChildren = useEvent("ChildAdded", ethersCtx.userAddress, ethersCtx.userAddress);
     const myTokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
-
+    
     // gets the 2nd and 4th index of the AllowanceClaimed event, in this case: child struct and timestamp.
     const myTransactions = useEventCustom("AllowanceClaimed", ethersCtx.userAddress, [2, 4], ethersCtx.userAddress);
 
+    console.log(myTransactions)
     return (
         <>
             <div className={styles.badgeContainer}>
                 <Badge type="children" amount={myChildren.length} icon={<Users size={50} />} />
                 <Badge type="tokens" amount={myTokens.length} icon={<Coins size={50} />} />
-                <Badge type="transactions" amount={212} icon={<ArrowsLeftRight size={50} />} />
+                <Badge type="transactions" amount={myTransactions.length} icon={<ArrowsLeftRight size={50} />} />
             </div>
             <h2 className={styles.childTitle}>Your Children</h2>
             <div className={styles.childContainer}>
