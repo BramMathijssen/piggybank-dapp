@@ -6,7 +6,7 @@ import CountdownTimer from "../CountdownTimer";
 
 import styles from "./ClaimCountdown.module.scss";
 
-const ClaimCountdown = ({ child }) => {
+const ClaimCountdown = ({ child, setClaimed , claimed}) => {
     // const [parentAddress, setParentAddress] = useState();
     // const [child, setChild] = useState();
     const [timeLeft, setTimeLeft] = useState();
@@ -44,12 +44,25 @@ const ClaimCountdown = ({ child }) => {
             setTimeLeft(tempTimeLeft);
         };
         getTimeLeft();
-    }, [ethersCtx,child]);
+    }, [ethersCtx,child, claimed]);
 
     console.log('hey')
 
-    const claim = async () => {
+    // const claim = async () => {
+    //     const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
+
+    //     await claimTx.wait(1);
+
+    //     setClaimed
+    // };
+
+    const claimHandler = async (e) => {
+        e.preventDefault();
+        console.log(`claiming..`);
         const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
+        
+        await claimTx.wait(1);
+        setClaimed((current) => !current); // toggle boolean to force a re-render on ChildOverview
     };
 
     console.log(child);
@@ -57,7 +70,7 @@ const ClaimCountdown = ({ child }) => {
     return (
         <div className={styles.claimCountdown}>
             <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={child.claimPeriod} /> : null}</div>
-            <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claim} size="medium" content="claim"></Button> : null}</div>
+            <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claimHandler} size="medium" content="claim"></Button> : null}</div>
         </div>
     );
 };

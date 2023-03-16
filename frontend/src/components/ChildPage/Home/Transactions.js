@@ -12,7 +12,7 @@ import { useEventCustom } from "../../../hooks/useEventCustom";
 
 import styles from "./Transactions.module.scss";
 
-const Transactions = ({parentAddress}) => {
+const Transactions = ({parentAddress, claimed}) => {
     // const [transactions, setTransactions] = useState();
     // const [parentAddress, setParentAddress] = useState();
     const ethersCtx = useContext(EthersContext);
@@ -20,7 +20,7 @@ const Transactions = ({parentAddress}) => {
     // const transactions = useEvent("AllowanceClaimed", ethersCtx.userAddress, parentAddress);
 
     // filters for AllowanceClaimed event, and gets the 2nd and 4th argument of the event (2= child, 4= timestamp), filters for the child's parent and the current user address
-    const transactions = useEventCustom("AllowanceClaimed", ethersCtx.userAddress, [2, 4], parentAddress, ethersCtx.userAddress);
+    const transactions = useEventCustom("AllowanceClaimed", claimed, [2, 4], parentAddress, ethersCtx.userAddress);
 
     // useEffect(() => {
     //     const getMyParentAndClaim = async () => {

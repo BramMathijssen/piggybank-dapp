@@ -9,7 +9,7 @@ import { useEvent } from "../../../hooks/useEvent";
 
 import styles from "./TokenOverview.module.scss";
 
-const TokenOverview = ({ parentAddress }) => {
+const TokenOverview = ({ parentAddress, claimed }) => {
     const ethersCtx = useContext(EthersContext);
     // const [parentAddress, setParentAddress] = useState();
     const [tokenBalanceList, setTokenBalanceList] = useState();
@@ -46,7 +46,7 @@ const TokenOverview = ({ parentAddress }) => {
             setTokenBalanceList(filteredTokenList);
         };
         getBalanceOfTokens();
-    }, [ethersCtx, ethersCtx.userAddress, tokens]);
+    }, [ethersCtx, ethersCtx.userAddress, tokens, claimed]);
 
     // console.log(tokens);
     console.log(tokenBalanceList);

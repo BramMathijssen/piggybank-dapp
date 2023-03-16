@@ -37,18 +37,18 @@ const HomePanelNew = () => {
             setTimeLeft(tempTimeLeft);
         };
         initialiseChildData();
-    }, [ethersCtx]);
+    }, [ethersCtx, claimed]);
 
     return (
         <>
             <div className={styles.flexContainer}>
                 <div className={styles.claimCountdownContainer}>
                     <h2 className={styles.title}>Claim</h2>
-                    <ClaimCountdown child={child} />
+                    <ClaimCountdown child={child} setClaimed={setClaimed} claimed={claimed} />
                 </div>
                 <div className={styles.detailsContainer}>
                     <h2 className={styles.title}>Details</h2>
-                    <Details child={child} setClaimed={setClaimed} claimed={claimed} />
+                    <Details child={child} parentAddress={parentAddress} setClaimed={setClaimed} claimed={claimed} />
                 </div>
             </div>
             <div className={styles.flexContainer}>
