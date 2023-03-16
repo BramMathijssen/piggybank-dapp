@@ -9,14 +9,14 @@ import EventsContext from "../../../context/events-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
 import styles from "./ChildrenTable.module.scss";
+import { useEvent } from "../../../hooks/useEvent";
+import EthersContext from "../../../context/ethers-context";
 
 const Table = ({ children }) => {
-    const eventsCtx = useContext(EventsContext);
-
-    console.log(`rendering table`)
+    const ethersCtx = useContext(EthersContext);
+    const tokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
 
     const avatarBodyTemplate = (rowData) => {
-        // console.log(rowData);
         return (
             <div>
                 <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.childAddress)} />
@@ -36,7 +36,7 @@ const Table = ({ children }) => {
     };
 
     const baseAmountBodyTemplate = (rowData) => {
-        const tokenSymbol = getSymbolByAddress(eventsCtx.tokens, rowData.tokenPreference);
+        const tokenSymbol = getSymbolByAddress(tokens, rowData.tokenPreference);
         return (
             <div className={styles.nameBody}>
                 <p>{rowData.baseAmount.toString()} </p>
@@ -65,8 +65,7 @@ const Table = ({ children }) => {
     };
 
     const tokenBodyTemplate = (rowData) => {
-        const tokenName = getNameByAddress(eventsCtx.tokens, rowData.tokenPreference);
-        // console.log(eventsCtx.tokens);
+        const tokenName = getNameByAddress(tokens, rowData.tokenPreference);
         return (
             <div className={styles.token}>
                 <span>{tokenName}</span>

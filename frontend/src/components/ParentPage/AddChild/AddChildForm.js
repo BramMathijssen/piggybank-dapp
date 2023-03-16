@@ -21,8 +21,6 @@ const AddChildForm = () => {
     const tokens = useEvent("TokenCreated", changed, ethersCtx.userAddress);
     const childCtx = useContext(ChildContext);
 
-    // console.log(tokens);
-    // console.log(tokenCtx.tokens);
 
     const addChildHandler = async (e) => {
         e.preventDefault();
@@ -31,8 +29,6 @@ const AddChildForm = () => {
         
         await tx.wait(1);
         childCtx.setChildAdded((current) => !current); // toggle boolean to force a re-render on ChildOverview
-        // console.log(tx);
-        // setChanged((current) => !current); 
     };
 
     return (

@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-
 import AddChildForm from "./AddChildForm";
 import ChildrenOverview from "./ChildrenOverview";
+import ChildContext from "../../../context/child-context";
 
 import styles from "./AddChildPanel.module.scss";
-import ChildContext from "../../../context/child-context";
 
 const AddChildPanel = () => {
     const childCtx = useContext(ChildContext);
