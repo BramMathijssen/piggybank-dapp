@@ -6,38 +6,57 @@ import CountdownTimer from "../CountdownTimer";
 
 import styles from "./ClaimCountdown.module.scss";
 
-const ClaimCountdown = ({ childAdded }) => {
-    const [parentAddress, setParentAddress] = useState();
-    const [myClaim, setMyClaim] = useState();
+const ClaimCountdown = ({ child }) => {
+    // const [parentAddress, setParentAddress] = useState();
+    // const [child, setChild] = useState();
     const [timeLeft, setTimeLeft] = useState();
     const ethersCtx = useContext(EthersContext);
 
-    useEffect(() => {
-        const getMyParentAndClaim = async () => {
-            if (!ethersCtx.contract) return;
+    // useEffect(() => {
+    //     const initialiseChildData = async () => {
+    //         if (!ethersCtx.contract) return;
 
-            const parentTx = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
-            setParentAddress(parentTx);
+    //         // get the child's parent address
+    //         const tempParentAddress = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
+    //         setParentAddress(tempParentAddress);
 
-            const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentTx, ethersCtx?.userAddress);
-            setMyClaim(claimTx);
+    //         // gets the child's data 
+    //         const tempChild = await ethersCtx.contract.parentToChildMappingNested(tempParentAddress, ethersCtx?.userAddress);
+    //         setChild(tempChild);
 
+    //         // get the current time of the contract in UNIX
+    //         const currentTime = await ethersCtx.contract.getCurrentTime();
+
+    //         // calculate the time left untill the child is able to claim their allowance
+    //         const tempTimeLeft = tempChild.nextClaimPeriod.toNumber() - currentTime.toNumber();
+    //         setTimeLeft(tempTimeLeft);
+    //     };
+    //     initialiseChildData();
+    // }, [ethersCtx]);
+
+        useEffect(() => {
+        const getTimeLeft = async () => {
+            // get the current time of the contract in UNIX
             const currentTime = await ethersCtx.contract.getCurrentTime();
-            const timeLeftTemp = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
-            setTimeLeft(timeLeftTemp);
+
+            // calculate the time left untill the child is able to claim their allowance
+            const tempTimeLeft = child.nextClaimPeriod.toNumber() - currentTime.toNumber();
+            setTimeLeft(tempTimeLeft);
         };
-        getMyParentAndClaim();
-    }, [ethersCtx]);
+        getTimeLeft();
+    }, [ethersCtx,child]);
+
+    console.log('hey')
 
     const claim = async () => {
-        const claimTx = await ethersCtx.contract.claim(myClaim.tokenPreference, myClaim.tokenPreference);
+        const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
     };
 
-    console.log(myClaim);
+    console.log(child);
 
     return (
         <div className={styles.claimCountdown}>
-            <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={myClaim.claimPeriod} /> : null}</div>
+            <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={child.claimPeriod} /> : null}</div>
             <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claim} size="medium" content="claim"></Button> : null}</div>
         </div>
     );

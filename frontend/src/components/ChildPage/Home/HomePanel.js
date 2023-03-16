@@ -3,76 +3,66 @@ import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import Timer from "../CountdownTimer";
+import ClaimCountdown from "./ClaimCountdown";
+import Details from "./Details";
+import TokenOverview from "./TokenOverview";
+import Transactions from "./Transactions";
+
 import styles from "./HomePanel.module.scss";
 
-const HomePanel = () => {
+const HomePanelNew = () => {
     const [parentAddress, setParentAddress] = useState();
-    const [myClaim, setMyClaim] = useState();
+    const [child, setChild] = useState();
     const [timeLeft, setTimeLeft] = useState();
+    const [claimed, setClaimed] = useState(false);
     const ethersCtx = useContext(EthersContext);
 
     useEffect(() => {
-        const getMyParentAndClaim = async () => {
+        const initialiseChildData = async () => {
             if (!ethersCtx.contract) return;
 
-            const parentTx = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
-            setParentAddress(parentTx);
+            // get the child's parent address
+            const tempParentAddress = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
+            setParentAddress(tempParentAddress);
 
-            const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentTx, ethersCtx?.userAddress);
-            setMyClaim(claimTx);
+            // gets the child's data
+            const tempChild = await ethersCtx.contract.parentToChildMappingNested(tempParentAddress, ethersCtx?.userAddress);
+            setChild(tempChild);
 
+            // get the current time of the contract in UNIX
             const currentTime = await ethersCtx.contract.getCurrentTime();
-            const leftTime = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
-            setTimeLeft(leftTime);
+
+            // calculate the time left untill the child is able to claim their allowance
+            const tempTimeLeft = tempChild.nextClaimPeriod.toNumber() - currentTime.toNumber();
+            setTimeLeft(tempTimeLeft);
         };
-        getMyParentAndClaim();
+        initialiseChildData();
     }, [ethersCtx]);
-
-    useEffect(() => {
-        const getMyParentAndClaim = async () => {
-            if (!ethersCtx.contract) return;
-
-            const currentTime = await ethersCtx.contract.getCurrentTime();
-            console.log(`✅Current Time: ${currentTime}`);
-        };
-        getMyParentAndClaim();
-    }, [ethersCtx]);
-
-    const convertTimestampToDate = (timestamp) => {
-        const date = new Date(timestamp * 1000); // multiply by 1000 to convert from seconds to milliseconds
-        const options = { day: "numeric", month: "numeric", year: "numeric" };
-        const formattedDate = date.toLocaleDateString("en-US", options);
-
-        return formattedDate;
-    };
-
-    const claim = async () => {
-        const claimTx = await ethersCtx.contract.claim(myClaim.tokenPreference, myClaim.tokenPreference);
-    };
-
-    console.log(myClaim);
 
     return (
         <>
-            {timeLeft ? <Timer timeLeft={timeLeft} /> : null}
-            <h2 className={styles.title}>Panel Content</h2>
-            <div className={styles.rowContainer}>
-                {myClaim && (
-                    <>
-                        <p>Yooo {myClaim.name}</p>
-                        <p>Your Parent is: {parentAddress}</p>
-                        <p>Your token preference is: {myClaim.tokenPreference} </p>
-                        <p>Your Claimable amount is {myClaim.claimableAmount.toString()}</p>
-                        <p>Your next Claim date is: {convertTimestampToDate(myClaim.nextClaimPeriod.toString())}</p>
-                        <p>My Claim Period: {getClaimPeriodString(myClaim.claimPeriod)}</p>
-                    </>
-                )}
-                <div className={styles.myParentContainer}></div>
-                <div className={styles.myClaims}></div>
-                {timeLeft < 0 ? <button onClick={claim}>Claim</button> : null}
+            <div className={styles.flexContainer}>
+                <div className={styles.claimCountdownContainer}>
+                    <h2 className={styles.title}>Claim</h2>
+                    <ClaimCountdown child={child} />
+                </div>
+                <div className={styles.detailsContainer}>
+                    <h2 className={styles.title}>Details</h2>
+                    <Details child={child} setClaimed={setClaimed} claimed={claimed} />
+                </div>
+            </div>
+            <div className={styles.flexContainer}>
+                <div className={styles.transactionsContainer}>
+                    <h2 className={styles.title}>Transactions</h2>
+                    <Transactions child={child} setClaimed={setClaimed} claimed={claimed} />
+                </div>
+                <div className={styles.tokenOverviewContainer}>
+                    <h2 className={styles.title}>TokenOverview</h2>
+                    <TokenOverview child={child} parentAddress={parentAddress} setClaimed={setClaimed} claimed={claimed} />
+                </div>
             </div>
         </>
     );
 };
 
-export default HomePanel;
+export default HomePanelNew;

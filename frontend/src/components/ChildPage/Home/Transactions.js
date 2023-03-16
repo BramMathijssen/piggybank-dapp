@@ -8,73 +8,79 @@ import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import { useEvent } from "../../../hooks/useEvent";
+import { useEventCustom } from "../../../hooks/useEventCustom";
 
 import styles from "./Transactions.module.scss";
 
-const Transactions = () => {
-    const [transactions, setTransactions] = useState();
-    const [parentAddress, setParentAddress] = useState();
+const Transactions = ({parentAddress}) => {
+    // const [transactions, setTransactions] = useState();
+    // const [parentAddress, setParentAddress] = useState();
     const ethersCtx = useContext(EthersContext);
     const parentTokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
+    // const transactions = useEvent("AllowanceClaimed", ethersCtx.userAddress, parentAddress);
 
-    useEffect(() => {
-        const getMyParentAndClaim = async () => {
-            if (!ethersCtx.contract) return;
+    // filters for AllowanceClaimed event, and gets the 2nd and 4th argument of the event (2= child, 4= timestamp), filters for the child's parent and the current user address
+    const transactions = useEventCustom("AllowanceClaimed", ethersCtx.userAddress, [2, 4], parentAddress, ethersCtx.userAddress);
 
-            const parentAddressTemp = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
-            setParentAddress(parentAddressTemp);
+    // useEffect(() => {
+    //     const getMyParentAndClaim = async () => {
+    //         if (!ethersCtx.contract) return;
 
-            // const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentTx, ethersCtx?.userAddress);
-            // setMyClaim(claimTx);
+    //         const parentAddressTemp = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
+    //         setParentAddress(parentAddressTemp);
 
-            // const currentTime = await ethersCtx.contract.getCurrentTime();
-            // const timeLeftTemp = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
-            // setTimeLeft(timeLeftTemp);
-        };
-        getMyParentAndClaim();
-    }, [ethersCtx, ethersCtx.userAddress]);
+    //         // const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentTx, ethersCtx?.userAddress);
+    //         // setMyClaim(claimTx);
 
-    // TODO: use useEvent Custom to get this data (child data + timestamp)
-    useEffect(() => {
-        if (!ethersCtx.userAddress && !parentAddress) {
-            console.log(`no user address or parent address found, aborting`);
-            return;
-        }
+    //         // const currentTime = await ethersCtx.contract.getCurrentTime();
+    //         // const timeLeftTemp = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
+    //         // setTimeLeft(timeLeftTemp);
+    //     };
+    //     getMyParentAndClaim();
+    // }, [ethersCtx, ethersCtx.userAddress]);
 
-        const getEvents = async () => {
-            const eventFilter = ethersCtx.contract.filters.AllowanceClaimed(parentAddress, ethersCtx.userAddress);
-            const events = await ethersCtx.contract.queryFilter(eventFilter);
+    // // TODO: use useEvent Custom to get this data (child data + timestamp)
+    // useEffect(() => {
+    //     if (!ethersCtx.userAddress && !parentAddress) {
+    //         console.log(`no user address or parent address found, aborting`);
+    //         return;
+    //     }
 
-            setTransactions(events);
-        };
+    //     const getEvents = async () => {
+    //         const eventFilter = ethersCtx.contract.filters.AllowanceClaimed(parentAddress, ethersCtx.userAddress);
+    //         const events = await ethersCtx.contract.queryFilter(eventFilter);
 
-        getEvents();
-    }, [ethersCtx, ethersCtx.userAddress, parentAddress]);
+    //         setTransactions(events);
+    //     };
+
+    //     getEvents();
+    // }, [ethersCtx, ethersCtx.userAddress, parentAddress]);
 
     console.log(transactions);
+
 
     const avatarBodyTemplate = (rowData) => {
         return (
             <div>
-                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.args.child.tokenPreference)} />
+                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData[0].tokenPreference)} />
             </div>
         );
     };
 
     const nameAddressBodyTemplate = (rowData) => {
-        const tokenName = getNameByAddress(parentTokens, rowData.args.child.tokenPreference);
+        const tokenName = getNameByAddress(parentTokens, rowData[0].tokenPreference);
         return (
             <div className={styles.nameBody}>
                 <div className={styles.flexContainer}>
                     <span>{tokenName}</span>
-                    <p>{rowData.args.child.tokenPreference}</p>
+                    <p>{rowData[0].tokenPreference}</p>
                 </div>
             </div>
         );
     };
 
     const claimPeriodBodyTemplate = (rowData) => {
-        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData.args.timestamp.toString());
+        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData[1].toString());
         return (
             <div className={styles.nameBody}>
                 {formattedDate} {formattedTime}
@@ -83,12 +89,12 @@ const Transactions = () => {
     };
 
     const tokenBodyTemplate = (rowData) => {
-        const tokenSymbol = getSymbolByAddress(parentTokens, rowData.args.child.tokenPreference);
+        const tokenSymbol = getSymbolByAddress(parentTokens, rowData[0].tokenPreference);
 
         return (
             <div className={styles.amountClaimed}>
                 <p>
-                    +{rowData.args.child.claimableAmount.toString()} {tokenSymbol}
+                    +{rowData[0].claimableAmount.toString()} {tokenSymbol}
                 </p>
                 <p></p>
             </div>
