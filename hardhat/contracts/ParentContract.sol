@@ -251,6 +251,11 @@ contract ParentContract {
 
         // sets the next claim period to 1 day
         child.nextClaimPeriod = getCurrentTime() + 1 days;
+
+        // sets new claimable amount according to new claim period
+        uint256 newClaimableAmount = calculateClaimableAmount(child.baseAmount, ClaimPeriod.DAILY);
+
+        child.claimableAmount = newClaimableAmount;
     }
 
     function setChildClaimMomentWeekly() public {
@@ -263,6 +268,11 @@ contract ParentContract {
 
         // sets the next claim period to 1 week
         child.nextClaimPeriod = getCurrentTime() + 1 weeks;
+
+        // sets new claimable amount according to new claim period
+        uint256 newClaimableAmount = calculateClaimableAmount(child.baseAmount, ClaimPeriod.WEEKLY);
+
+        child.claimableAmount = newClaimableAmount;
     }
 
     function setChildClaimMomentMonthly() public {
@@ -274,6 +284,11 @@ contract ParentContract {
 
         // sets the next claim period to 4 week
         child.nextClaimPeriod = getCurrentTime() + 4 weeks;
+
+        // sets new claimable amount according to new claim period
+        uint256 newClaimableAmount = calculateClaimableAmount(child.baseAmount, ClaimPeriod.MONTHLY);
+
+        child.claimableAmount = newClaimableAmount;
     }
 
     /// testing -> safe to delete
