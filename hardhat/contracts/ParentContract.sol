@@ -291,6 +291,13 @@ contract ParentContract {
         child.claimableAmount = newClaimableAmount;
     }
 
+    // TODO: Check if the child's parent owns the selected token
+    function setChildTokenPreference(address tokenAddress) public {
+        address childsParent = getChildsParent();
+        Child storage child = parentToChildMappingNested[childsParent][msg.sender];
+        child.tokenPreference = tokenAddress;
+    }
+
     /// testing -> safe to delete
     function test() public view returns (address) {
         return msg.sender;
