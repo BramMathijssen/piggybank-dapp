@@ -34,24 +34,43 @@ const EditClaimPeriod = () => {
     };
 
     return (
-        <div className={styles.claimPeriod}>
-            <h2 className={styles.title}>Create New Token</h2>
-            <div className={styles.createTokenPanel}>
-                <div className={styles.createContainer}>
-                    <button onClick={setClaimMomentDaily}>Set Daily</button>
-                    <button onClick={setClaimMomentWeekly}>Set Weekly</button>
-                    <button onClick={setClaimMomentMonthly}>Set Monthly</button>
-                    {/* <form onSubmit={createToken}>
-                        <div className={styles.formContainer}>
-                            <label>Token Name</label>
-                            <input type="text" ref={contractNameRef}></input>
-                            <label>Symbol</label>
-                            <input type="text" ref={contractSymbolRef}></input>
-                            <label>Supply</label>
-                            <input type="number" ref={contractSupplyRef}></input>
-                            <button className={styles.button}> deploy</button>
+        <div className={styles.editClaimPeriod}>
+            <div className={styles.claimPeriodContainer}>
+                <div className={styles.claimPeriod}>
+                    <div className={styles.period}>
+                        <p>DAILY</p>
+                    </div>
+                    <div className={styles.flexContainer}>
+                        <div className={styles.claimableAmount}>
+                            <p>Claimable</p>
+                            <p>128</p>
                         </div>
-                    </form> */}
+                        <button className={styles.claimPeriodButton}>Pick</button>
+                    </div>
+                </div>
+                <div className={styles.claimPeriod}>
+                    <div className={styles.period}>
+                        <p>WEEKLY</p>
+                    </div>
+                    <div className={styles.flexContainer}>
+                        <div className={styles.claimableAmount}>
+                            <p>Claimable</p>
+                            <p>1000</p>
+                        </div>
+                        <button className={styles.claimPeriodButton}>Pick</button>
+                    </div>
+                </div>
+                <div className={styles.claimPeriod}>
+                    <div className={styles.period}>
+                        <p>MONTHLY</p>
+                    </div>
+                    <div className={styles.flexContainer}>
+                        <div className={styles.claimableAmount}>
+                            <p>Claimable</p>
+                            <p>4400</p>
+                        </div>
+                        <button className={styles.claimPeriodButton}>Pick</button>
+                    </div>
                 </div>
             </div>
         </div>

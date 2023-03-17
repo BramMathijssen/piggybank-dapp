@@ -5,8 +5,14 @@ import EthersContext from "../../../context/ethers-context";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 import { useEvent } from "../../../hooks/useEvent";
+import { truncateAddress } from "../../../helpers/truncateAddress";
+import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
-const EditTokenPreference = ({ child }) => {
+const EditTokenPreference = ({ child, parentAddress }) => {
+    const ethersCtx = useContext(EthersContext);
+
+    const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
+
     return (
         <div className={styles.tokenPreference}>
             <h3>Currently Selected Token</h3>
@@ -16,35 +22,44 @@ const EditTokenPreference = ({ child }) => {
                         <Jazzicon diameter={45} seed={jsNumberForAddress(child.tokenPreference)} />
                     </div>
                     <div className={styles.tokenDetails}>
-                        <p>Token Name</p>
-                        <p>0x98453948fhsdkfj29383fsdjkfl45dfgdfg3xcvj5</p>
+                        <p>{getNameByAddress(tokens, child.tokenPreference)}</p>
+                        <p>{child.tokenPreference}</p>
                     </div>
                 </div>
                 <div className={styles.amountOwned}>
                     <p className={styles.amount}>1000</p>
-                    <p className={styles.tokenSymbol}>MC </p>
+                    <p className={styles.tokenSymbol}>{getSymbolByAddress(tokens, child.tokenPreference)}</p>
                 </div>
             </div>
             <h3 className={styles.pickTokenTitle}>Pick a Token</h3>
-            <div className={styles.tokenOptions}>
-                <div className={styles.tokenOptionInfo}>
-                    <div className={styles.tokenOptionAvatar}>
-                        <Jazzicon diameter={30} seed={jsNumberForAddress(child.tokenPreference)} />
-                    </div>
-                    <div className={styles.tokenOptionDetails}>
-                        <p className={styles.tokenOptionName}>Token Name</p>
-                        <p className={styles.tokenOptionAddress}>0x984...cvj5</p>
-                    </div>
-                </div>
-                <div className={styles.flexContainer}>
-                    <div className={styles.tokenOptionAmountOwned}>
-                        <p className={styles.tokenOptionAmount}>1000</p>
-                        <p className={styles.tokenOptionSymbol}>MC </p>
-                    </div>
-                    <div className={styles.buttonContainer}>
-                        <button className={styles.pickButton}>Pick</button>
-                    </div>
-                </div>
+            <div className={styles.tokenOptionsContainer}>
+                {tokens.map((token) => {
+                    // only display tokens which are not currently prefered
+                    if (token.tokenAddress !== child.tokenPreference) {
+                        return (
+                            <div className={styles.tokenOptions}>
+                                <div className={styles.tokenOptionInfo}>
+                                    <div className={styles.tokenOptionAvatar}>
+                                        <Jazzicon diameter={30} seed={jsNumberForAddress(token.tokenAddress)} />
+                                    </div>
+                                    <div className={styles.tokenOptionDetails}>
+                                        <p className={styles.tokenOptionName}>{token.name}</p>
+                                        <p className={styles.tokenOptionAddress}>{truncateAddress(token.tokenAddress)}</p>
+                                    </div>
+                                </div>
+                                <div className={styles.flexContainer}>
+                                    <div className={styles.tokenOptionAmountOwned}>
+                                        <p className={styles.tokenOptionAmount}>1000</p>
+                                        <p className={styles.tokenOptionSymbol}>MC </p>
+                                    </div>
+                                    <div className={styles.buttonContainer}>
+                                        <button className={styles.pickButton}>Pick</button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
+                })}
             </div>
         </div>
     );

@@ -15,6 +15,7 @@
     width: 40%;
     background-color: rgb(247, 247, 247);
     border-radius: 12px;
+    border: 3px solid #00FFC3;
 }
 
 .tokenInfo {
@@ -61,6 +62,11 @@
 }
 
 // token options
+.tokenOptionsContainer{
+    display: flex;
+    gap: 20px;
+}
+
 .pickTokenTitle{
     margin-top: 40px;
 }
