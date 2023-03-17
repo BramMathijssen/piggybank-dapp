@@ -1,32 +1,53 @@
+import { ethers } from "ethers";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 
 import styles from "./EditClaimPeriod.module.scss";
 
-const EditClaimPeriod = () => {
-    const contractNameRef = useRef();
-    const contractSymbolRef = useRef();
-    const contractSupplyRef = useRef();
-
-    const [changed, setChanged] = useState(false);
+const EditClaimPeriod = ({ child }) => {
+    const [claimableDaily, setClaimableDaily] = useState();
+    const [claimableWeekly, setClaimableWeekly] = useState();
+    const [claimableMonthly, setClaimableMonthly] = useState();
 
     const ethersCtx = useContext(EthersContext);
 
-    const setClaimMomentDaily = async (e) => {
+    const getClaimableAmount = async (claimPeriod) => {
+        console.log(`getting claimable amount`);
+        const claimableAmount = await ethersCtx.contract.calculateClaimableAmount(child.baseAmount, claimPeriod);
+
+        return claimableAmount;
+    };
+
+    useEffect(() => {
+        const getClaimableAmounts = async () => {
+            const tempClaimableDaily = await getClaimableAmount(0);
+            setClaimableDaily(tempClaimableDaily.toString());
+
+            const tempClaimableWeekly = await getClaimableAmount(1);
+            setClaimableWeekly(tempClaimableWeekly.toString());
+
+            const tempClaimableMonthly = await getClaimableAmount(2);
+            setClaimableMonthly(tempClaimableMonthly.toString());
+        };
+
+        getClaimableAmounts();
+    }, [child, ethersCtx.userAddress]);
+
+    const setClaimPeriodDaily = async (e) => {
         e.preventDefault();
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildClaimMomentDaily();
         await tx.wait(1);
     };
 
-    const setClaimMomentWeekly = async (e) => {
+    const setClaimPeriodWeekly = async (e) => {
         e.preventDefault();
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildClaimMomentWeekly();
         await tx.wait(1);
     };
 
-    const setClaimMomentMonthly = async (e) => {
+    const setClaimPeriodMonthly = async (e) => {
         e.preventDefault();
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildClaimMomentMonthly();
@@ -43,9 +64,9 @@ const EditClaimPeriod = () => {
                     <div className={styles.flexContainer}>
                         <div className={styles.claimableAmount}>
                             <p>Claimable</p>
-                            <p>128</p>
+                            <p>{claimableDaily}</p>
                         </div>
-                        <button className={styles.claimPeriodButton}>Pick</button>
+                        <button className={styles.claimPeriodButton} onClick={setClaimPeriodDaily}>Pick</button>
                     </div>
                 </div>
                 <div className={styles.claimPeriod}>
@@ -55,9 +76,9 @@ const EditClaimPeriod = () => {
                     <div className={styles.flexContainer}>
                         <div className={styles.claimableAmount}>
                             <p>Claimable</p>
-                            <p>1000</p>
+                            <p>{claimableWeekly}</p>
                         </div>
-                        <button className={styles.claimPeriodButton}>Pick</button>
+                        <button className={styles.claimPeriodButton} onClick={setClaimPeriodWeekly}>Pick</button>
                     </div>
                 </div>
                 <div className={styles.claimPeriod}>
@@ -67,9 +88,9 @@ const EditClaimPeriod = () => {
                     <div className={styles.flexContainer}>
                         <div className={styles.claimableAmount}>
                             <p>Claimable</p>
-                            <p>4400</p>
+                            <p>{claimableMonthly}</p>
                         </div>
-                        <button className={styles.claimPeriodButton}>Pick</button>
+                        <button className={styles.claimPeriodButton} onClick={setClaimPeriodMonthly}>Pick</button>
                     </div>
                 </div>
             </div>

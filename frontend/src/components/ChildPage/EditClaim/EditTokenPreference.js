@@ -13,6 +13,12 @@ const EditTokenPreference = ({ child, parentAddress }) => {
 
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
+    const setNewTokenPreference = async (tokenAddress) => {
+        console.log(`Creating token`);
+        const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
+        await tx.wait(1);
+    };
+
     return (
         <div className={styles.tokenPreference}>
             <h3>Currently Selected Token</h3>
@@ -53,7 +59,9 @@ const EditTokenPreference = ({ child, parentAddress }) => {
                                         <p className={styles.tokenOptionSymbol}>MC </p>
                                     </div>
                                     <div className={styles.buttonContainer}>
-                                        <button className={styles.pickButton}>Pick</button>
+                                        <button className={styles.pickButton} onClick={() => setNewTokenPreference(token.tokenAddress)}>
+                                            Pick
+                                        </button>
                                     </div>
                                 </div>
                             </div>

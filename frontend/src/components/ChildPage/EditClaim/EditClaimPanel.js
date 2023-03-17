@@ -28,7 +28,7 @@ const EditClaimPanel = () => {
 
     return (
         <div className={styles.flexContainer}>
-            <EditClaimPeriod />
+            {child &&<EditClaimPeriod child={child}/>}
             {child && <EditTokenPreference parentAddress={parentAddress} child={child}/> }
         </div>
     );
