@@ -25,7 +25,27 @@ const EditTokenPreference = ({ child }) => {
                     <p className={styles.tokenSymbol}>MC </p>
                 </div>
             </div>
-            <p>Token preference</p>
+            <h3 className={styles.pickTokenTitle}>Pick a Token</h3>
+            <div className={styles.tokenOptions}>
+                <div className={styles.tokenOptionInfo}>
+                    <div className={styles.tokenOptionAvatar}>
+                        <Jazzicon diameter={30} seed={jsNumberForAddress(child.tokenPreference)} />
+                    </div>
+                    <div className={styles.tokenOptionDetails}>
+                        <p className={styles.tokenOptionName}>Token Name</p>
+                        <p className={styles.tokenOptionAddress}>0x984...cvj5</p>
+                    </div>
+                </div>
+                <div className={styles.flexContainer}>
+                    <div className={styles.tokenOptionAmountOwned}>
+                        <p className={styles.tokenOptionAmount}>1000</p>
+                        <p className={styles.tokenOptionSymbol}>MC </p>
+                    </div>
+                    <div className={styles.buttonContainer}>
+                        <button className={styles.pickButton}>Pick</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
