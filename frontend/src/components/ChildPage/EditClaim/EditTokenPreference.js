@@ -10,6 +10,7 @@ import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenD
 
 const EditTokenPreference = ({ child, parentAddress }) => {
     const ethersCtx = useContext(EthersContext);
+    const [preferenceChanged, setPreferenceChanged] = useState(false);
 
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
@@ -17,6 +18,7 @@ const EditTokenPreference = ({ child, parentAddress }) => {
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
         await tx.wait(1);
+        setPreferenceChanged((prev) => !prev);
     };
 
     return (

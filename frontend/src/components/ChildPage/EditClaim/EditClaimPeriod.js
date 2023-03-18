@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
+import ClaimPeriod from "./ClaimPeriod";
 
 import styles from "./EditClaimPeriod.module.scss";
 
@@ -57,42 +58,9 @@ const EditClaimPeriod = ({ child }) => {
     return (
         <div className={styles.editClaimPeriod}>
             <div className={styles.claimPeriodContainer}>
-                <div className={styles.claimPeriod}>
-                    <div className={styles.period}>
-                        <p>DAILY</p>
-                    </div>
-                    <div className={styles.flexContainer}>
-                        <div className={styles.claimableAmount}>
-                            <p>Claimable</p>
-                            <p>{claimableDaily}</p>
-                        </div>
-                        <button className={styles.claimPeriodButton} onClick={setClaimPeriodDaily}>Pick</button>
-                    </div>
-                </div>
-                <div className={styles.claimPeriod}>
-                    <div className={styles.period}>
-                        <p>WEEKLY</p>
-                    </div>
-                    <div className={styles.flexContainer}>
-                        <div className={styles.claimableAmount}>
-                            <p>Claimable</p>
-                            <p>{claimableWeekly}</p>
-                        </div>
-                        <button className={styles.claimPeriodButton} onClick={setClaimPeriodWeekly}>Pick</button>
-                    </div>
-                </div>
-                <div className={styles.claimPeriod}>
-                    <div className={styles.period}>
-                        <p>MONTHLY</p>
-                    </div>
-                    <div className={styles.flexContainer}>
-                        <div className={styles.claimableAmount}>
-                            <p>Claimable</p>
-                            <p>{claimableMonthly}</p>
-                        </div>
-                        <button className={styles.claimPeriodButton} onClick={setClaimPeriodMonthly}>Pick</button>
-                    </div>
-                </div>
+                <ClaimPeriod type="Daily" setClaimPeriod={setClaimPeriodDaily} claimableAmount={claimableDaily} />
+                <ClaimPeriod type="Weekly" setClaimPeriod={setClaimPeriodWeekly} claimableAmount={claimableWeekly} />
+                <ClaimPeriod type="Monthly" setClaimPeriod={setClaimPeriodMonthly} claimableAmount={claimableMonthly} />
             </div>
         </div>
     );
