@@ -5,6 +5,14 @@
     margin: 25px;
 }
 
+.claimPeriod.active {
+    border: 3px solid #00ffc3;
+}
+
+.type {
+    text-transform: uppercase;
+}
+
 .claimPeriod p {
     margin: 0;
 }
@@ -25,7 +33,7 @@
     font-weight: 600;
 }
 
-.flexContainer{
+.flexContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,4 +48,10 @@
     color: white;
     font-weight: 600;
     cursor: pointer;
+}
+
+.selected{
+    font-weight: 600;
+    text-transform: uppercase;
+    color: grey;
 }

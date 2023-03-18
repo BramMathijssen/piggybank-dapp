@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import ClaimPeriod from "./ClaimPeriod";
@@ -10,6 +9,10 @@ const EditClaimPeriod = ({ child }) => {
     const [claimableWeekly, setClaimableWeekly] = useState();
     const [claimableMonthly, setClaimableMonthly] = useState();
 
+    const [dailyActive, setDailyActive] = useState(false);
+    const [weeklyActive, setWeeklyActive] = useState(true);
+    const [monthlyActive, setMonthlyActive] = useState(false);
+
     const ethersCtx = useContext(EthersContext);
 
     const getClaimableAmount = async (claimPeriod) => {
@@ -19,6 +22,7 @@ const EditClaimPeriod = ({ child }) => {
         return claimableAmount;
     };
 
+    // get the claimable amount based on the claimPeriod
     useEffect(() => {
         const getClaimableAmounts = async () => {
             const tempClaimableDaily = await getClaimableAmount(0);
@@ -33,6 +37,23 @@ const EditClaimPeriod = ({ child }) => {
 
         getClaimableAmounts();
     }, [child, ethersCtx.userAddress]);
+
+    // gets the current active claimPeriod to dynamically style the claimperiod component
+    useEffect(() => {
+        if (child.claimPeriod === 0) {
+            setDailyActive(true);
+            setWeeklyActive(false);
+            setMonthlyActive(false);
+        } else if (child.claimPeriod === 1) {
+            setDailyActive(false);
+            setWeeklyActive(true);
+            setMonthlyActive(false);
+        } else if (child.claimPeriod === 2) {
+            setDailyActive(false);
+            setWeeklyActive(false);
+            setMonthlyActive(true);
+        }
+    }, [child]);
 
     const setClaimPeriodDaily = async (e) => {
         e.preventDefault();
@@ -58,9 +79,9 @@ const EditClaimPeriod = ({ child }) => {
     return (
         <div className={styles.editClaimPeriod}>
             <div className={styles.claimPeriodContainer}>
-                <ClaimPeriod type="Daily" setClaimPeriod={setClaimPeriodDaily} claimableAmount={claimableDaily} />
-                <ClaimPeriod type="Weekly" setClaimPeriod={setClaimPeriodWeekly} claimableAmount={claimableWeekly} />
-                <ClaimPeriod type="Monthly" setClaimPeriod={setClaimPeriodMonthly} claimableAmount={claimableMonthly} />
+                <ClaimPeriod type="Daily" setClaimPeriod={setClaimPeriodDaily} claimableAmount={claimableDaily} active={dailyActive}/>
+                <ClaimPeriod type="Weekly" setClaimPeriod={setClaimPeriodWeekly} claimableAmount={claimableWeekly} active={weeklyActive}/>
+                <ClaimPeriod type="Monthly" setClaimPeriod={setClaimPeriodMonthly} claimableAmount={claimableMonthly} active={monthlyActive}/>
             </div>
         </div>
     );
