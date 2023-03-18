@@ -8,8 +8,10 @@ import { useEvent } from "../../../hooks/useEvent";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import TokenOption from "./TokenOption";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
+    const [tokenBalance, setTokenBalance] = useState();
     const ethersCtx = useContext(EthersContext);
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
@@ -19,6 +21,15 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
         await tx.wait(1);
         setChanged((prev) => !prev);
     };
+
+    useEffect(() => {
+        const getBalanceOfTokens = async () => {
+            if (!ethersCtx.contract) return;
+            const amount = await ethersCtx.contract.getBalanceTest(child.tokenPreference);
+            setTokenBalance(amount.toString());
+        };
+        getBalanceOfTokens();
+    }, [ethersCtx, ethersCtx.userAddress, child]);
 
     return (
         <div className={styles.tokenPreference}>
@@ -34,7 +45,7 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
                     </div>
                 </div>
                 <div className={styles.amountOwned}>
-                    <p className={styles.amount}>1000</p>
+                    <p className={styles.amount}>{weiToEth(tokenBalance)}</p>
                     <p className={styles.tokenSymbol}>{getSymbolByAddress(tokens, child.tokenPreference)}</p>
                 </div>
             </div>

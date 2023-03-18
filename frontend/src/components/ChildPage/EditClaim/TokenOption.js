@@ -3,6 +3,7 @@ import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 import styles from "./TokenOption.module.scss";
 
@@ -32,7 +33,7 @@ const TokenOption = ({ token, setNewTokenPreference }) => {
             </div>
             <div className={styles.flexContainer}>
                 <div className={styles.tokenOptionAmountOwned}>
-                    <p className={styles.tokenOptionAmount}>{tokenBalance}</p>
+                    <p className={styles.tokenOptionAmount}>{weiToEth(tokenBalance)}</p>
                     <p className={styles.tokenOptionSymbol}>{token.symbol}</p>
                 </div>
                 <div className={styles.buttonContainer}>

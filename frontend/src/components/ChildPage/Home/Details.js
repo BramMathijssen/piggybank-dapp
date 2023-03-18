@@ -1,6 +1,7 @@
 import React from "react";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 import styles from "./Details.module.scss";
 
@@ -19,7 +20,7 @@ const Details = ({ parentAddress, child }) => {
                         <p className={styles.info}>Token preference:</p>
                         <p className={styles.result}>{child.tokenPreference} </p>
                         <p className={styles.info}>Claimable amount:</p>
-                        <p className={styles.result}>{child.claimableAmount.toString()}</p>
+                        <p className={styles.result}>{weiToEth(child.claimableAmount.toString())}</p>
                         <p className={styles.info}>Next Claim date:</p>
                         <p className={styles.result}>{unixTimestampToReadable(child.nextClaimPeriod.toString()).formattedDate}</p>
                         <p className={styles.info}>Claim Period:</p>

@@ -1,17 +1,18 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import EthersContext from "../../../context/ethers-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { weiToEth } from "../../../helpers/weiToEth";
 import { useEvent } from "../../../hooks/useEvent";
 import { useEventCustom } from "../../../hooks/useEventCustom";
 
 import styles from "./Transactions.module.scss";
 
-const Transactions = ({parentAddress, claimed}) => {
+const Transactions = ({ parentAddress, claimed }) => {
     const ethersCtx = useContext(EthersContext);
     const parentTokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
@@ -53,7 +54,7 @@ const Transactions = ({parentAddress, claimed}) => {
         return (
             <div className={styles.amountClaimed}>
                 <p>
-                    +{rowData[0].claimableAmount.toString()} {tokenSymbol}
+                    +{weiToEth(rowData[0].claimableAmount.toString())} {tokenSymbol}
                 </p>
                 <p></p>
             </div>

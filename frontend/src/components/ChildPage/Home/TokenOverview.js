@@ -4,6 +4,7 @@ import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
+import { weiToEth } from "../../../helpers/weiToEth";
 import { useEvent } from "../../../hooks/useEvent";
 
 import styles from "./TokenOverview.module.scss";
@@ -74,7 +75,7 @@ const TokenOverview = ({ parentAddress, claimed }) => {
                                     </div>
                                 </div>
                                 <div className={styles.tokenAmount}>
-                                    <p>{token.amount}</p>
+                                    <p>{weiToEth(token.amount)}</p>
                                 </div>
                             </div>
                         ) : null;

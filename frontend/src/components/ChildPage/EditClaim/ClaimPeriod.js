@@ -1,4 +1,5 @@
 import React from "react";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 import styles from "./ClaimPeriod.module.scss";
 
@@ -22,7 +23,7 @@ const ClaimPeriod = ({ type, setClaimPeriod, claimableAmount, active }) => {
                     <div className={styles.claimableAmount}>
                         <p className={styles.claimAble}>Claimable</p>
                         <div className={styles.amountFlex}>
-                            <p>{claimableAmount}</p>
+                            <p>{weiToEth(claimableAmount)}</p>
                             <p>/{transformString(type)}</p>
                         </div>
                     </div>
