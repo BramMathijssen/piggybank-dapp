@@ -10,6 +10,7 @@ import { unixTimestampToReadable } from "../../../helpers/unixToDate";
 import { getNameByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import { useEvent } from "../../../hooks/useEvent";
 import EthersContext from "../../../context/ethers-context";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 const TransactionsTable = ({ transactions }) => {
     const ethersCtx = useContext(EthersContext);
@@ -52,7 +53,7 @@ const TransactionsTable = ({ transactions }) => {
         return (
             <div className={styles.amountClaimed}>
                 <p>
-                    -{rowData[0].claimableAmount.toString()} {tokenName}
+                    -{weiToEth(rowData[0].claimableAmount.toString())} {tokenName}
                 </p>
             </div>
         );

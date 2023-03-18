@@ -1,4 +1,4 @@
-import {ethers } from "ethers";
+import { ethers } from "ethers";
 import abi from "../../../constants/tokenCreator.abi.json";
 import React, { useContext, useEffect, useState } from "react";
 import EthersContext from "../../../context/ethers-context";
@@ -8,6 +8,7 @@ import styles from "./Tokens.module.scss";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 const Tokens = () => {
     const ethersCtx = useContext(EthersContext);
@@ -47,7 +48,6 @@ const Tokens = () => {
         }
     };
 
-
     const getTotalSupplyForToken = (tokenAddress) => {
         try {
             for (let i = 0; i < tokenBalanceList.length; i++) {
@@ -75,8 +75,8 @@ const Tokens = () => {
                                 <p className={styles.address}>{truncateAddress(token.tokenAddress)}</p>
                             </div>
                             <div className={styles.tokenAmounts}>
-                                <p className={styles.balance}>balance: {getBalanceForToken(token.tokenAddress)}</p>
-                                <p className={styles.totalSupply}>Total Supply: {getTotalSupplyForToken(token.tokenAddress)}</p>
+                                <p className={styles.balance}>balance: {weiToEth(getBalanceForToken(token.tokenAddress))}</p>
+                                <p className={styles.totalSupply}>Total Supply: {weiToEth(getTotalSupplyForToken(token.tokenAddress))}</p>
                             </div>
                         </div>
                     );

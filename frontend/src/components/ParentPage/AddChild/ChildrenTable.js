@@ -10,6 +10,7 @@ import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenD
 import styles from "./ChildrenTable.module.scss";
 import { useEvent } from "../../../hooks/useEvent";
 import EthersContext from "../../../context/ethers-context";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 const Table = ({ children }) => {
     const ethersCtx = useContext(EthersContext);
@@ -38,7 +39,7 @@ const Table = ({ children }) => {
         const tokenSymbol = getSymbolByAddress(tokens, rowData.tokenPreference);
         return (
             <div className={styles.nameBody}>
-                <p>{rowData.baseAmount.toString()} </p>
+                <p>{weiToEth(rowData.baseAmount.toString())} </p>
                 <p>{tokenSymbol}</p>
             </div>
         );
@@ -78,7 +79,7 @@ const Table = ({ children }) => {
             <DataTable value={children} scrollable scrollHeight="450px" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "5%" }} body={avatarBodyTemplate}></Column>
                 <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
-                <Column field="amount" header="Allowance" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
+                <Column field="amount" header="Base Allowance" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
                 <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
                 <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimBodyTemplate}></Column>
                 <Column field="token" header="Token" style={{ width: "25%" }} body={tokenBodyTemplate}></Column>

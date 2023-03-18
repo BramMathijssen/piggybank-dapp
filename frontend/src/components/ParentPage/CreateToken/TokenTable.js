@@ -5,10 +5,10 @@ import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 
 import styles from "./TokenTable.module.scss";
+import { weiToEth } from "../../../helpers/weiToEth";
 
 const TokenTable = ({ tokens }) => {
-
-    console.log(`rendering table`)
+    console.log(`rendering table`);
 
     const avatarBodyTemplate = (rowData) => {
         console.log(rowData);
@@ -41,7 +41,7 @@ const TokenTable = ({ tokens }) => {
     const tokenSupplyBodyTemplate = (rowData) => {
         return (
             <div className={styles.nameBody}>
-                <p>{rowData.supply.toString()} </p>
+                <p>{weiToEth(rowData.supply.toString())} </p>
             </div>
         );
     };
