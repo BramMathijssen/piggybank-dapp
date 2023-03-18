@@ -31,6 +31,7 @@ const ClaimCountdown = ({ child, setClaimed, claimed }) => {
 
     return (
         <div className={styles.claimCountdown}>
+            <h2 className={styles.title}>Time Untill Claim</h2>
             <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={child.claimPeriod} /> : null}</div>
             <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claimHandler} size="medium" content="claim"></Button> : null}</div>
         </div>

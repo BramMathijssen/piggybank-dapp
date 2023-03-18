@@ -15,7 +15,7 @@
     width: 40%;
     background-color: rgb(247, 247, 247);
     border-radius: 12px;
-    border: 3px solid #00FFC3;
+    border: 3px solid #00ffc3;
 }
 
 .tokenInfo {
@@ -61,81 +61,12 @@
     font-size: 14px;
 }
 
-// token options
-.tokenOptionsContainer{
-    display: flex;
-    gap: 20px;
-}
-
-.pickTokenTitle{
+.pickTokenTitle {
     margin-top: 40px;
 }
-.tokenOptions {
-    background-color: rgb(247, 247, 247);
-    padding: 16px;
-    border-radius: 12px;
-    width: 220px;
-}
 
-.tokenOptionInfo {
+// token options
+.tokenOptionsContainer {
     display: flex;
-    align-items: center;
-}
-
-.tokenOptionAvatar {
-    margin-right: 10px;
-}
-
-.tokenOptionDetails p {
-    margin: 0;
-}
-
-.tokenOptionName {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.tokenOptionAddress {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgb(124, 124, 124);
-}
-
-.flexContainer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 25px;
-}
-
-.tokenOptionAmountOwned {
-    display: flex;
-    align-items: flex-end;
-}
-
-.tokenOptionAmount {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-.tokenOptionSymbol {
-    font-size: 12px;
-}
-
-.tokenOptionAmountOwned p {
-    margin: 0;
-}
-
-.tokenOptionSymbol {
-}
-
-.pickButton {
-    height: 25px;
-    width: 60px;
-    border: none;
-    background-color: black;
-    border-radius: 6px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
+    gap: 20px;
 }

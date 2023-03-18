@@ -7,6 +7,7 @@ import { jsNumberForAddress } from "react-jazzicon";
 import { useEvent } from "../../../hooks/useEvent";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
+import TokenOption from "./TokenOption";
 
 const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const ethersCtx = useContext(EthersContext);
@@ -42,30 +43,7 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
                 {tokens.map((token) => {
                     // only display tokens which are not currently prefered
                     if (token.tokenAddress !== child.tokenPreference) {
-                        return (
-                            <div className={styles.tokenOptions}>
-                                <div className={styles.tokenOptionInfo}>
-                                    <div className={styles.tokenOptionAvatar}>
-                                        <Jazzicon diameter={30} seed={jsNumberForAddress(token.tokenAddress)} />
-                                    </div>
-                                    <div className={styles.tokenOptionDetails}>
-                                        <p className={styles.tokenOptionName}>{token.name}</p>
-                                        <p className={styles.tokenOptionAddress}>{truncateAddress(token.tokenAddress)}</p>
-                                    </div>
-                                </div>
-                                <div className={styles.flexContainer}>
-                                    <div className={styles.tokenOptionAmountOwned}>
-                                        <p className={styles.tokenOptionAmount}>1000</p>
-                                        <p className={styles.tokenOptionSymbol}>MC </p>
-                                    </div>
-                                    <div className={styles.buttonContainer}>
-                                        <button className={styles.pickButton} onClick={() => setNewTokenPreference(token.tokenAddress)}>
-                                            Pick
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        );
+                        return <TokenOption token={token} setNewTokenPreference={setNewTokenPreference} />;
                     }
                 })}
             </div>
