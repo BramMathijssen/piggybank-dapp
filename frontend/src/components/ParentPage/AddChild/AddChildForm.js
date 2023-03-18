@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import React, { useContext, useRef, useState } from "react";
 import ChildContext from "../../../context/child-context";
 import EthersContext from "../../../context/ethers-context";
@@ -25,7 +26,9 @@ const AddChildForm = () => {
     const addChildHandler = async (e) => {
         e.preventDefault();
         console.log(`Adding new child`);
-        const tx = await ethersCtx.contract.addChild(childNameRef.current.value, childAddressRef.current.value, tokenPreferenceRef.current.value, baseAmountRef.current.value);
+        const etherValue = parseFloat(baseAmountRef.current.value);
+        const weiValue = ethers.utils.parseEther(etherValue.toString());
+        const tx = await ethersCtx.contract.addChild(childNameRef.current.value, childAddressRef.current.value, tokenPreferenceRef.current.value, weiValue);
         
         await tx.wait(1);
         childCtx.setChildAdded((current) => !current); // toggle boolean to force a re-render on ChildOverview
@@ -37,7 +40,7 @@ const AddChildForm = () => {
                 <Input label="Name" content="Name" inputRef={childNameRef} />
                 <Input label="Child Address" content="Address" inputRef={childAddressRef} />
                 <Dropdown label="Token Preference" options={tokens} optionValue="tokenAddress" optionDisplay="name" inputRef={tokenPreferenceRef} />
-                <Input label="Base Amount" content="Amount" inputRef={baseAmountRef} />
+                <Input label="Base Amount (in ETH)" content="Amount" inputRef={baseAmountRef} />
                 <div className={styles.buttonContainer}>
                     <Button content="add" size="medium" />
                 </div>

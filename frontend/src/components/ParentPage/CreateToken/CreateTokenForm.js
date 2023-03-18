@@ -1,4 +1,5 @@
-import React, { useContext, useRef } from "react";
+import { ethers } from "ethers";
+import React, { useContext, useEffect, useRef } from "react";
 import EthersContext from "../../../context/ethers-context";
 import Button from "../../UI/Button";
 import Input from "../../UI/Input";
@@ -12,10 +13,13 @@ const CreateTokenForm = (props) => {
 
     const ethersCtx = useContext(EthersContext);
 
+
     const createTokenHandler = async (e) => {
         e.preventDefault();
         console.log(`Creating new token`);
-        const tx = await ethersCtx.contract.createNewToken(tokenSupplyRef.current.value, tokenNameRef.current.value, tokenSymbolRef.current.value);
+        const etherValue = parseFloat(tokenSupplyRef.current.value);
+        const weiValue = ethers.utils.parseEther(etherValue.toString());
+        const tx = await ethersCtx.contract.createNewToken(weiValue, tokenNameRef.current.value, tokenSymbolRef.current.value);
 
         await tx.wait(1);
         props.setTokenAdded((current) => !current); // toggle boolean to force a re-render on TokenOverview
@@ -26,7 +30,7 @@ const CreateTokenForm = (props) => {
             <form className={styles.form} onSubmit={createTokenHandler}>
                 <Input label="Token Name" content="Token Name" inputRef={tokenNameRef} />
                 <Input label="Token Symbol" content="Token Symbol" inputRef={tokenSymbolRef} />
-                <Input label="Supply" content="Supply" inputRef={tokenSupplyRef} />
+                <Input label="Supply (in ETH)" content="Supply (in ETH)" inputRef={tokenSupplyRef} />
                 <div className={styles.buttonContainer}>
                     <Button content="add" size="medium" />
                 </div>
