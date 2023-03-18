@@ -8,17 +8,15 @@ import { useEvent } from "../../../hooks/useEvent";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
-const EditTokenPreference = ({ child, parentAddress }) => {
+const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const ethersCtx = useContext(EthersContext);
-    const [preferenceChanged, setPreferenceChanged] = useState(false);
-
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
     const setNewTokenPreference = async (tokenAddress) => {
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
         await tx.wait(1);
-        setPreferenceChanged((prev) => !prev);
+        setChanged((prev) => !prev);
     };
 
     return (

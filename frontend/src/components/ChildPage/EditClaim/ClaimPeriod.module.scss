@@ -23,20 +23,31 @@
     margin-bottom: 25px;
 }
 
-.claimableAmount p:first-child {
-    color: grey;
-    font-size: 13px;
-}
-
-.claimableAmount p:last-child {
-    font-size: 25px;
-    font-weight: 600;
-}
-
 .flexContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.claimAble {
+    font-size: 13px;
+    color: grey;
+}
+
+.amountFlex {
+    display: flex;
+    align-items: center;
+}
+
+.amountFlex p:first-child {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.amountFlex p:nth-child(2) {
+    margin-left: 5px;
+    font-size: 19px;
+    color: grey;
 }
 
 .claimPeriodButton {
@@ -50,7 +61,7 @@
     cursor: pointer;
 }
 
-.selected{
+.selected {
     font-weight: 600;
     text-transform: uppercase;
     color: grey;

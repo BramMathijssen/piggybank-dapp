@@ -8,7 +8,7 @@ import EthersContext from "../../../context/ethers-context";
 const EditClaimPanel = () => {
     const [parentAddress, setParentAddress] = useState();
     const [child, setChild] = useState();
-    const [claimed, setClaimed] = useState(false);
+    const [changed, setChanged] = useState(false);
     const ethersCtx = useContext(EthersContext);
 
     useEffect(() => {
@@ -24,12 +24,12 @@ const EditClaimPanel = () => {
             setChild(tempChild);
         };
         initialiseChildData();
-    }, [ethersCtx, claimed]);
+    }, [ethersCtx, changed]);
 
     return (
         <div className={styles.flexContainer}>
-            {child &&<EditClaimPeriod child={child}/>}
-            {child && <EditTokenPreference parentAddress={parentAddress} child={child}/> }
+            {child && <EditClaimPeriod child={child} setChanged={setChanged} />}
+            {child && <EditTokenPreference parentAddress={parentAddress} child={child} setChanged={setChanged} />}
         </div>
     );
 };
