@@ -1,12 +1,7 @@
 @import "./../../../assets/styles/variables";
 @import "./../../../assets/styles/mixins";
+@import "./../../../assets/styles/main";
 
-.title {
-    margin-top: 0px;
-}
-
-.rowContainer {
-}
 
 .panelTitle {
     margin-bottom: 0px;
@@ -62,7 +57,8 @@
 
 .childTitle {
     display: flex;
-    margin-bottom: 0px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     align-items: center;
 }
 
