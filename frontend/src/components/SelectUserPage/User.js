@@ -1,16 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../UI/Button";
-
+import { motion } from "framer-motion";
 
 import styles from "./User.module.scss";
 
 const User = ({ type }) => {
     return (
-        <div  className={styles.container}>
+        <motion.div
+            className={styles.container}
+            whileHover={{
+                scale: 1.1,
+                border: "5px solid #00FFC3",
+            }}
+            transition={{ type: "spring" }}
+        >
             <div className={styles.title}>{type}</div>
             <div className={styles.content}>
-                <p>Hey im content</p>
             </div>
             <div className={styles.action}>
                 {type === "Parent" ? (
@@ -23,7 +29,7 @@ const User = ({ type }) => {
                     </Link>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };
 
