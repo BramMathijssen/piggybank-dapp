@@ -1,5 +1,6 @@
 import React from "react";
 import { weiToEth } from "../../../helpers/weiToEth";
+import { motion } from "framer-motion";
 
 import styles from "./ClaimPeriod.module.scss";
 
@@ -15,7 +16,16 @@ const ClaimPeriod = ({ type, setClaimPeriod, claimableAmount, active }) => {
     };
     return (
         <>
-            <div className={`${styles[`claimPeriod`]} ${active ? styles.active : ""}`}>
+            <motion.div
+                className={`${styles[`claimPeriod`]} ${active ? styles.active : ""}`}
+                layout
+                whileHover={{
+                    scale: 1.03,
+                    originX:0,
+                    border: '2px solid black'
+                }}
+                transition={{ type: "spring", stiffness: 500}}
+            >
                 <div className={styles.period}>
                     <p className={styles.type}>{type}</p>
                 </div>
@@ -35,7 +45,7 @@ const ClaimPeriod = ({ type, setClaimPeriod, claimableAmount, active }) => {
                         <p className={styles.selected}>Current</p>
                     )}
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 };

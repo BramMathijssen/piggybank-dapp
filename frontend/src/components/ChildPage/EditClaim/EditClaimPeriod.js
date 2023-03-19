@@ -2,6 +2,7 @@ import React, { useContext, useRef, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import ClaimPeriod from "./ClaimPeriod";
 
+
 import styles from "./EditClaimPeriod.module.scss";
 
 const EditClaimPeriod = ({ child, setChanged }) => {
