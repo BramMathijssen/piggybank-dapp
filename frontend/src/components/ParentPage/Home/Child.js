@@ -8,12 +8,12 @@ import styles from "./Child.module.scss";
 const Child = ({ name, address }) => {
     return (
         <div className={styles.child}>
-            <div className={styles.childAvatar}>
-                <Jazzicon diameter={50} seed={jsNumberForAddress(address)} />
+            <div className={styles.avatar}>
+                <Jazzicon diameter={44} seed={jsNumberForAddress(address)} />
             </div>
-            <div className={styles.childContent}>
-                <p>{name}</p>
-                <p>{truncateAddress(address)}</p>
+            <div className={styles.content}>
+                <p className={styles.name}>{name}</p>
+                <p className={styles.address}>{truncateAddress(address)}</p>
             </div>
         </div>
     );

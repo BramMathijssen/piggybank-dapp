@@ -1,60 +1,13 @@
-@import "./../../../assets/styles/variables";
-@import "./../../../assets/styles/mixins";
 @import "./../../../assets/styles/main";
 
-
-.panelTitle {
-    margin-bottom: 0px;
-}
-
-.panelContainer {
-    display: flex;
-    flex-direction: row;
-    gap: 75px;
-    height: 100%;
-    // display: flex;
-    // flex-direction: column;
-    // flex: 1;
-    // padding: 50px;
-    // overflow: auto;
-    // background: #ffffff;
-    // border: 2px solid #000000;
-    // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 8px 8px 0px #000000;
-    // border-radius: 12px;
-}
-
-.transactionsPanel{
-    display: flex;
-    flex-direction: column;
-    flex: 0.7;
-}
-
-.tokensPanel{
-    display: flex;
-    flex-direction: column;
-    flex: 0.3;
-}
-
-
-
-// .badgeContainer > :first-child {
-//     background-color: red;
-// }
-
-// .badgeContainer > :nth-child(2) {
-//     background-color: green;
-// }
-
-// .badgeContainer > :nth-child(3) {
-//     background-color: blue;
-// }
-
+/* Badge Container */
 .badgeContainer {
     display: flex;
     gap: 50px;
     margin-top: -20px;
 }
 
+/* Child */
 .childTitle {
     display: flex;
     margin-top: 25px;
@@ -62,15 +15,15 @@
     align-items: center;
 }
 
-.title{
+.title {
     margin: 0;
 }
 
-.iconPlus{
+.iconPlus {
     background-color: #daf465;
     border-radius: 20px;
     border: 2px solid black;
-    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25), 2px 2px 0px #000000;
+    box-shadow: 2px 2px 0px #000000;
     margin-left: 7px;
 }
 
@@ -78,3 +31,25 @@
     display: flex;
     gap: 50px;
 }
+
+/* Panels */
+.panelContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 75px;
+}
+
+/* Transactions Panel */
+.transactionsPanel {
+    display: flex;
+    flex-direction: column;
+    flex: 0.7;
+}
+
+/* Tokens Panel */
+.tokensPanel {
+    display: flex;
+    flex-direction: column;
+    flex: 0.3;
+}
+

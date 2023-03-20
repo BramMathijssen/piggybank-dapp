@@ -22,9 +22,9 @@ const HomePanel = () => {
     return (
         <>
             <div className={styles.badgeContainer}>
-                <Badge type="children" amount={myChildren.length} icon={<Users size={50} />} />
-                <Badge type="tokens" amount={myTokens.length} icon={<Coins size={50} />} />
-                <Badge type="transactions" amount={myTransactions.length} icon={<ArrowsLeftRight size={50} />} />
+                <Badge type="children" amount={myChildren.length} icon={<Users size={42} />} />
+                <Badge type="tokens" amount={myTokens.length} icon={<Coins size={42} />} />
+                <Badge type="transactions" amount={myTransactions.length} icon={<ArrowsLeftRight size={42} />} />
             </div>
             <div className={styles.childTitle}>
                 <h2 className={styles.title}>Your Children</h2>
@@ -40,14 +40,13 @@ const HomePanel = () => {
             <div className={styles.panelContainer}>
                 <div className={styles.transactionsPanel}>
                     <h2 className={styles.transactionsTitle}>Recent Transactions</h2>
-                    <Panel>
-                        {/* <TransactionsTable transactions={eventsCtx.transactions} /> */}
-                        {myTransactions && <TransactionsTable transactions={myTransactions} />}
-                    </Panel>
+
+                    {/* <TransactionsTable transactions={eventsCtx.transactions} /> */}
+                    {myTransactions && <TransactionsTable transactions={myTransactions} />}
                 </div>
                 <div className={styles.tokensPanel}>
                     <h2 className={styles.tokensTitle}>My Tokens</h2>
-                    <Panel>{ethersCtx.contract && <Tokens />}</Panel>
+                    {ethersCtx.contract && <Tokens />}
                 </div>
             </div>
         </>

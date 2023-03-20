@@ -11,9 +11,8 @@ const User = ({ type }) => {
             className={styles.container}
             whileHover={{
                 scale: 1.1,
-                border: "5px solid #00FFC3",
             }}
-            transition={{ type: "spring" }}
+            transition={{ type: "spring", stiffness: 500}}
         >
             <div className={styles.title}>{type}</div>
             <div className={styles.content}>

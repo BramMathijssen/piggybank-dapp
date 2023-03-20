@@ -1,6 +1,13 @@
+@import "./../../../assets/styles/main";
+
+.transactionsTable{
+    @include panel;
+    flex: 1;
+}
+
 .amountClaimed{
     font-size: 16px;
-    color: rgb(238, 106, 97);
+    color: $text-red;
     font-weight: 600;
 }
 
@@ -10,7 +17,7 @@
 }
 
 .flexContainer p {
-    color: grey;
-    font-size: 12px;
+    color: $text-secondary-grey;
+    font-size: $font-size-small;
     margin: 2px;
 }

@@ -60,14 +60,14 @@ const TransactionsTable = ({ transactions }) => {
     };
 
     return (
-        <>
+        <div className={styles.transactionsTable}>
             <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                 <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
                 <Column field="" header="Name" style={{ width: "40%" }} body={nameAddressBodyTemplate}></Column>
                 <Column field="period" header="Claim Moment" style={{ width: "15%" }} body={claimPeriodBodyTemplate}></Column>
                 <Column field="token" header="Amount" style={{ width: "16%" }} body={tokenBodyTemplate}></Column>
             </DataTable>
-        </>
+        </div>
     );
 };
 

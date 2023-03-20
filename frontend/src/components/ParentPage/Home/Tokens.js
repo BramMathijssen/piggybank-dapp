@@ -64,9 +64,8 @@ const Tokens = () => {
         <div className={styles.tokens}>
             {tokens &&
                 tokens.map((token) => {
-                    console.log(token);
                     return (
-                        <div className={styles.flexContainer}>
+                        <div key={token.tokenAddress} className={styles.flexContainer}>
                             <div className={styles.avatar}>
                                 <Jazzicon diameter={35} seed={jsNumberForAddress(token.tokenAddress)} />
                             </div>

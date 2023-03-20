@@ -1,42 +1,8 @@
-@use "sass:math";
-
-//breakpoints
-$xs: 480px;
-$sm: 640px;
-$md: 768px;
-$lg: 1024px;
-$xl: 1280px;
-$xxl: 1536px;
-
-//Font-size
-$base-font-size: 16px;
-$default-min-font-size: 8px;
-$default-max-font-size: 32px;
-
-// Heading styles
-@mixin heading-style {
-    text-transform: uppercase;
-    max-width: 600px;
-    color: yellow;
-    -webkit-text-stroke: 2px black;
-    filter: drop-shadow(5px 5px black);
-    line-height: 1.2;
-    letter-spacing: -2px;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
-h1.styled {
-    @include heading-style;
-    font-size: 70px;
-}
-
-h2.styled {
-    @include heading-style;
-    font-size: 45px;
-}
-
-h3.styled {
-    @include heading-style;
-    font-size: 25px;
+// panel border styling
+@mixin panel {
+    background: #ffffff;
+    border: 1px solid #000000;
+    box-shadow: 6px 6px 0px #000000;
+    border-radius: 12px;
+    overflow: auto; // fixes issue where corner of the border is hidden
 }
