@@ -5,19 +5,28 @@
     flex: 1;
 }
 
-.amountClaimed{
-    font-size: 16px;
+.name{
+    font-size: $font-size-base;
+    font-weight: 600;
+    color: $primary-black;
+}
+
+.address{
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+}
+
+.dateTime{
+    font-size: $font-size-base;
+}
+
+.token{
+    font-size: $font-size-base;
+}
+
+.amount{
+    font-size: $font-size-base;
     color: $text-red;
     font-weight: 600;
-}
-
-.flexContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.flexContainer p {
-    color: $text-secondary-grey;
-    font-size: $font-size-small;
-    margin: 2px;
 }

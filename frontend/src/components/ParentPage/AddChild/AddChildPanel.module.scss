@@ -1,9 +1,8 @@
-@import "./../../../assets/styles/variables";
-@import "./../../../assets/styles/mixins";
+@import "./../../../assets/styles/main.scss";
 
-.flexContainer {
+.addChildPanel {
     display: flex;
-    gap: 100px;
+    gap: 50px;
     margin-bottom: 50px;
     flex: 0.6;
 }
@@ -11,13 +10,12 @@
 .addChildContainer {
     display: flex;
     flex-direction: column;
-    flex: 0.4;
+    flex: 0.3;
 }
 
 .overviewContainer {
     display: flex;
-    // height: 500px; //hardcoded height
     flex-direction: column;
-    flex: 0.6;
+    flex: 0.7;
 }
 

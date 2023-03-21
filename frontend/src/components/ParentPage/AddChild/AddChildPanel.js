@@ -9,7 +9,7 @@ const AddChildPanel = () => {
     const childCtx = useContext(ChildContext);
 
     return (
-        <div className={styles.flexContainer}>
+        <div className={styles.addChildPanel}>
             <div className={styles.addChildContainer}>
                 <h2 className={styles.title}>Add Child</h2>
                 <AddChildForm />

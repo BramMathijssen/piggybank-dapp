@@ -1,8 +1,8 @@
 .button {
   background-color: #7be5ce;
   color: black;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0 black;
+  border: 1px solid black;
+  box-shadow: 3px 3px 0 black;
   cursor: pointer;
   margin-right: 2em;
   text-transform: uppercase;
@@ -30,9 +30,9 @@
   }
 
   &.medium {
-    font-size: 14px;
-    font-weight: 700;
-    padding: 8px 25px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 22px;
   }
 
   &.small {

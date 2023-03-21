@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 import EthersContext from "../../../context/ethers-context";
 import Badge from "./Badge";
 import Child from "./Child";
 import { Users, Coins, ArrowsLeftRight, Plus } from "phosphor-react";
-import Panel from "../../UI/Panel";
 import { useEvent } from "../../../hooks/useEvent";
 import TransactionsTable from "./TransactionsTable";
 import Tokens from "./Tokens";
@@ -22,9 +21,9 @@ const HomePanel = () => {
     return (
         <>
             <div className={styles.badgeContainer}>
-                <Badge type="children" amount={myChildren.length} icon={<Users size={42} />} />
-                <Badge type="tokens" amount={myTokens.length} icon={<Coins size={42} />} />
-                <Badge type="transactions" amount={myTransactions.length} icon={<ArrowsLeftRight size={42} />} />
+                <Badge type="children" amount={myChildren.length} icon={<Users size={40} />} />
+                <Badge type="tokens" amount={myTokens.length} icon={<Coins size={40} />} />
+                <Badge type="transactions" amount={myTransactions.length} icon={<ArrowsLeftRight size={40} />} />
             </div>
             <div className={styles.childTitle}>
                 <h2 className={styles.title}>Your Children</h2>

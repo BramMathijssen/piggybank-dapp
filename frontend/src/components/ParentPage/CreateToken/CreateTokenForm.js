@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import EthersContext from "../../../context/ethers-context";
 import Button from "../../UI/Button";
 import Input from "../../UI/Input";
@@ -12,7 +12,6 @@ const CreateTokenForm = (props) => {
     const tokenSupplyRef = useRef();
 
     const ethersCtx = useContext(EthersContext);
-
 
     const createTokenHandler = async (e) => {
         e.preventDefault();
@@ -32,7 +31,7 @@ const CreateTokenForm = (props) => {
                 <Input label="Token Symbol" content="Token Symbol" inputRef={tokenSymbolRef} />
                 <Input label="Supply (in ETH)" content="Supply (in ETH)" inputRef={tokenSupplyRef} />
                 <div className={styles.buttonContainer}>
-                    <Button content="add" size="medium" />
+                    <Button content="Add" size="medium" />
                 </div>
             </form>
         </div>

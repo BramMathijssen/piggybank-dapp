@@ -18,7 +18,6 @@ const AddChildForm = () => {
     const [changed, setChanged] = useState(false);
 
     const ethersCtx = useContext(EthersContext);
-    // const tokenCtx = useContext(TokenContext);
     const tokens = useEvent("TokenCreated", changed, ethersCtx.userAddress);
     const childCtx = useContext(ChildContext);
 

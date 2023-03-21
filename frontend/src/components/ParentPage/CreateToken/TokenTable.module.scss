@@ -1,28 +1,50 @@
+@import "./../../../assets/styles/main";
 
-.nameBody {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+// .nameBody {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+// }
+
+// .token{
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .token p {
+//     color: grey;
+//     font-size: 12px;
+//     margin: 2px;
+// }
+
+// .flexContainer {
+//     display: flex;
+//     flex-direction: column;
+// }
+
+// .flexContainer p {
+//     color: grey;
+//     font-size: 12px;
+//     margin: 2px;
+// }
+
+/* Name Address */
+.name {
+    font-size: $font-size-base;
+    font-weight: 600;
 }
 
-.token{
-    display: flex;
-    flex-direction: column;
+.address {
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
 }
 
-.token p {
-    color: grey;
-    font-size: 12px;
-    margin: 2px;
+/* Token Symbol */
+.tokenSymbol {
+    font-size: $font-size-base;
 }
 
-.flexContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.flexContainer p {
-    color: grey;
-    font-size: 12px;
-    margin: 2px;
+.tokenSupply{
+    font-size: $font-size-base;
 }
