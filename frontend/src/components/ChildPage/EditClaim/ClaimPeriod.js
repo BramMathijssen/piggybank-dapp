@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { weiToEth } from "../../../helpers/weiToEth";
 import { motion } from "framer-motion";
 
 import styles from "./ClaimPeriod.module.scss";
+import EthersContext from "../../../context/ethers-context";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const ClaimPeriod = ({ type, setClaimPeriod, claimableAmount, active }) => {
+    const ethersCtx = useContext(EthersContext);
+
     const transformString = (period) => {
-        if (type === "Daily") {
+        if (period === "Daily") {
             return "Day";
-        } else if (type === "Weekly") {
+        } else if (period === "Weekly") {
             return "Week";
-        } else if (type === "Monthly") {
+        } else if (period === "Monthly") {
             return "Month";
         }
     };
@@ -25,25 +29,31 @@ const ClaimPeriod = ({ type, setClaimPeriod, claimableAmount, active }) => {
             }}
             transition={{ type: "spring", stiffness: 500 }}
         >
-            <div className={styles.period}>
-                <p className={styles.type}>{type}</p>
-            </div>
-            <div className={styles.flexContainer}>
-                <div className={styles.claimableAmount}>
-                    <p className={styles.claimable}>Claimable</p>
-                    <div className={styles.amountFlex}>
-                        <p className={styles.claimableAmount}>{weiToEth(claimableAmount)}</p>
-                        <p className={styles.claimMoment}>/{transformString(type)}</p>
+            {ethersCtx.loading ? (
+                <LoadingSpinner />
+            ) : (
+                <>
+                    <div className={styles.period}>
+                        <p className={styles.type}>{type}</p>
                     </div>
-                </div>
-                {!active ? (
-                    <button className={styles.claimPeriodButton} onClick={setClaimPeriod}>
-                        Pick
-                    </button>
-                ) : (
-                    <p className={styles.selected}>Current</p>
-                )}
-            </div>
+                    <div className={styles.flexContainer}>
+                        <div className={styles.claimableAmount}>
+                            <p className={styles.claimable}>Claimable</p>
+                            <div className={styles.amountFlex}>
+                                <p className={styles.claimableAmount}>{weiToEth(claimableAmount)}</p>
+                                <p className={styles.claimMoment}>/{transformString(type)}</p>
+                            </div>
+                        </div>
+                        {!active ? (
+                            <button className={styles.claimPeriodButton} onClick={setClaimPeriod}>
+                                Pick
+                            </button>
+                        ) : (
+                            <p className={styles.selected}>Current</p>
+                        )}
+                    </div>
+                </>
+            )}
         </motion.div>
     );
 };

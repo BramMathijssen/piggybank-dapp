@@ -1,3 +1,5 @@
+@import "./../../../assets/styles/main.scss";
+
 .progressBar{
     display: flex;
     justify-content: flex-start;
@@ -9,7 +11,8 @@
 
 .inner{
     display: flex;
-    background-color: #CEFFB7;
+    // background-color: #CEFFB7;
+    background-color: $accent-green;
     height: 78%;
     margin: 3px;
     color: black;

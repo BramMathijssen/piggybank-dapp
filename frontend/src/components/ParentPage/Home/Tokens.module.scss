@@ -3,6 +3,7 @@
 .tokens {
     @include panel;
     padding: 20px;
+    flex: 1;
 }
 
 .flexContainer {

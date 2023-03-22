@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import EditClaimPeriod from "./EditClaimPeriod";
 import EditTokenPreference from "./EditTokenPreference";
 import { motion } from "framer-motion";

@@ -3,10 +3,11 @@ import HomePanel from "../components/ParentPage/Home/HomePanel";
 import AddChildPanel from "../components/ParentPage/AddChild/AddChildPanel";
 import CreateTokenPanel from "../components/ParentPage/CreateToken/CreateTokenPanel";
 import Sidebar from "../components/UI/Sidebar";
-import ConnectWallet from "../components/ParentPage/Layout/ConnectWallet";
-import { motion, AnimatePresence } from "framer-motion";
+import ConnectWallet from "../components/UI/ConnectWallet";
+import { motion } from "framer-motion";
 
 import styles from "./Parent.module.scss";
+import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 const Parent = () => {
     const [home, setHome] = useState(true);
@@ -46,19 +47,18 @@ const Parent = () => {
             <Sidebar links={parentLinks} />
             <div className={styles.content}>
                 <ConnectWallet />
-
                 {home ? (
-                    <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
+                    <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.3 }}>
                         <HomePanel />
                     </motion.div>
                 ) : null}
                 {addChild ? (
-                    <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
+                    <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.3 }}>
                         <AddChildPanel />
                     </motion.div>
                 ) : null}
                 {createToken ? (
-                    <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
+                    <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.3 }}>
                         <CreateTokenPanel />
                     </motion.div>
                 ) : null}

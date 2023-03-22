@@ -11,6 +11,7 @@ import styles from "./ChildrenTable.module.scss";
 import { useEvent } from "../../../hooks/useEvent";
 import EthersContext from "../../../context/ethers-context";
 import { weiToEth } from "../../../helpers/weiToEth";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const Table = ({ children }) => {
     const ethersCtx = useContext(EthersContext);
@@ -74,14 +75,18 @@ const Table = ({ children }) => {
 
     return (
         <div className="card">
-            <DataTable value={children} scrollable scrollHeight="450px" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
-                <Column field="avatar" style={{ width: "1%" }} body={avatarColumnTemplate}></Column>
-                <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressColumnTemplate}></Column>
-                <Column field="amount" header="Base Allowance" style={{ width: "25%" }} body={baseAmountColumnTemplate}></Column>
-                <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodColumnTemplate}></Column>
-                <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimColumnTemplate}></Column>
-                <Column field="token" header="Token" style={{ width: "25%" }} body={tokenColumnTemplate}></Column>
-            </DataTable>
+            {ethersCtx.loading ? (
+                <LoadingSpinner />
+            ) : (
+                <DataTable value={children} scrollable scrollHeight="450px" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
+                    <Column field="avatar" style={{ width: "1%" }} body={avatarColumnTemplate}></Column>
+                    <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressColumnTemplate}></Column>
+                    <Column field="amount" header="Base Allowance" style={{ width: "25%" }} body={baseAmountColumnTemplate}></Column>
+                    <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodColumnTemplate}></Column>
+                    <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimColumnTemplate}></Column>
+                    <Column field="token" header="Token" style={{ width: "25%" }} body={tokenColumnTemplate}></Column>
+                </DataTable>
+            )}
         </div>
     );
 };

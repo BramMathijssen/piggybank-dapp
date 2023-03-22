@@ -1,7 +1,7 @@
-@import "./../assets/styles/variables";
+@import "./../assets/styles/main.scss";
 
 .main {
-    background-color: #F2F5F1;
+    background-color: $background-light;
     position: relative;
     display: flex;
     flex-direction: column;

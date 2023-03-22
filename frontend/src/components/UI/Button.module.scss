@@ -1,8 +1,10 @@
+@import "./../../assets/styles/main.scss";
+
 .button {
-  background-color: #7be5ce;
-  color: black;
-  border: 1px solid black;
-  box-shadow: 3px 3px 0 black;
+  background-color: $button-cyan;
+  color: $primary-black;
+  border: 1px solid $primary-black;
+  box-shadow: 3px 3px 0 $primary-black;
   cursor: pointer;
   margin-right: 2em;
   text-transform: uppercase;
@@ -48,6 +50,6 @@
   /* Button Pseudo-classes */
   &:hover {
     transform: translate(1px, 1px);
-    box-shadow: 1px 1px black;
+    box-shadow: 1px 1px $primary-black;
   }
 }

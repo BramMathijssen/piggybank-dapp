@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import EthersContext from "../../../context/ethers-context";
+import EthersContext from "../../context/ethers-context";
 
 import styles from "./ConnectWallet.module.scss";
 

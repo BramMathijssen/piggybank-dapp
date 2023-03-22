@@ -1,7 +1,7 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 import ClaimPeriod from "./ClaimPeriod";
-
 
 import styles from "./EditClaimPeriod.module.scss";
 
@@ -58,36 +58,45 @@ const EditClaimPeriod = ({ child, setChanged }) => {
 
     const setClaimPeriodDaily = async (e) => {
         e.preventDefault();
+        ethersCtx.setLoading(true);
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildClaimMomentDaily();
         await tx.wait(1);
-
-        setChanged((prev) => !prev); // toggles boolean to force a re-render 
+        ethersCtx.setLoading(false);
+        setChanged((prev) => !prev); // toggles boolean to force a re-render
     };
 
     const setClaimPeriodWeekly = async (e) => {
         e.preventDefault();
+        ethersCtx.setLoading(true);
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildClaimMomentWeekly();
         await tx.wait(1);
-        setChanged((prev) => !prev); // toggles boolean to force a re-render 
+        ethersCtx.setLoading(false);
+        setChanged((prev) => !prev); // toggles boolean to force a re-render
     };
 
     const setClaimPeriodMonthly = async (e) => {
         e.preventDefault();
+        ethersCtx.setLoading(true);
         console.log(`Creating token`);
         const tx = await ethersCtx.contract.setChildClaimMomentMonthly();
         await tx.wait(1);
-        setChanged((prev) => !prev); // toggles boolean to force a re-render 
+        ethersCtx.setLoading(false);
+        setChanged((prev) => !prev); // toggles boolean to force a re-render
     };
 
     return (
         <div className={styles.editClaimPeriod}>
-            <div className={styles.claimPeriodContainer}>
-                <ClaimPeriod type="Daily" setClaimPeriod={setClaimPeriodDaily} claimableAmount={claimableDaily} active={dailyActive} />
-                <ClaimPeriod type="Weekly" setClaimPeriod={setClaimPeriodWeekly} claimableAmount={claimableWeekly} active={weeklyActive} />
-                <ClaimPeriod type="Monthly" setClaimPeriod={setClaimPeriodMonthly} claimableAmount={claimableMonthly} active={monthlyActive} />
-            </div>
+            {ethersCtx.loading ? (
+                <LoadingSpinner />
+            ) : (
+                <div className={styles.claimPeriodContainer}>
+                    <ClaimPeriod type="Daily" setClaimPeriod={setClaimPeriodDaily} claimableAmount={claimableDaily} active={dailyActive} />
+                    <ClaimPeriod type="Weekly" setClaimPeriod={setClaimPeriodWeekly} claimableAmount={claimableWeekly} active={weeklyActive} />
+                    <ClaimPeriod type="Monthly" setClaimPeriod={setClaimPeriodMonthly} claimableAmount={claimableMonthly} active={monthlyActive} />
+                </div>
+            )}
         </div>
     );
 };

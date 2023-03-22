@@ -16,21 +16,29 @@ const AddChildForm = () => {
     const tokenPreferenceRef = useRef();
 
     const [changed, setChanged] = useState(false);
+    // const [loading, setLoading] = useState(false)
 
     const ethersCtx = useContext(EthersContext);
     const tokens = useEvent("TokenCreated", changed, ethersCtx.userAddress);
     const childCtx = useContext(ChildContext);
 
-
     const addChildHandler = async (e) => {
         e.preventDefault();
-        console.log(`Adding new child`);
-        const etherValue = parseFloat(baseAmountRef.current.value);
-        const weiValue = ethers.utils.parseEther(etherValue.toString());
-        const tx = await ethersCtx.contract.addChild(childNameRef.current.value, childAddressRef.current.value, tokenPreferenceRef.current.value, weiValue);
-        
-        await tx.wait(1);
-        childCtx.setChildAdded((current) => !current); // toggle boolean to force a re-render on ChildOverview
+        try {
+            ethersCtx.setLoading(true);
+            console.log(`Adding new child`);
+            const etherValue = parseFloat(baseAmountRef.current.value);
+            const weiValue = ethers.utils.parseEther(etherValue.toString());
+            const tx = await ethersCtx.contract.addChild(childNameRef.current.value, childAddressRef.current.value, tokenPreferenceRef.current.value, weiValue);
+
+            await tx.wait(1);
+            console.log(tx);
+            ethersCtx.setLoading(false);
+            childCtx.setChildAdded((current) => !current); // toggle boolean to force a re-render on ChildOverview
+        } catch (error) {
+            console.log(`something went wrong with your transaction.${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
     return (
