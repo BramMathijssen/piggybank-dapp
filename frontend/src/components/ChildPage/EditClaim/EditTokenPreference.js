@@ -1,11 +1,10 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext,  useState, useEffect } from "react";
 
 import styles from "./EditTokenPreference.module.scss";
 import EthersContext from "../../../context/ethers-context";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 import { useEvent } from "../../../hooks/useEvent";
-import { truncateAddress } from "../../../helpers/truncateAddress";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import TokenOption from "./TokenOption";
 import { weiToEth } from "../../../helpers/weiToEth";
@@ -32,7 +31,7 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     }, [ethersCtx, ethersCtx.userAddress, child]);
 
     return (
-        <div className={styles.tokenPreference}>
+        <div className={styles.tokenPreferencePanel}>
             <h3>Currently Selected Token</h3>
             <div className={styles.currentToken}>
                 <div className={styles.tokenInfo}>
@@ -40,8 +39,8 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
                         <Jazzicon diameter={45} seed={jsNumberForAddress(child.tokenPreference)} />
                     </div>
                     <div className={styles.tokenDetails}>
-                        <p>{getNameByAddress(tokens, child.tokenPreference)}</p>
-                        <p>{child.tokenPreference}</p>
+                        <p className={styles.tokenName}>{getNameByAddress(tokens, child.tokenPreference)}</p>
+                        <p className={styles.tokenAddress}>{child.tokenPreference}</p>
                     </div>
                 </div>
                 <div className={styles.amountOwned}>
@@ -51,10 +50,10 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
             </div>
             <h3 className={styles.pickTokenTitle}>Pick a Token</h3>
             <div className={styles.tokenOptionsContainer}>
-                {tokens.map((token) => {
+                {tokens.map((token, index) => {
                     // only display tokens which are not currently prefered
                     if (token.tokenAddress !== child.tokenPreference) {
-                        return <TokenOption token={token} setNewTokenPreference={setNewTokenPreference} />;
+                        return <TokenOption key={index} token={token} setNewTokenPreference={setNewTokenPreference} />;
                     }
                 })}
             </div>

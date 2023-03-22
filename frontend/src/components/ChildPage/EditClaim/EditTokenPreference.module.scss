@@ -1,45 +1,118 @@
-.tokenPreference {
+@import "./../../../assets/styles/main.scss";
+
+// .tokenPreference {
+//     @include panel;
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1; // doet niks
+//     padding: 25px;
+// }
+
+// .currentToken {
+//     padding: 20px;
+//     width: 500px;
+//     background-color: $background-lightgrey;
+//     border-radius: 12px;
+//     border: 2px solid $primary-cyan;
+// }
+
+// .tokenInfo {
+//     display: flex;
+//     align-items: center;
+// }
+
+// .tokenAvatar {
+//     margin-right: 20px;
+// }
+
+// .tokenDetails p {
+//     margin: 0;
+// }
+
+// .tokenDetails p:first-child {
+//     font-size: 20px;
+//     font-weight: 600;
+// }
+
+// .tokenDetails p:last-child {
+//     font-size: 13px;
+//     font-weight: 400;
+//     color: rgb(124, 124, 124);
+// }
+
+// .amountOwned {
+//     display: flex;
+//     align-items: flex-end;
+//     margin-top: 30px;
+// }
+// .amountOwned p {
+//     margin-bottom: 0;
+// }
+
+// .amount {
+//     font-size: 22px;
+//     font-weight: 600;
+//     margin-right: 2px;
+// }
+
+// .tokenSymbol {
+//     font-size: 14px;
+// }
+
+// .pickTokenTitle {
+//     margin-top: 40px;
+// }
+
+// // token options
+// .tokenOptionsContainer {
+//     display: flex;
+//     gap: 20px;
+// }
+
+
+/* Token Preference Panel */
+.tokenPreferencePanel {
+    @include panel;
     display: flex;
     flex-direction: column;
     flex: 1; // doet niks
-    overflow: auto;
-    background: #ffffff;
-    border: 2px solid #000000;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 8px 8px 0px #000000;
-    border-radius: 12px;
     padding: 25px;
 }
 
+/* Currently Selected Token */
 .currentToken {
     padding: 20px;
-    width: 40%;
-    background-color: rgb(247, 247, 247);
+    width: 500px;
+    background-color: $background-lightgrey;
     border-radius: 12px;
-    border: 3px solid #00ffc3;
+    border: 2px solid $primary-cyan;
 }
 
+/* Selected Token Info */
 .tokenInfo {
     display: flex;
     align-items: center;
 }
 
+/* Selected Token Avatar */
 .tokenAvatar {
     margin-right: 20px;
 }
 
+/* Selected Token Details */
 .tokenDetails p {
     margin: 0;
 }
 
-.tokenDetails p:first-child {
-    font-size: 20px;
-    font-weight: 600;
+.tokenName{
+    font-size: $font-size-large;
+    font-weight: 500;
 }
 
-.tokenDetails p:last-child {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgb(124, 124, 124);
+.tokenAddress {
+    font-size: $font-size-base;
+    font-weight: 300;
+    color: $text-secondary-grey;
 }
 
 .amountOwned {
@@ -47,25 +120,28 @@
     align-items: flex-end;
     margin-top: 30px;
 }
+
 .amountOwned p {
     margin-bottom: 0;
 }
 
 .amount {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: $font-size-large;
+    font-weight: 500;
     margin-right: 2px;
 }
 
 .tokenSymbol {
-    font-size: 14px;
+    font-size: $font-size-base;
+    font-weight: 300;
 }
 
+/* Title for Pick Token Options */
 .pickTokenTitle {
     margin-top: 40px;
 }
 
-// token options
+/* Container of Token Options */
 .tokenOptionsContainer {
     display: flex;
     gap: 20px;

@@ -1,62 +1,71 @@
+@import "./../../../assets/styles/main.scss";
+
+/* Single Claim Period */
 .claimPeriod {
-    background-color: rgb(247, 247, 247);
+    background-color: $background-lightgrey;
     border-radius: 10px;
     padding: 15px;
     margin: 25px;
-}
-
-.claimPeriod.active {
-    border: 3px solid #00ffc3;
-}
-
-.type {
-    text-transform: uppercase;
 }
 
 .claimPeriod p {
     margin: 0;
 }
 
+/* Conditionally styling for active claim period */
+.claimPeriod.active {
+    border: 2px solid $primary-cyan;
+}
+
+/* Claim Period */
 .period {
-    font-size: 25px;
-    font-weight: 600;
+    font-size: $font-size-large;
+    font-weight: 500;
     margin-bottom: 25px;
 }
 
+.type {
+    text-transform: uppercase;
+}
+
+/* Claimable Amounts */
 .flexContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.claimAble {
-    font-size: 13px;
-    color: grey;
+.claimable {
+    font-size: $font-size-base;
+    color: $text-secondary-grey;
+    font-weight: 400;
 }
 
 .amountFlex {
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }
 
-.amountFlex p:first-child {
-    font-size: 25px;
-    font-weight: 600;
+.claimableAmount {
+    font-size: $font-size-large;
+    font-weight: 500;
 }
 
-.amountFlex p:nth-child(2) {
+.claimMoment {
     margin-left: 5px;
-    font-size: 19px;
-    color: grey;
+    font-size: $font-size-base;
+    color: $text-secondary-grey;
 }
 
+/* Conditionally displayed button or selected */
 .claimPeriodButton {
     height: 30px;
     width: 70px;
     border: none;
-    background-color: black;
+    background-color: $primary-black;
     border-radius: 6px;
-    color: white;
+    color: $primary-white;
     font-weight: 600;
     cursor: pointer;
 }
@@ -64,5 +73,5 @@
 .selected {
     font-weight: 600;
     text-transform: uppercase;
-    color: grey;
+    color: $text-secondary-grey;
 }

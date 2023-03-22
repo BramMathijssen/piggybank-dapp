@@ -23,12 +23,12 @@ const TokenOption = ({ token, setNewTokenPreference }) => {
 
     return (
         <motion.div
-            className={styles.tokenOptions}
+            className={styles.tokenOption}
             layout
             whileHover={{
                 scale: 1.03,
                 originX: 0,
-                border: '2px solid black'
+                border: "2px solid black",
             }}
             transition={{ type: "spring", stiffness: 500 }}
         >

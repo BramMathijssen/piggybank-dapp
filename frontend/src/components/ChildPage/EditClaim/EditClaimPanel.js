@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import EditClaimPeriod from "./EditClaimPeriod";
 import EditTokenPreference from "./EditTokenPreference";
+import { motion } from "framer-motion";
 
 import styles from "./EditClaimPanel.module.scss";
 import EthersContext from "../../../context/ethers-context";
@@ -27,10 +28,10 @@ const EditClaimPanel = () => {
     }, [ethersCtx, changed]);
 
     return (
-        <div className={styles.flexContainer}>
+        <motion.div className={styles.flexContainer} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
             {child && <EditClaimPeriod child={child} setChanged={setChanged} />}
             {child && <EditTokenPreference parentAddress={parentAddress} child={child} setChanged={setChanged} />}
-        </div>
+        </motion.div>
     );
 };
 

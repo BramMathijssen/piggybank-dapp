@@ -15,38 +15,36 @@ const ClaimPeriod = ({ type, setClaimPeriod, claimableAmount, active }) => {
         }
     };
     return (
-        <>
-            <motion.div
-                className={`${styles[`claimPeriod`]} ${active ? styles.active : ""}`}
-                layout
-                whileHover={{
-                    scale: 1.03,
-                    originX:0,
-                    border: '2px solid black'
-                }}
-                transition={{ type: "spring", stiffness: 500}}
-            >
-                <div className={styles.period}>
-                    <p className={styles.type}>{type}</p>
-                </div>
-                <div className={styles.flexContainer}>
-                    <div className={styles.claimableAmount}>
-                        <p className={styles.claimAble}>Claimable</p>
-                        <div className={styles.amountFlex}>
-                            <p>{weiToEth(claimableAmount)}</p>
-                            <p>/{transformString(type)}</p>
-                        </div>
+        <motion.div
+            className={`${styles[`claimPeriod`]} ${active ? styles.active : ""}`}
+            layout
+            whileHover={{
+                scale: 1.03,
+                originX: 0,
+                border: "2px solid black",
+            }}
+            transition={{ type: "spring", stiffness: 500 }}
+        >
+            <div className={styles.period}>
+                <p className={styles.type}>{type}</p>
+            </div>
+            <div className={styles.flexContainer}>
+                <div className={styles.claimableAmount}>
+                    <p className={styles.claimable}>Claimable</p>
+                    <div className={styles.amountFlex}>
+                        <p className={styles.claimableAmount}>{weiToEth(claimableAmount)}</p>
+                        <p className={styles.claimMoment}>/{transformString(type)}</p>
                     </div>
-                    {!active ? (
-                        <button className={styles.claimPeriodButton} onClick={setClaimPeriod}>
-                            Pick
-                        </button>
-                    ) : (
-                        <p className={styles.selected}>Current</p>
-                    )}
                 </div>
-            </motion.div>
-        </>
+                {!active ? (
+                    <button className={styles.claimPeriodButton} onClick={setClaimPeriod}>
+                        Pick
+                    </button>
+                ) : (
+                    <p className={styles.selected}>Current</p>
+                )}
+            </div>
+        </motion.div>
     );
 };
 

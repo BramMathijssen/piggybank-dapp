@@ -1,19 +1,23 @@
+@import "./../../../assets/styles/main";
+
 .tokenOverview {
     display: flex;
-    flex: 1; // sets height of the panel
-    flex-direction: row;
-    background: #ffffff;
-    border: 2px solid #000000;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 8px 8px 0px #000000;
-    border-radius: 12px;
+    flex: 1;
+    gap: 25px;
     padding: 20px;
+    justify-content: space-between;
 }
 
-.tokensContainer {
-    flex: 0.6; // sets width of the token information
+/* tokenList Container */
+.tokenListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
 }
 
-.flexContainer {
+/* Individual Token Container */
+.tokenContainer {
     display: flex;
     background-color: aliceblue;
     padding: 10px;
@@ -21,30 +25,35 @@
     margin-bottom: 10px;
 }
 
+/* Token Information */
 .tokenInfo {
     display: flex;
     align-items: center;
 }
 
+/* Icon */
 .tokenIcon {
     margin-right: 10px;
 }
 
-.tokenName p {
+/* Token Name and Address */
+.name,
+.address{
     margin: 0;
 }
 
-.tokenName p:first-child {
-    font-size: 17px;
+.name{
+    font-size: $font-size-base;
     font-weight: 600;
+    margin-right: 30px;
 }
 
-.tokenName p:last-child {
-    color: rgb(155, 155, 155);
-    font-size: 14px;
-    font-weight: 600;
+.address{
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
 }
 
+/* Token Amount Owned */
 .tokenAmount {
     display: flex;
     flex: 1;
@@ -53,19 +62,17 @@
     justify-content: center;
 }
 
-.tokenAmount p {
+.amount{
     margin: 0;
-}
-
-.tokenAmount p:first-child {
-    font-size: 17px;
+    font-size: $font-size-base;
     font-weight: 600;
 }
 
+/* PieChart Container */
 .pieChartContainer {
     display: flex;
-    flex: 1;
+    flex: 0.5;
+    justify-content: center;
+    background-color: $background-lightgrey;
+    border-radius: 15px;
 }
-
-
-

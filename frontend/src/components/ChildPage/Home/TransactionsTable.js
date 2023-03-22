@@ -3,12 +3,12 @@ import { DataTable } from "primereact/datatable";
 import React, { useContext } from "react";
 import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
-import EthersContext from "../../../../context/ethers-context";
-import { getNameByAddress, getSymbolByAddress } from "../../../../helpers/getTokenDetailsbyAddress";
-import { unixTimestampToReadable } from "../../../../helpers/unixToDate";
-import { weiToEth } from "../../../../helpers/weiToEth";
-import { useEvent } from "../../../../hooks/useEvent";
-import { useEventCustom } from "../../../../hooks/useEventCustom";
+import EthersContext from "../../../context/ethers-context";
+import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
+import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { weiToEth } from "../../../helpers/weiToEth";
+import { useEvent } from "../../../hooks/useEvent";
+import { useEventCustom } from "../../../hooks/useEventCustom";
 
 import styles from "./TransactionsTable.module.scss";
 

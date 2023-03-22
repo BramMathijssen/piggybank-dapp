@@ -1,10 +1,14 @@
-.tokenOptions {
-    background-color: rgb(247, 247, 247);
+@import "./../../../assets/styles/main.scss";
+
+/* Single Token Option */
+.tokenOption {
+    background-color: $background-lightgrey;
     padding: 16px;
     border-radius: 12px;
     width: 220px;
 }
 
+/* Token Option Information*/
 .tokenOptionInfo {
     display: flex;
     align-items: center;
@@ -19,51 +23,51 @@
 }
 
 .tokenOptionName {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: $font-size-base;
+    font-weight: 500;
 }
 
 .tokenOptionAddress {
-    font-size: 11px;
+    font-size: $font-size-small;
     font-weight: 400;
-    color: rgb(124, 124, 124);
+    color: $text-secondary-grey;
 }
 
+/* Token Option Amounts */
 .flexContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 25px;
+    flex: wrap;
 }
 
 .tokenOptionAmountOwned {
     display: flex;
     align-items: flex-end;
+    flex: wrap;
 }
 
 .tokenOptionAmount {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: $font-size-base;
+    font-weight: 500;
 }
 
 .tokenOptionSymbol {
-    font-size: 12px;
+    font-size: $font-size-small;
 }
 
 .tokenOptionAmountOwned p {
     margin: 0 2px 0 0;
 }
 
-.tokenOptionSymbol {
-}
-
 .pickButton {
     height: 25px;
     width: 60px;
     border: none;
-    background-color: black;
+    background-color: $primary-black;
     border-radius: 6px;
-    color: white;
+    color: $primary-white;
     font-weight: 600;
     cursor: pointer;
 }
