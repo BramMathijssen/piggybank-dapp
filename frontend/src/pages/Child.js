@@ -4,8 +4,9 @@ import Sidebar from "../components/UI/Sidebar";
 import styles from "./Child.module.scss";
 import ConnectWallet from "../components/ParentPage/Layout/ConnectWallet";
 import EditClaimPanel from "../components/ChildPage/EditClaim/EditClaimPanel";
-import HomePanelNew from "../components/ChildPage/Home/HomePanel";
+import HomePanel from "../components/ChildPage/Home/HomePanel";
 import { motion } from "framer-motion";
+import Panels from "../components/ChildPage/Home/TestFlex/Panels";
 
 const Child = () => {
     const [home, setHome] = useState(true);
@@ -34,16 +35,17 @@ const Child = () => {
             <Sidebar links={childLinks} />
             <div className={styles.content}>
                 <ConnectWallet />
-                {home ? (
+                <Panels />
+                {/* {home ? (
                     <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
-                        <HomePanelNew />
+                        <HomePanel />
                     </motion.div>
                 ) : null}
                 {editClaim ? (
                     <motion.div initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
                         <EditClaimPanel />
                     </motion.div>
-                ) : null}
+                ) : null}  */}
             </div>
         </main>
     );

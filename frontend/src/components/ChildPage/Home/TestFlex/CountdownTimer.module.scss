@@ -1,0 +1,33 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 90px);
+    grid-template-rows: repeat(2, 85px);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-content: center;
+    align-content: center;
+}
+
+.claimReady{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: 600;
+}
+
+.progressContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.timeUnit {
+    display: flex;
+    justify-content: center;
+    color: rgb(155, 155, 155);
+}

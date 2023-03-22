@@ -1,7 +1,23 @@
+// .main {
+//     display: flex;
+//     height: 100vh;
+//     background-color: #F2F5F1;
+// }
+
+// .content {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1;
+//     margin: 0px 50px 50px 50px;
+//     gap: 25px;
+// }
+
+
 .main {
     display: flex;
-    max-height: 100vh;
+    height: 100vh;
     background-color: #F2F5F1;
+    overflow: auto;
 }
 
 .content {
@@ -11,4 +27,5 @@
     margin: 0px 50px 50px 50px;
     gap: 25px;
 }
+
 

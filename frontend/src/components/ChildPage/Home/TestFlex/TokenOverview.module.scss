@@ -1,0 +1,154 @@
+// .tokenOverview {
+//     display: flex;
+//     flex: 1; // sets height of the panel
+//     flex-direction: row;
+//     background: #ffffff;
+//     border: 2px solid #000000;
+//     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 8px 8px 0px #000000;
+//     border-radius: 12px;
+//     padding: 20px;
+// }
+
+// .tokensContainer {
+//     flex: 0.6; // sets width of the token information
+// }
+
+// .flexContainer {
+//     display: flex;
+//     background-color: aliceblue;
+//     padding: 10px;
+//     border-radius: 10px;
+//     margin-bottom: 10px;
+// }
+
+// .tokenInfo {
+//     display: flex;
+//     align-items: center;
+// }
+
+// .tokenIcon {
+//     margin-right: 10px;
+// }
+
+// .tokenName p {
+//     margin: 0;
+// }
+
+// .tokenName p:first-child {
+//     font-size: 17px;
+//     font-weight: 600;
+// }
+
+// .tokenName p:last-child {
+//     color: rgb(155, 155, 155);
+//     font-size: 14px;
+//     font-weight: 600;
+// }
+
+// .tokenAmount {
+//     display: flex;
+//     flex: 1;
+//     flex-direction: column;
+//     align-items: flex-end;
+//     justify-content: center;
+// }
+
+// .tokenAmount p {
+//     margin: 0;
+// }
+
+// .tokenAmount p:first-child {
+//     font-size: 17px;
+//     font-weight: 600;
+// }
+
+// .pieChartContainer {
+//     display: flex;
+//     flex: 1;
+// }
+
+// NEW
+
+
+
+// .tokensContainer {
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-start;
+//     align-items: flex-start;
+//     flex: 0.6; // sets width of the token information
+// }
+
+@import "./../../../../assets/styles/main";
+
+.tokenOverview {
+    display: flex;
+    padding: 20px;
+}
+
+/* tokenList Container */
+.tokenListContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+/* Individual Token Container */
+.tokenContainer {
+    display: flex;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Token Information */
+.tokenInfo {
+    display: flex;
+    align-items: center;
+}
+
+/* Icon */
+.tokenIcon {
+    margin-right: 10px;
+}
+
+/* Token Name and Address */
+.name,
+.address{
+    margin: 0;
+}
+
+.name{
+    font-size: $font-size-base;
+    font-weight: 600;
+    margin-right: 30px;
+}
+
+.address{
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+}
+
+/* Token Amount Owned */
+.tokenAmount {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.amount{
+    margin: 0;
+    font-size: $font-size-base;
+    font-weight: 600;
+}
+
+/* PieChart Container */
+.pieChartContainer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}

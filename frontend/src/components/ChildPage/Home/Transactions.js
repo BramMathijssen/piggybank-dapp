@@ -62,15 +62,23 @@ const Transactions = ({ parentAddress, claimed }) => {
     };
 
     return (
+        // <div className={styles.transactions}>
+        //     <div className="card">
+        //         <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
+        //             <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
+        //             <Column field="" header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
+        //             <Column field="period" header="Claim Moment" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
+        //             <Column field="token" header="Amount" style={{ width: "16%" }} body={tokenBodyTemplate}></Column>
+        //         </DataTable>
+        //     </div>
+        // </div>
         <div className={styles.transactions}>
-            <div className="card">
                 <DataTable value={transactions} scrollable scrollHeight="500px" paginator rows={6} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
                     <Column field="avatar" style={{ width: "1%" }} body={avatarBodyTemplate}></Column>
                     <Column field="" header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
                     <Column field="period" header="Claim Moment" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
                     <Column field="token" header="Amount" style={{ width: "16%" }} body={tokenBodyTemplate}></Column>
                 </DataTable>
-            </div>
         </div>
     );
 };

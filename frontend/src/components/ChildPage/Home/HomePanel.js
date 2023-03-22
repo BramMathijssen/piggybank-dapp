@@ -6,6 +6,7 @@ import TokenOverview from "./TokenOverview";
 import Transactions from "./Transactions";
 
 import styles from "./HomePanel.module.scss";
+import Panels from "./TestFlex/Panels";
 
 const HomePanel = () => {
     const [parentAddress, setParentAddress] = useState();
@@ -30,6 +31,7 @@ const HomePanel = () => {
 
     return (
         <>
+            {/* <Panels /> */}
             <div className={styles.flexContainer}>
                 <div className={styles.claimCountdownContainer}>
                     <h2 className={styles.title}>Claim</h2>

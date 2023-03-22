@@ -1,0 +1,102 @@
+// .detailsContainer {
+//     display: flex;
+//     flex-direction: column;
+//     flex: 1; 
+//     overflow: auto;
+//     background: #ffffff;
+//     border: 2px solid #000000;
+//     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 8px 8px 0px #000000;
+//     border-radius: 12px;
+//     height: 200px;
+//     padding: 20px 40px 20px 40px;
+// }
+
+// .details{
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr);
+//     grid-template-rows: repeat(5, 1fr);
+//     grid-column-gap: 0px;
+//     grid-row-gap: 0px;
+//     justify-content: center;
+//     align-content: center;
+//     background-color: aliceblue;
+//     padding: 15px;
+//     border-radius: 10px;
+// }
+
+// .details p{
+//     margin-bottom: 4px;
+// }
+
+// .intro{
+//     font-size: 12px;
+//     color: rgb(163, 162, 162);
+//     margin-bottom: 2px;
+// }
+
+// .name{
+//     font-size: 22px;
+//     font-weight: 600;
+//     margin-top: 0px;
+// }
+
+// .info{
+//     color: rgb(142, 143, 142);
+//     font-weight: 500;
+//     font-size: 15px
+// }
+
+// .result{
+//     text-align: right;
+//     font-weight: 600;
+// }
+
+@import "./../../../../assets/styles/main.scss";
+
+// new
+.detailsContainer{
+    padding: 25px;
+    flex: 1; //grows the content horizontally
+}
+
+.details{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    justify-content: center;
+    align-content: center;
+    background-color: $background-light;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.details p{
+    margin-bottom: 3px;
+}
+
+.intro{
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+    margin: 0;
+
+}
+
+.name{
+    font-size: $font-size-large;
+    font-weight: 500;
+    margin-top: 0px;
+}
+
+.info{
+    color: $text-secondary-grey;
+    font-weight: 400;
+    font-size: $font-size-base;
+}
+
+.result{
+    text-align: right;
+    font-weight: 500;
+    font-size: $font-size-base;
+}
