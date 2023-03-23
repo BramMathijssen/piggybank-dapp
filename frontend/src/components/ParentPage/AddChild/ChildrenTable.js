@@ -11,79 +11,82 @@ import styles from "./ChildrenTable.module.scss";
 import { useEvent } from "../../../hooks/useEvent";
 import EthersContext from "../../../context/ethers-context";
 import { weiToEth } from "../../../helpers/weiToEth";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const Table = ({ children }) => {
     const ethersCtx = useContext(EthersContext);
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, ethersCtx.userAddress);
 
-    const avatarBodyTemplate = (rowData) => {
+    const avatarColumnTemplate = (rowData) => {
         return (
-            <div>
-                <Jazzicon diameter={35} seed={jsNumberForAddress(rowData.childAddress)} />
+            <div className={styles.avatarColumn}>
+                <Jazzicon diameter={30} seed={jsNumberForAddress(rowData.childAddress)} />
             </div>
         );
     };
 
-    const nameAddressBodyTemplate = (rowData) => {
+    const nameAddressColumnTemplate = (rowData) => {
         return (
-            <div className={styles.nameBody}>
-                <div className={styles.flexContainer}>
-                    <span>{rowData.name}</span>
-                    <p>{rowData.childAddress}</p>
-                </div>
+            <div className={styles.nameAddressColumn}>
+                <span className={styles.name}>{rowData.name}</span>
+                <p className={styles.address}>{rowData.childAddress}</p>
             </div>
         );
     };
 
-    const baseAmountBodyTemplate = (rowData) => {
+    const baseAmountColumnTemplate = (rowData) => {
         const tokenSymbol = getSymbolByAddress(tokens, rowData.tokenPreference);
         return (
-            <div className={styles.nameBody}>
-                <p>{weiToEth(rowData.baseAmount.toString())} </p>
-                <p>{tokenSymbol}</p>
+            <div className={styles.baseAmountColumn}>
+                <p className={styles.baseAmount}>{weiToEth(rowData.baseAmount.toString())} </p>
+                <p className={styles.tokenSymbol}>{tokenSymbol}</p>
             </div>
         );
     };
 
-    const claimPeriodBodyTemplate = (rowData) => {
+    const claimPeriodColumnTemplate = (rowData) => {
         const claimPeriod = getClaimPeriodString(rowData.claimPeriod);
         return (
-            <div className={styles.nameBody}>
-                <p>{claimPeriod}</p>
+            <div className={styles.claimPeriodColumn}>
+                <p className={styles.claimPeriod}>{claimPeriod}</p>
             </div>
         );
     };
 
-    const nextClaimBodyTemplate = (rowData) => {
+    const nextClaimColumnTemplate = (rowData) => {
         const { formattedDate, formattedTime } = unixTimestampToReadable(rowData.nextClaimPeriod);
         return (
-            <div className={styles.claimPeriod}>
-                <span>{formattedDate}</span>
-                <p>{formattedTime}</p>
+            <div className={styles.nextClaimColumn}>
+                <span className={styles.claimDate}>{formattedDate}</span>
+                <p className={styles.claimTime}>{formattedTime}</p>
             </div>
         );
     };
 
-    const tokenBodyTemplate = (rowData) => {
+    const tokenColumnTemplate = (rowData) => {
         const tokenName = getNameByAddress(tokens, rowData.tokenPreference);
         return (
-            <div className={styles.token}>
-                <span>{tokenName}</span>
-                <p>{rowData.tokenPreference}</p>
+            <div className={styles.tokenColumn}>
+                <span className={styles.tokenName}>{tokenName}</span>
+                <p className={styles.tokenAddress}>{rowData.tokenPreference}</p>
             </div>
         );
     };
 
     return (
         <div className="card">
-            <DataTable value={children} scrollable scrollHeight="450px" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
-                <Column field="avatar" style={{ width: "5%" }} body={avatarBodyTemplate}></Column>
-                <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressBodyTemplate}></Column>
-                <Column field="amount" header="Base Allowance" style={{ width: "25%" }} body={baseAmountBodyTemplate}></Column>
-                <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodBodyTemplate}></Column>
-                <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimBodyTemplate}></Column>
-                <Column field="token" header="Token" style={{ width: "25%" }} body={tokenBodyTemplate}></Column>
-            </DataTable>
+            {ethersCtx.loading ? (
+                <LoadingSpinner />
+            ) : (
+                <DataTable value={children} scrollable scrollHeight="450px" paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: "50rem" }}>
+                    <Column field="avatar" style={{ width: "1%" }} body={avatarColumnTemplate}></Column>
+                    <Column field={children.name} header="Name" style={{ width: "15%" }} body={nameAddressColumnTemplate}></Column>
+                    <Column field="amount" header="Base Allowance" style={{ width: "25%" }} body={baseAmountColumnTemplate}></Column>
+                    <Column field="period" header="Period" style={{ width: "25%" }} body={claimPeriodColumnTemplate}></Column>
+                    <Column field="nextClaim" header="Next Claim" style={{ width: "25%" }} body={nextClaimColumnTemplate}></Column>
+                    <Column field="token" header="Token" style={{ width: "25%" }} body={tokenColumnTemplate}></Column>
+                </DataTable>
+            )}
         </div>
     );
 };

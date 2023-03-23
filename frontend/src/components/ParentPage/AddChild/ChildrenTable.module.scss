@@ -1,39 +1,75 @@
+@import "./../../../assets/styles/main";
 
-.nameBody {
+/* Name Address */
+.nameAddressColumn {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
+.name {
+    font-size: $font-size-base;
+    font-weight: 600;
+}
+
+.address {
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+}
+
+/* Base Amount */
+.baseAmountColumn {
+    display: flex;
+    gap: 4px;
+}
+
+.baseAmount,
+.tokenSymbol {
+    font-size: $font-size-base;
+}
+
+.tokenSymbol {
+    font-weight: 600;
+}
+
+/* Claim Period */
 .claimPeriod {
+    font-size: $font-size-base;
+}
+
+/* Next Claim */
+.nextClaimColumn {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-.claimPeriod p {
-    font-size: 14px;
-    color: grey;
-    margin: 2px;
+.claimDate {
+    font-size: $font-size-base;
 }
 
-.token{
+.claimTime {
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+}
+
+/* Token */
+.tokenColumn {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-.token p {
-    color: grey;
-    font-size: 12px;
-    margin: 2px;
+.tokenName{
+    font-size: $font-size-base;
 }
 
-.flexContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.flexContainer p {
-    color: grey;
-    font-size: 12px;
-    margin: 2px;
+.tokenAddress{
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
 }

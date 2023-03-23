@@ -1,22 +1,21 @@
-@import "./../../assets/styles/variables";
-@import "./../../assets/styles/mixins";
+@import "./../../assets/styles/main.scss";
 
-.container{
+.container {
     display: flex;
-    background-color: #00FFC3;
+    background-color: $primary-cyan;
     flex-direction: column;
     height: 100vh;
-    width: 13%;
-    border-right: 4px solid black;
+    width: 225px;
+    border-right: 3px solid $primary-black;
 }
 
-.avatarContainer{
+.avatarContainer {
     display: flex;
     justify-content: center;
-    margin: 60px;
+    margin: 70px 20px 50px 20px;
 }
 
-.ul{
+.ul {
     display: flex;
     flex-direction: column;
     list-style: none;
@@ -24,22 +23,26 @@
     justify-content: center;
 }
 
-.li{
+.li {
     display: flex;
     justify-content: center;
 }
 
-.link{
+.li:last-child {
+    align-self: stretch;
+}
+
+.link {
     cursor: pointer;
-    //background-color: rgb(255, 167, 255);
-    background-color: #6637ED;
-    color: white;
-    font-weight: 600;
-    width: 150px;
+    background-color: $accent-purple;
+    color: $primary-white;
+    font-size: $font-size-base;
+    font-weight: 500;
+    width: 135px;
     text-align: center;
-    padding: 10px;
+    padding: 8px;
     margin: 10px;
-    border: 2px solid #000000;
-    box-shadow: 2px 2px 0px #000000;
+    border: 2px solid $primary-black;
+    box-shadow: 2px 2px 0px $primary-black;
     border-radius: 4px;
 }

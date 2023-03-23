@@ -5,7 +5,7 @@ export const getNameByAddress = (array, address) => {
             return array[i][2];
         }
     }
-    return null; // or whatever you want to return if no match is found
+    return null; 
 };
 
 export const getSymbolByAddress = (array, address) => {
@@ -15,5 +15,5 @@ export const getSymbolByAddress = (array, address) => {
             return array[i][3];
         }
     }
-    return null; // or whatever you want to return if no match is found
+    return null; 
 };

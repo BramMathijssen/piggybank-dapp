@@ -1,8 +1,10 @@
+@import "./../../assets/styles/main.scss";
+
 .button {
-  background-color: #7be5ce;
-  color: black;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0 black;
+  background-color: $button-cyan;
+  color: $primary-black;
+  border: 1px solid $primary-black;
+  box-shadow: 3px 3px 0 $primary-black;
   cursor: pointer;
   margin-right: 2em;
   text-transform: uppercase;
@@ -22,6 +24,11 @@
     background-color: white;
   }
 
+  &.purple {
+    background-color: $accent-purple;
+    color: white;
+  }
+
   /* Button Size */
   &.large {
     font-size: 18px;
@@ -30,9 +37,9 @@
   }
 
   &.medium {
-    font-size: 14px;
-    font-weight: 700;
-    padding: 8px 25px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 22px;
   }
 
   &.small {
@@ -48,6 +55,6 @@
   /* Button Pseudo-classes */
   &:hover {
     transform: translate(1px, 1px);
-    box-shadow: 1px 1px black;
+    box-shadow: 1px 1px $primary-black;
   }
 }

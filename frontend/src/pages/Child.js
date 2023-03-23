@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Sidebar from "../components/UI/Sidebar";
+import ConnectWallet from "../components/UI/ConnectWallet";
+import EditClaimPanel from "../components/ChildPage/EditClaim/EditClaimPanel";
+import HomePanel from "../components/ChildPage/Home/HomePanel";
 
 import styles from "./Child.module.scss";
-import ConnectWallet from "../components/ParentPage/Layout/ConnectWallet";
-import EditClaimPanel from "../components/ChildPage/EditClaim/EditClaimPanel";
-import HomePanelNew from "../components/ChildPage/Home/HomePanel";
 
 const Child = () => {
     const [home, setHome] = useState(true);
@@ -33,7 +33,7 @@ const Child = () => {
             <Sidebar links={childLinks} />
             <div className={styles.content}>
                 <ConnectWallet />
-                {home ? <HomePanelNew /> : null}
+                {home ? <HomePanel /> : null}
                 {editClaim ? <EditClaimPanel /> : null}
             </div>
         </main>

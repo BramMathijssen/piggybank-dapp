@@ -12,7 +12,9 @@ const EthersContext = React.createContext({
     chainId: null,
     isConnected: null,
     storage: null,
+    loading: null,
     setUserAddress: () => {},
+    setLoading: () => {},
     onConnect: () => {},
     onDisconnect: () => {},
 });
@@ -24,6 +26,7 @@ export const EthersContextProvider = (props) => {
     const [userAddress, setUserAddress] = useState(null);
     const [chainId, setChainId] = useState(null);
     const [storageContainer, setStorageContainer] = useState(localStorage?.getItem("isWalletConnected"));
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
 
     const pageReload = () => {
@@ -121,7 +124,9 @@ export const EthersContextProvider = (props) => {
                 userAddress: userAddress,
                 chainId: chainId,
                 storage: storageContainer,
+                loading: loading,
                 setUserAddress: setUserAddress,
+                setLoading: setLoading,
                 onConnect: connectWalletHandler,
                 onDisconnect: disconnectWalletHandler,
             }}

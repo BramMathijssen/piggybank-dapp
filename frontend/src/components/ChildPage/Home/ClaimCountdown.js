@@ -4,6 +4,7 @@ import Button from "../../UI/Button";
 import CountdownTimer from "./CountdownTimer";
 
 import styles from "./ClaimCountdown.module.scss";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const ClaimCountdown = ({ child, setClaimed, claimed }) => {
     const [timeLeft, setTimeLeft] = useState();
@@ -23,18 +24,30 @@ const ClaimCountdown = ({ child, setClaimed, claimed }) => {
 
     const claimHandler = async (e) => {
         e.preventDefault();
-        console.log(`claiming..`);
-        const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
-        await claimTx.wait(1);
-        setClaimed((current) => !current); // toggle boolean to force a re-render on transactions/tokenoverview/details
+        try {
+            ethersCtx.setLoading(true);
+            const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
+            await claimTx.wait(1);
+            ethersCtx.setLoading(false);
+            setClaimed((current) => !current); // toggle boolean to force a re-render on transactions/tokenoverview/details
+        } catch (error) {
+            console.log(`something went wrong with your transaction. ${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
     return (
-        <div className={styles.claimCountdown}>
-            <h2 className={styles.title}>Time Untill Claim</h2>
-            <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={child.claimPeriod} /> : null}</div>
-            <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claimHandler} size="medium" content="claim"></Button> : null}</div>
-        </div>
+        <>
+            {ethersCtx.loading ? (
+                <LoadingSpinner />
+            ) : (
+                <div className={styles.claimCountdown}>
+                    {timeLeft > 0 ? <h2 className={styles.title}>Time Untill Claim</h2> : null}
+                    <div className={styles.countDown}>{timeLeft ? <CountdownTimer timeLeft={timeLeft} claimPeriod={child.claimPeriod} /> : null}</div>
+                    <div className={styles.claimButton}>{timeLeft < 0 ? <Button onClick={claimHandler} size="medium" content="claim"></Button> : null}</div>
+                </div>
+            )}
+        </>
     );
 };
 

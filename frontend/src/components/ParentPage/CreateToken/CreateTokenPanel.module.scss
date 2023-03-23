@@ -22,9 +22,9 @@
 //     margin-top: 25px;
 // }
 
-.flexContainer {
+.createTokenPanel {
     display: flex;
-    gap: 100px;
+    gap: 50px;
     margin-bottom: 50px;
     flex: 0.6;
 }
@@ -32,12 +32,11 @@
 .createTokenContainer {
     display: flex;
     flex-direction: column;
-    flex: 0.4;
+    flex: 0.3;
 }
 
 .overviewContainer {
     display: flex;
-    // height: 500px; //hardcoded height
     flex-direction: column;
-    flex: 0.6;
+    flex: 0.7;
 }

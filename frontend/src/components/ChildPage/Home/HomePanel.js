@@ -3,9 +3,11 @@ import EthersContext from "../../../context/ethers-context";
 import ClaimCountdown from "./ClaimCountdown";
 import Details from "./Details";
 import TokenOverview from "./TokenOverview";
-import Transactions from "./Transactions";
+import { motion } from "framer-motion";
+import TransactionsTable from "./TransactionsTable";
 
 import styles from "./HomePanel.module.scss";
+
 
 const HomePanel = () => {
     const [parentAddress, setParentAddress] = useState();
@@ -29,28 +31,37 @@ const HomePanel = () => {
     }, [ethersCtx, claimed]);
 
     return (
-        <>
-            <div className={styles.flexContainer}>
-                <div className={styles.claimCountdownContainer}>
-                    <h2 className={styles.title}>Claim</h2>
-                    <ClaimCountdown child={child} setClaimed={setClaimed} claimed={claimed} />
+        <motion.div className={styles.panels}
+        initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -10, opacity: 0 }} transition={{ duration: 0.4 }}>
+            <div className={styles.rowContainer1}>
+                <div className={styles.panelContainer}>
+                    <h2>Claim</h2>
+                    <div className={styles.countdownPanel}>
+                        <ClaimCountdown child={child} setClaimed={setClaimed} claimed={claimed} />
+                    </div>
                 </div>
-                <div className={styles.detailsContainer}>
-                    <h2 className={styles.title}>Details</h2>
-                    <Details child={child} parentAddress={parentAddress}/>
-                </div>
-            </div>
-            <div className={styles.flexContainer}>
-                <div className={styles.transactionsContainer}>
-                    <h2 className={styles.title}>Transactions</h2>
-                    <Transactions child={child} claimed={claimed} />
-                </div>
-                <div className={styles.tokenOverviewContainer}>
-                    <h2 className={styles.title}>TokenOverview</h2>
-                    <TokenOverview child={child} parentAddress={parentAddress} claimed={claimed} />
+                <div className={styles.panelContainer}>
+                    <h2>Details</h2>
+                    <div className={styles.detailsPanel}>
+                        <Details child={child} parentAddress={parentAddress} />
+                    </div>
                 </div>
             </div>
-        </>
+            <div className={styles.rowContainer2}>
+                <div className={styles.panelContainer}>
+                    <h2>Recent Claims</h2>
+                    <div className={styles.transactionsPanel}>
+                        <TransactionsTable child={child} claimed={claimed} />
+                    </div>
+                </div>
+                <div className={styles.panelContainer}>
+                    <h2>Token Overview</h2>
+                    <div className={styles.overviewPanel}>
+                        <TokenOverview child={child} parentAddress={parentAddress} claimed={claimed} />
+                    </div>
+                </div>
+            </div>
+        </motion.div>
     );
 };
 

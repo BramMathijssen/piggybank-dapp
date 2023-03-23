@@ -1,9 +1,7 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
-import Button from "../../UI/Button";
-import EthersContext from "../../../context/ethers-context";
+import React, { useContext } from "react";
+import EthersContext from "../../context/ethers-context";
 
 import styles from "./ConnectWallet.module.scss";
-import { ethers } from "ethers";
 
 const ConnectWallet = () => {
     const ethersCtx = useContext(EthersContext);
@@ -17,7 +15,7 @@ const ConnectWallet = () => {
             {ethersCtx.userAddress ? (
                 <>
                     <div className={styles.connectionDetailsContainer}>
-                        <p>{ethersCtx.userAddress}</p>
+                        <p className={styles.userAddress}>{ethersCtx.userAddress}</p>
                         <div className={styles.chain}>
                             <p>{ethersCtx.chainId?.name}</p>
                         </div>

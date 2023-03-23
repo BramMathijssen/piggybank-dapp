@@ -1,14 +1,14 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
-
-import styles from "./EditTokenPreference.module.scss";
+import React, { useContext, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 import { useEvent } from "../../../hooks/useEvent";
-import { truncateAddress } from "../../../helpers/truncateAddress";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import TokenOption from "./TokenOption";
 import { weiToEth } from "../../../helpers/weiToEth";
+
+import styles from "./EditTokenPreference.module.scss";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const [tokenBalance, setTokenBalance] = useState();
@@ -16,10 +16,17 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
     const setNewTokenPreference = async (tokenAddress) => {
-        console.log(`Creating token`);
-        const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
-        await tx.wait(1);
-        setChanged((prev) => !prev);
+        try {
+            ethersCtx.setLoading(true);
+            console.log(`Creating token`);
+            const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
+            await tx.wait(1);
+            ethersCtx.setLoading(false);
+            setChanged((prev) => !prev);
+        } catch (error) {
+            console.log(`something went wrong with your transaction.${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -32,32 +39,38 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     }, [ethersCtx, ethersCtx.userAddress, child]);
 
     return (
-        <div className={styles.tokenPreference}>
-            <h3>Currently Selected Token</h3>
-            <div className={styles.currentToken}>
-                <div className={styles.tokenInfo}>
-                    <div className={styles.tokenAvatar}>
-                        <Jazzicon diameter={45} seed={jsNumberForAddress(child.tokenPreference)} />
+        <div className={styles.tokenPreferencePanel}>
+            {ethersCtx.loading ? (
+                <LoadingSpinner />
+            ) : (
+                <>
+                    <h3>Currently Selected Token</h3>
+                    <div className={styles.currentToken}>
+                        <div className={styles.tokenInfo}>
+                            <div className={styles.tokenAvatar}>
+                                <Jazzicon diameter={45} seed={jsNumberForAddress(child.tokenPreference)} />
+                            </div>
+                            <div className={styles.tokenDetails}>
+                                <p className={styles.tokenName}>{getNameByAddress(tokens, child.tokenPreference)}</p>
+                                <p className={styles.tokenAddress}>{child.tokenPreference}</p>
+                            </div>
+                        </div>
+                        <div className={styles.amountOwned}>
+                            <p className={styles.amount}>{weiToEth(tokenBalance)}</p>
+                            <p className={styles.tokenSymbol}>{getSymbolByAddress(tokens, child.tokenPreference)}</p>
+                        </div>
                     </div>
-                    <div className={styles.tokenDetails}>
-                        <p>{getNameByAddress(tokens, child.tokenPreference)}</p>
-                        <p>{child.tokenPreference}</p>
+                    <h3 className={styles.pickTokenTitle}>Pick a Token</h3>
+                    <div className={styles.tokenOptionsContainer}>
+                        {tokens.map((token, index) => {
+                            // only display tokens which are not currently prefered
+                            if (token.tokenAddress !== child.tokenPreference) {
+                                return <TokenOption key={index} token={token} setNewTokenPreference={setNewTokenPreference} />;
+                            }
+                        })}
                     </div>
-                </div>
-                <div className={styles.amountOwned}>
-                    <p className={styles.amount}>{weiToEth(tokenBalance)}</p>
-                    <p className={styles.tokenSymbol}>{getSymbolByAddress(tokens, child.tokenPreference)}</p>
-                </div>
-            </div>
-            <h3 className={styles.pickTokenTitle}>Pick a Token</h3>
-            <div className={styles.tokenOptionsContainer}>
-                {tokens.map((token) => {
-                    // only display tokens which are not currently prefered
-                    if (token.tokenAddress !== child.tokenPreference) {
-                        return <TokenOption token={token} setNewTokenPreference={setNewTokenPreference} />;
-                    }
-                })}
-            </div>
+                </>
+            )}
         </div>
     );
 };

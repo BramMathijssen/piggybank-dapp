@@ -64,19 +64,22 @@ const Tokens = () => {
         <div className={styles.tokens}>
             {tokens &&
                 tokens.map((token) => {
-                    console.log(token);
                     return (
-                        <div className={styles.flexContainer}>
+                        <div key={token.tokenAddress} className={styles.flexContainer}>
                             <div className={styles.avatar}>
-                                <Jazzicon diameter={35} seed={jsNumberForAddress(token.tokenAddress)} />
+                                <Jazzicon diameter={33} seed={jsNumberForAddress(token.tokenAddress)} />
                             </div>
                             <div className={styles.tokenInfo}>
                                 <p className={styles.name}>{token.name}</p>
                                 <p className={styles.address}>{truncateAddress(token.tokenAddress)}</p>
                             </div>
                             <div className={styles.tokenAmounts}>
-                                <p className={styles.balance}>balance: {weiToEth(getBalanceForToken(token.tokenAddress))}</p>
-                                <p className={styles.totalSupply}>Total Supply: {weiToEth(getTotalSupplyForToken(token.tokenAddress))}</p>
+                                <p className={styles.totalSupply}>
+                                    Total Supply: <span>{weiToEth(getTotalSupplyForToken(token.tokenAddress))}</span>
+                                </p>
+                                <p className={styles.balance}>
+                                    Balance: <span>{weiToEth(getBalanceForToken(token.tokenAddress))}</span>
+                                </p>
                             </div>
                         </div>
                     );

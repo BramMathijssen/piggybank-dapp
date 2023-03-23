@@ -1,0 +1,43 @@
+@import "./../../../assets/styles/main";
+
+.transactions {
+    flex: 1; //stretches the table horizontally in the panel
+}
+
+/* Name Address */
+.name {
+    font-size: $font-size-base;
+    font-weight: 600;
+}
+
+.address {
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+}
+
+/* Claim Moment */
+.claimMomentColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.claimDate {
+    font-size: $font-size-base;
+    font-weight: 600;
+    margin: 0;
+}
+
+.claimTime {
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
+}
+
+/* Amount */
+.amount {
+    font-size: $font-size-base;
+    color: $text-green;
+    font-weight: 600;
+}

@@ -37,19 +37,7 @@ const TokenOverview = ({ parentAddress, claimed }) => {
         getBalanceOfTokens();
     }, [ethersCtx, ethersCtx.userAddress, tokens, claimed]);
 
-    // const data = [
-    //     { name: "Group A", value: 400 },
-    //     { name: "Group B", value: 300 },
-    //     { name: "Group C", value: 300 },
-    //     { name: "Group D", value: 200 },
-    // ];
-
-    // (unused) code to show legend for the piechart
-    const renderColorfulLegendText = (value, entry) => {
-        return <span style={{ color: "#596579", fontWeight: 500, padding: "10px" }}>{value}</span>;
-    };
-
-    // (used) code to show a lined label connected to the piechart
+    // Render a lined label connected to the piechart
     let renderLabel = function (entry) {
         return entry.name;
     };
@@ -58,24 +46,24 @@ const TokenOverview = ({ parentAddress, claimed }) => {
 
     return (
         <div className={styles.tokenOverview}>
-            <div className={styles.tokensContainer}>
-                <h3>My Tokens</h3>
+            <div className={styles.tokenListContainer}>
+                <h3 className={styles.title}>My Tokens</h3>
                 {tokenBalanceList &&
                     tokenBalanceList.map((token) => {
                         // check if the amount owned is bigger than 0
                         return token.amount > 0 ? (
-                            <div className={styles.flexContainer}>
+                            <div key={token.address} className={styles.tokenContainer}>
                                 <div className={styles.tokenInfo}>
                                     <div className={styles.tokenIcon}>
-                                        <Jazzicon diameter={35} seed={jsNumberForAddress(token.address)} />
+                                        <Jazzicon diameter={30} seed={jsNumberForAddress(token.address)} />
                                     </div>
-                                    <div className={styles.tokenName}>
-                                        <p>{token.name}</p>
-                                        <p>{truncateAddress(token.address)}</p>
+                                    <div className={styles.tokenNameAddress}>
+                                        <p className={styles.name}>{token.name}</p>
+                                        <p className={styles.address}>{truncateAddress(token.address)}</p>
                                     </div>
                                 </div>
                                 <div className={styles.tokenAmount}>
-                                    <p>{weiToEth(token.amount)}</p>
+                                    <p className={styles.amount}>{weiToEth(token.amount)}</p>
                                 </div>
                             </div>
                         ) : null;
@@ -85,7 +73,7 @@ const TokenOverview = ({ parentAddress, claimed }) => {
                 <ResponsiveContainer>
                     <PieChart width={100} height={200}>
                         {tokenBalanceList && (
-                            <Pie data={tokenBalanceList} width={"100"} cx="50%" cy="50%" innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={2} dataKey="amount" label={renderLabel} stroke={1}>
+                            <Pie data={tokenBalanceList} width={"100"} cx="50%" cy="50%" innerRadius={40} outerRadius={90} fill="#8884d8" paddingAngle={1} dataKey="amount" label={renderLabel} stroke={1}>
                                 {tokenBalanceList.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}

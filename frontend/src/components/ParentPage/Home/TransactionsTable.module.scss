@@ -1,16 +1,32 @@
-.amountClaimed{
-    font-size: 16px;
-    color: rgb(238, 106, 97);
+@import "./../../../assets/styles/main";
+
+.transactionsTable{
+    @include panel;
+    flex: 1;
+}
+
+.name{
+    font-size: $font-size-base;
     font-weight: 600;
+    color: $primary-black;
 }
 
-.flexContainer {
-    display: flex;
-    flex-direction: column;
+.address{
+    margin: 2px 0 0 0;
+    font-size: $font-size-small;
+    color: $text-secondary-grey;
 }
 
-.flexContainer p {
-    color: grey;
-    font-size: 12px;
-    margin: 2px;
+.dateTime{
+    font-size: $font-size-base;
+}
+
+.token{
+    font-size: $font-size-base;
+}
+
+.amount{
+    font-size: $font-size-base;
+    color: $text-red;
+    font-weight: 600;
 }

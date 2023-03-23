@@ -1,15 +1,18 @@
+@import "./../../../assets/styles/main.scss";
+
 .progressBar{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 350px;
     height: 34px;
-    border: 4px solid black;
+    border: 3px solid black;
 }
 
 .inner{
     display: flex;
-    background-color: #CEFFB7;
+    // background-color: #CEFFB7;
+    background-color: $accent-green;
     height: 78%;
     margin: 3px;
     color: black;

@@ -1,30 +1,44 @@
-.flexContainer {
+@import "./../../../assets/styles/main.scss";
+
+.panels{
     display: flex;
-    gap: 75px;
-    margin-bottom: 50px;
-    height: 500px;
+    flex-direction: column;
+    flex: 1;
+    margin-top: -30px;
 }
 
-.claimCountdownContainer {
+.rowContainer1 {
+    display: flex;
+    flex-direction: row;
+    flex: 0.75;
+    gap: 25px;
+    margin-bottom: 15px;
+}
+
+.rowContainer2 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 25px;
+}
+
+.panelContainer {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-.detailsContainer {
+.countdownPanel,
+.detailsPanel,
+.transactionsPanel,
+.overviewPanel {
+    @include panel;
     display: flex;
-    flex-direction: column;
     flex: 1;
 }
 
-.transactionsContainer {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+.countdownPanel{
+    justify-content: center;
+    align-items: center;
 }
 
-.tokenOverviewContainer {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}

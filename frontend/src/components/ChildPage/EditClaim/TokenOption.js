@@ -4,6 +4,7 @@ import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { weiToEth } from "../../../helpers/weiToEth";
+import { motion } from "framer-motion";
 
 import styles from "./TokenOption.module.scss";
 
@@ -21,7 +22,16 @@ const TokenOption = ({ token, setNewTokenPreference }) => {
     }, [ethersCtx, ethersCtx.userAddress, token]);
 
     return (
-        <div className={styles.tokenOptions}>
+        <motion.div
+            className={styles.tokenOption}
+            layout
+            whileHover={{
+                scale: 1.03,
+                originX: 0,
+                border: "2px solid black",
+            }}
+            transition={{ type: "spring", stiffness: 500 }}
+        >
             <div className={styles.tokenOptionInfo}>
                 <div className={styles.tokenOptionAvatar}>
                     <Jazzicon diameter={30} seed={jsNumberForAddress(token.tokenAddress)} />
@@ -42,7 +52,7 @@ const TokenOption = ({ token, setNewTokenPreference }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

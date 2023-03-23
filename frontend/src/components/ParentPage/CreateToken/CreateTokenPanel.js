@@ -8,7 +8,7 @@ const CreateTokenPanel = () => {
     const [tokenAdded, setTokenAdded] = useState(false);
 
     return (
-        <div className={styles.flexContainer}>
+        <div className={styles.createTokenPanel}>
             <div className={styles.createTokenContainer}>
                 <h2 className={styles.title}>Create Token</h2>
                 <CreateTokenForm setTokenAdded={setTokenAdded} />
