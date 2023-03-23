@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import EditClaimPeriod from "./EditClaimPeriod";
 import EditTokenPreference from "./EditTokenPreference";
 import { motion } from "framer-motion";
+import EthersContext from "../../../context/ethers-context";
 
 import styles from "./EditClaimPanel.module.scss";
-import EthersContext from "../../../context/ethers-context";
 
 const EditClaimPanel = () => {
     const [parentAddress, setParentAddress] = useState();

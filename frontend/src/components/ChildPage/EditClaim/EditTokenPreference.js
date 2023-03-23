@@ -16,12 +16,17 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
     const setNewTokenPreference = async (tokenAddress) => {
-        ethersCtx.setLoading(true);
-        console.log(`Creating token`);
-        const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
-        await tx.wait(1);
-        ethersCtx.setLoading(false);
-        setChanged((prev) => !prev);
+        try {
+            ethersCtx.setLoading(true);
+            console.log(`Creating token`);
+            const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
+            await tx.wait(1);
+            ethersCtx.setLoading(false);
+            setChanged((prev) => !prev);
+        } catch (error) {
+            console.log(`something went wrong with your transaction.${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
     useEffect(() => {

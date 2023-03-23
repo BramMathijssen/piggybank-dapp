@@ -1,57 +1,33 @@
-@import "./../../assets/styles/variables";
-@import "./../../assets/styles/mixins";
-
-// .container {
-//   max-width: 400px;
-//   min-height: 500px;
-//   width: 400px;
-//   height: 500px;
-//   background-color: #ffffff;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .title {
-//   background-color: $primary-purple;
-//   border-bottom: 5px solid black;
-//   text-align: center;
-//   padding: 25px;
-//   height: 30%;
-// }
-
-// .content {
-//   flex-grow: 1;
-// }
-
-// .action {
-//   display: flex;
-//   justify-content: center;
-//   padding: 25px;
-// }
+@import "./../../assets/styles/main";
 
 .container {
     max-width: 400px;
     min-height: 200px;
     width: 400px;
     height: 200px;
-    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    border: 2px solid black;
-    box-shadow: 4px 4px 0 black;
+    border: 2px solid $primary-black;
+    box-shadow: 4px 4px 0 $primary-black;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
-.title {
-    background-color: $primary-purple;
-    border-bottom: 5px solid black;
-    text-align: center;
-    padding: 25px;
-    height: 30%;
+.Child {
+    background-color: $primary-cyan;
+}
+
+.Parent{
+    background-color: $accent-purple;
+    color: white;
 }
 
 .content {
-    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    font-size: $font-size-large;
+    align-items: center;
 }
 
 .action {

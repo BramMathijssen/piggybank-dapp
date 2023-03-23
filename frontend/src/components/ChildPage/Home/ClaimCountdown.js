@@ -4,7 +4,6 @@ import Button from "../../UI/Button";
 import CountdownTimer from "./CountdownTimer";
 
 import styles from "./ClaimCountdown.module.scss";
-import { ethers } from "ethers";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const ClaimCountdown = ({ child, setClaimed, claimed }) => {
@@ -27,7 +26,6 @@ const ClaimCountdown = ({ child, setClaimed, claimed }) => {
         e.preventDefault();
         try {
             ethersCtx.setLoading(true);
-            console.log(`claiming..`);
             const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
             await claimTx.wait(1);
             ethersCtx.setLoading(false);

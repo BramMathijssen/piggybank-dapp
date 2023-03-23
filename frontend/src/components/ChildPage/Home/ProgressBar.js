@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import styles from "./ProgressBar.module.scss";
 
+// CONSTANTS
+const DAY_UNIX = 86400;
+const WEEK_UNIX = 604800;
+const MONTH_UNIX = 2419200;
+
 const ProgressBar = ({ timeRemaining, claimPeriod }) => {
     const [percentage, setPercentage] = useState();
-    const DAY_UNIX = 86400;
-    const WEEK_UNIX = 604800;
-    const MONTH_UNIX = 2419200;
 
     const calcTimeRemainingPercentage = (claimPeriod) => {
         let percentage;

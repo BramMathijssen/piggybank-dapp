@@ -1,76 +1,75 @@
-@import "./../../assets/styles/variables";
-@import "./../../assets/styles/mixins";
+@import "./../../assets/styles/main.scss";
 
 .header {
-  box-sizing: border-box;
-  color: #000000;
-  background-color: #fee333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: row;
-  border: 15px solid black;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+    box-sizing: border-box;
+    color: #000000;
+    // background-color: #fee333;
+    background-color: $background-light;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    border: 15px solid black;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
 }
 
 .title {
-  text-transform: uppercase;
-  max-width: 600px;
-  color: yellow;
-  font-size: 70px;
-  -webkit-text-stroke: 2px black;
-  filter: drop-shadow(5px 5px black);
-  line-height: 1.2;
-  letter-spacing: -2px;
+    text-transform: uppercase;
+    max-width: 600px;
+    color: yellow;
+    font-size: 70px;
+    -webkit-text-stroke: 2px black;
+    filter: drop-shadow(5px 5px black);
+    line-height: 1.2;
+    letter-spacing: -2px;
 }
 
 .subtitle {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .button {
-  background-color: #7be5ce;
-  color: var(--black);
-  font-size: 18px;
-  font-weight: 700;
-  padding: 14px 28px;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0 black;
-  cursor: pointer;
-  margin-right: 2em;
-  text-transform: uppercase;
-  will-change: transform;
-  transition: transform 0.25s;
+    background-color: #7be5ce;
+    color: var(--black);
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border: 2px solid black;
+    box-shadow: 4px 4px 0 black;
+    cursor: pointer;
+    margin-right: 2em;
+    text-transform: uppercase;
+    will-change: transform;
+    transition: transform 0.25s;
 }
 
 .button:hover {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px black;
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px black;
 }
 
 .button2 {
-  background-color: white;
-  color: black;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 14px 28px;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0 black;
-  cursor: pointer;
-  text-transform: uppercase;
-  will-change: transform;
-  transition: transform 0.25s;
+    background-color: white;
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border: 2px solid black;
+    box-shadow: 4px 4px 0 black;
+    cursor: pointer;
+    text-transform: uppercase;
+    will-change: transform;
+    transition: transform 0.25s;
 }
 
 .button2:hover {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px black;
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px black;
 }
 
 .piggy {
-  height: 60vmin;
-  pointer-events: none;
-  filter: drop-shadow(8px 0 0 black) drop-shadow(0 8px 0 black)
-    drop-shadow(-8px 0 0 black) drop-shadow(0 -8px 0 black);
+    height: 60vmin;
+    pointer-events: none;
+    filter: drop-shadow(8px 0 0 black) drop-shadow(0 8px 0 black) drop-shadow(-8px 0 0 black) drop-shadow(0 -8px 0 black);
 }

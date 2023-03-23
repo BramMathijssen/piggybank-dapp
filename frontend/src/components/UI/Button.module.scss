@@ -24,6 +24,11 @@
     background-color: white;
   }
 
+  &.purple {
+    background-color: $accent-purple;
+    color: white;
+  }
+
   /* Button Size */
   &.large {
     font-size: 18px;

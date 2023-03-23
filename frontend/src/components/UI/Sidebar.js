@@ -3,6 +3,7 @@ import Avatar from "./Avatar";
 import { motion } from "framer-motion";
 
 import styles from "./Sidebar.module.scss";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ links }) => {
     return (
@@ -10,7 +11,7 @@ const Sidebar = ({ links }) => {
             <div className={styles.avatarContainer}>
                 <Avatar />
             </div>
-            <nav>
+            <nav className={styles.navigation}>
                 <ul className={styles.ul}>
                     {links.map((link, index) => (
                         <motion.li
@@ -20,13 +21,18 @@ const Sidebar = ({ links }) => {
                                 scale: 1.03,
                                 originX: 0,
                             }}
-                            transition={{ type: "tween"}}
+                            transition={{ type: "tween" }}
                         >
                             <a className={styles.link} onClick={link.onClick}>
                                 {link.label}
                             </a>
                         </motion.li>
                     ))}
+                    <Link to="../select-user">
+                        <li className={styles.li}>
+                            <a className={styles.link}>Log-out</a>
+                        </li>
+                    </Link>
                 </ul>
             </nav>
         </div>

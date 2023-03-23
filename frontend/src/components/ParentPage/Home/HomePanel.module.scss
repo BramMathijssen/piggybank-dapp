@@ -21,16 +21,16 @@
 }
 
 .iconPlus {
-    background-color: #daf465;
+    background-color: $accent-green;
     border-radius: 20px;
-    border: 2px solid black;
-    box-shadow: 2px 2px 0px #000000;
+    border: 2px solid $primary-black;
+    box-shadow: 2px 2px 0px $primary-black;
     margin-left: 7px;
 }
 
 .childContainer {
     display: flex;
-    gap: 50px;
+    gap: 35px;
 }
 
 /* Panels */

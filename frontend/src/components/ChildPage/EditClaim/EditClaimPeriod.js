@@ -56,34 +56,46 @@ const EditClaimPeriod = ({ child, setChanged }) => {
         }
     }, [child]);
 
-    const setClaimPeriodDaily = async (e) => {
-        e.preventDefault();
-        ethersCtx.setLoading(true);
-        console.log(`Creating token`);
-        const tx = await ethersCtx.contract.setChildClaimMomentDaily();
-        await tx.wait(1);
-        ethersCtx.setLoading(false);
-        setChanged((prev) => !prev); // toggles boolean to force a re-render
+    const setClaimPeriodDaily = async () => {
+        try {
+            ethersCtx.setLoading(true);
+            console.log(`Creating token`);
+            const tx = await ethersCtx.contract.setChildClaimMomentDaily();
+            await tx.wait(1);
+            ethersCtx.setLoading(false);
+            setChanged((prev) => !prev); // toggles boolean to force a re-render
+        } catch (error) {
+            console.log(`something went wrong with your transaction.${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
-    const setClaimPeriodWeekly = async (e) => {
-        e.preventDefault();
-        ethersCtx.setLoading(true);
-        console.log(`Creating token`);
-        const tx = await ethersCtx.contract.setChildClaimMomentWeekly();
-        await tx.wait(1);
-        ethersCtx.setLoading(false);
-        setChanged((prev) => !prev); // toggles boolean to force a re-render
+    const setClaimPeriodWeekly = async () => {
+        try {
+            ethersCtx.setLoading(true);
+            console.log(`Creating token`);
+            const tx = await ethersCtx.contract.setChildClaimMomentWeekly();
+            await tx.wait(1);
+            ethersCtx.setLoading(false);
+            setChanged((prev) => !prev); // toggles boolean to force a re-render
+        } catch (error) {
+            console.log(`something went wrong with your transaction.${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
-    const setClaimPeriodMonthly = async (e) => {
-        e.preventDefault();
-        ethersCtx.setLoading(true);
-        console.log(`Creating token`);
-        const tx = await ethersCtx.contract.setChildClaimMomentMonthly();
-        await tx.wait(1);
-        ethersCtx.setLoading(false);
-        setChanged((prev) => !prev); // toggles boolean to force a re-render
+    const setClaimPeriodMonthly = async () => {
+        try {
+            ethersCtx.setLoading(true);
+            console.log(`Creating token`);
+            const tx = await ethersCtx.contract.setChildClaimMomentMonthly();
+            await tx.wait(1);
+            ethersCtx.setLoading(false);
+            setChanged((prev) => !prev); // toggles boolean to force a re-render
+        } catch (error) {
+            console.log(`something went wrong with your transaction.${error}`);
+            ethersCtx.setLoading(false);
+        }
     };
 
     return (

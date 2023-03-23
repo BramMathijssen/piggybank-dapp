@@ -28,6 +28,10 @@
     justify-content: center;
 }
 
+.li:last-child {
+    align-self: stretch;
+}
+
 .link {
     cursor: pointer;
     background-color: $accent-purple;

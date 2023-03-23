@@ -8,7 +8,7 @@
 
 .flexContainer {
     display: flex;
-    background: #ffffff;
+    background: $primary-white;
     border-bottom: 1px solid $seperator-lightgrey;
     padding: 10px;
 }
@@ -39,19 +39,19 @@
     color: $text-secondary-grey;
 }
 
-.totalSupply{
+.totalSupply {
     font-size: $font-size-base;
 }
 
-.totalSupply span{
+.totalSupply span {
     font-weight: 300;
 }
 
-.balance{
+.balance {
     font-size: $font-size-base;
 }
 
-.balance span{
+.balance span {
     font-weight: 300;
 }
 

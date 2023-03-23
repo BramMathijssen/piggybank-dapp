@@ -8,13 +8,13 @@ import styles from "./User.module.scss";
 const User = ({ type }) => {
     return (
         <motion.div
-            className={styles.container}
+            className={`${styles[`container`]} ${styles[type]}`}
             whileHover={{
                 scale: 1.1,
             }}
-            transition={{ type: "spring", stiffness: 500}}
+            transition={{ type: "spring", stiffness: 500 }}
         >
-            <div className={styles.title}>{type}</div>
+            {/* <div className={styles.title}>{type}</div>
             <div className={styles.content}>
             </div>
             <div className={styles.action}>
@@ -25,6 +25,19 @@ const User = ({ type }) => {
                 ) : (
                     <Link to="/child">
                         <Button type="confirm" size="medium" content="Start" />
+                    </Link>
+                )}
+            </div> */}
+
+            <div className={`${styles[`content`]} ${type}`}>Continue as a {type}</div>
+            <div className={styles.action}>
+                {type === "Parent" ? (
+                    <Link to="/parent">
+                        <Button type="confirm" size="medium" content="Start" />
+                    </Link>
+                ) : (
+                    <Link to="/child">
+                        <Button type="purple" size="medium" content="Start" />
                     </Link>
                 )}
             </div>
