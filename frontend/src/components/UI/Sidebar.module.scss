@@ -15,12 +15,18 @@
     margin: 70px 20px 50px 20px;
 }
 
+.navigation {
+    height: 100%;
+}
+
 .ul {
+    margin: 0;
     display: flex;
+    height: 100%;
     flex-direction: column;
     list-style: none;
+    align-items: fles-start;
     padding: 0;
-    justify-content: center;
 }
 
 .li {
@@ -28,11 +34,8 @@
     justify-content: center;
 }
 
-.li:last-child {
-    align-self: stretch;
-}
-
-.link {
+.link,
+.logoutLink {
     cursor: pointer;
     background-color: $accent-purple;
     color: $primary-white;
@@ -45,4 +48,24 @@
     border: 2px solid $primary-black;
     box-shadow: 2px 2px 0px $primary-black;
     border-radius: 4px;
+}
+
+.logoutLink{
+    background-color: #313131;;
+}
+
+// places last link at the bottom
+.li:last-child {
+    margin-bottom: 50px;
+    margin-top: auto;
+}
+
+.reactLink{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.linkIcon{
+    margin-right: 5px;
 }

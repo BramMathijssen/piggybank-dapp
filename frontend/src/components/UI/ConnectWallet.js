@@ -22,7 +22,7 @@ const ConnectWallet = () => {
                     </div>
                     <div className={styles.connectContainer}>
                         <a className={styles.connect} onClick={clickHandler}>
-                            CONNECTED
+                            Connected
                         </a>
                     </div>
                     {/* <Button onClick={clickHandler} content="Connected" size="small"></Button> */}

@@ -1,10 +1,10 @@
 @import "./../../assets/styles/main";
 
-.connectWalletContainer p{
+.connectWalletContainer p {
     margin: 7px;
 }
 
-.connectWalletContainer{
+.connectWalletContainer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -17,35 +17,60 @@
     font-size: 14px;
 }
 
-.connectContainer{
+.connectContainer,
+.unconnectedContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $primary-cyan;
     padding: 0 40px 0 40px;
+    cursor: pointer;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.connectContainer {
+    background-color: $primary-cyan;
     border: 1px solid $primary-black;
     border-bottom: none;
     border-left: none;
-    cursor: pointer;
-    font-weight: 500;
 }
 
-.connectionDetailsContainer{
+.unconnectedContainer {
+    color: $primary-white;
+    border: 1px solid $primary-black;
+    height: 30px;
+    background: -webkit-linear-gradient(-45deg, $primary-cyan, $accent-purple);
+    background-size: 200% 200%;
+    animation: gradient 12s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.connectionDetailsContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
 }
 
-.userAddress{
+.userAddress {
     color: $text-secondary-grey;
     font-size: $font-size-base;
     font-weight: 300;
 }
 
-.chain{
+.chain {
     border: 1px solid $primary-black;
     border-bottom: none;
     padding: 0 20px 0 20px;
 }
-

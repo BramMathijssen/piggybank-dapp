@@ -1,60 +1,60 @@
 @import "./../../assets/styles/main.scss";
 
 .button {
-  background-color: $button-cyan;
-  color: $primary-black;
-  border: 1px solid $primary-black;
-  box-shadow: 3px 3px 0 $primary-black;
-  cursor: pointer;
-  margin-right: 2em;
-  text-transform: uppercase;
-  will-change: transform;
-  transition: transform 0.25s;
+    background-color: $button-cyan;
+    color: $primary-black;
+    border: 1px solid $primary-black;
+    box-shadow: 3px 3px 0 $primary-black;
+    cursor: pointer;
+    margin-right: 2em;
+    text-transform: uppercase;
+    will-change: transform;
+    transition: transform 0.25s;
 
-  /* Button Types */
-  &.danger {
-    background-color: red !important;
-  }
+    /* Button Types */
+    &.danger {
+        background-color: red !important;
+    }
 
-  &.confirm {
-    background-color: #7be5ce;
-  }
+    &.confirm {
+        background-color: #7be5ce;
+    }
 
-  &.info {
-    background-color: white;
-  }
+    &.info {
+        background-color: white;
+    }
 
-  &.purple {
-    background-color: $accent-purple;
-    color: white;
-  }
+    &.purple {
+        background-color: $accent-purple;
+        color: white;
+    }
 
-  /* Button Size */
-  &.large {
-    font-size: 18px;
-    font-weight: 700;
-    padding: 14px 28px;
-  }
+    /* Button Size */
+    &.large {
+        font-size: 18px;
+        font-weight: 700;
+        padding: 14px 28px;
+    }
 
-  &.medium {
-    font-size: 13px;
-    font-weight: 600;
-    padding: 7px 22px;
-  }
+    &.medium {
+        font-size: 13px;
+        font-weight: 600;
+        padding: 7px 22px;
+    }
 
-  &.small {
-    font-size: 12px;
-    font-weight: 700;
-    padding: 0px 13px;
-  }
+    &.small {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 0px 13px;
+    }
 
-  &.round{
-    border-radius: 25px;
-  }
+    &.round {
+        border-radius: 25px;
+    }
 
-  /* Button Pseudo-classes */
-  &:hover {
-    transform: translate(1px, 1px);
-    box-shadow: 1px 1px $primary-black;
-  }
+    /* Button Pseudo-classes */
+    &:hover {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px $primary-black;
+    }
 }

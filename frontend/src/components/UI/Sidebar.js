@@ -1,6 +1,7 @@
 import React from "react";
 import Avatar from "./Avatar";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "phosphor-react";
 
 import styles from "./Sidebar.module.scss";
 import { Link } from "react-router-dom";
@@ -28,11 +29,14 @@ const Sidebar = ({ links }) => {
                             </a>
                         </motion.li>
                     ))}
-                    <Link to="../select-user">
-                        <li className={styles.li}>
-                            <a className={styles.link}>Log-out</a>
-                        </li>
-                    </Link>
+                    <li className={styles.li}>
+                        <a className={styles.logoutLink}>
+                            <Link className={styles.reactLink} to="../select-user">
+                                <ArrowLeft className={styles.linkIcon} size={21} />
+                                Back
+                            </Link>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
