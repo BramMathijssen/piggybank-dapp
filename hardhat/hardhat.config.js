@@ -16,10 +16,10 @@ module.exports = {
     networks: {
         hardhat: {
             chainId: 31337,
-            mining: {
-                auto: false,
-                interval: 5000,
-            },
+            // mining: {
+            //     auto: false,
+            //     interval: 5000,
+            // },
         },
         goerli: {
             url: GOERLI_RPC_URL,
