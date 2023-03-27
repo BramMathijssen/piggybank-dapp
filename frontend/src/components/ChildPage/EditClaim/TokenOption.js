@@ -15,11 +15,16 @@ const TokenOption = ({ token, setNewTokenPreference }) => {
     useEffect(() => {
         const getBalanceOfTokens = async () => {
             if (!ethersCtx.contract) return;
-            const amount = await ethersCtx.contract.getBalanceTest(token.tokenAddress);
+            // const amount = await ethersCtx.contract.getBalanceTest(token.tokenAddress);
+            const amount = await ethersCtx.contract.getERC20Balance(token.tokenAddress);
+            console.log(`AMOUNT`)
+            console.log(amount);
             setTokenBalance(amount.toString());
         };
         getBalanceOfTokens();
     }, [ethersCtx, ethersCtx.userAddress, token]);
+
+    console.log(`heeyyyy`)
 
     return (
         <motion.div

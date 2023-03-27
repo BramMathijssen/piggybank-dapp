@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-ethers")
+require("solidity-coverage")
 require("@nomiclabs/hardhat-waffle")
 require("@nomicfoundation/hardhat-network-helpers")
 require("hardhat-deploy")

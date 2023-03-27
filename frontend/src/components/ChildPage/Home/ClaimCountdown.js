@@ -26,7 +26,7 @@ const ClaimCountdown = ({ child, setClaimed, claimed }) => {
         e.preventDefault();
         try {
             ethersCtx.setLoading(true);
-            const claimTx = await ethersCtx.contract.claim(child.tokenPreference, child.tokenPreference);
+            const claimTx = await ethersCtx.contract.claim(child.tokenPreference);
             await claimTx.wait(1);
             ethersCtx.setLoading(false);
             setClaimed((current) => !current); // toggle boolean to force a re-render on transactions/tokenoverview/details

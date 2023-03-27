@@ -1,3 +1,4 @@
+
 import React, { useContext, useState, useEffect } from "react";
 import EthersContext from "../../../context/ethers-context";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
@@ -6,9 +7,10 @@ import { useEvent } from "../../../hooks/useEvent";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import TokenOption from "./TokenOption";
 import { weiToEth } from "../../../helpers/weiToEth";
+import { ethers } from "ethers";
+import LoadingSpinner from "../../UI/LoadingSpinner";
 
 import styles from "./EditTokenPreference.module.scss";
-import LoadingSpinner from "../../UI/LoadingSpinner";
 
 const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const [tokenBalance, setTokenBalance] = useState();
@@ -32,7 +34,13 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     useEffect(() => {
         const getBalanceOfTokens = async () => {
             if (!ethersCtx.contract) return;
-            const amount = await ethersCtx.contract.getBalanceTest(child.tokenPreference);
+            // const amount = await ethersCtx.contract.getBalanceTest(child.tokenPreference);
+            const amount = await ethersCtx.contract.getERC20Balance(child.tokenPreference);
+
+            console.log(`AMOUNT`);
+
+            console.log(ethers.utils.formatEther(amount));
+
             setTokenBalance(amount.toString());
         };
         getBalanceOfTokens();

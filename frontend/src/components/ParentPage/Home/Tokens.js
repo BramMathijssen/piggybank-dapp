@@ -18,13 +18,16 @@ const Tokens = () => {
     useEffect(() => {
         console.log("tokens found, goin!");
         console.log(tokens);
+        console.log(`CONTRACT`)
+        console.log(ethersCtx.contract)
         for (let i = 0; i < tokens.length; i++) {
             console.log(tokens[i]);
 
             const erc20Contract = new ethers.Contract(tokens[i].tokenAddress, abi, ethersCtx.signer);
 
             const getTokens = async () => {
-                const contractAddress = await ethersCtx.contract.contractAddress();
+                //const contractAddress = await ethersCtx.contract.contractAddress();
+                const contractAddress = await ethersCtx.contract.address;
                 const bal = await erc20Contract.balanceOf(contractAddress);
                 const totalSupply = await erc20Contract.totalSupply();
 

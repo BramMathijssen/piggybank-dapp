@@ -6,6 +6,7 @@ import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
 import { weiToEth } from "../../../helpers/weiToEth";
 import { useEvent } from "../../../hooks/useEvent";
+import { ethers } from "ethers";
 
 import styles from "./TokenOverview.module.scss";
 
@@ -20,11 +21,14 @@ const TokenOverview = ({ parentAddress, claimed }) => {
             if (!ethersCtx.contract) return;
 
             const promises = tokens.map(async (token) => {
-                const amount = await ethersCtx.contract.getBalanceTest(token.tokenAddress);
+                //const amount = await ethersCtx.contract.getBalanceTest(token.tokenAddress);
+                const amountBN = await ethersCtx.contract.getERC20Balance(token.tokenAddress);
+                const formattedAmount = parseFloat(ethers.utils.formatEther(amountBN));
+
                 return {
                     name: token.name,
                     address: token.tokenAddress,
-                    amount: amount.toNumber(),
+                    amount: formattedAmount
                 };
             });
             const resolvedTokenList = await Promise.all(promises);
@@ -63,7 +67,7 @@ const TokenOverview = ({ parentAddress, claimed }) => {
                                     </div>
                                 </div>
                                 <div className={styles.tokenAmount}>
-                                    <p className={styles.amount}>{weiToEth(token.amount)}</p>
+                                    <p className={styles.amount}>{token.amount}</p>
                                 </div>
                             </div>
                         ) : null;

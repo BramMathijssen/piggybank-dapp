@@ -5,41 +5,11 @@ const helpers = require("@nomicfoundation/hardhat-network-helpers")
 const { developmentChains, networkConfig } = require("../../helper-hardhat-config")
 const { weeks } = require("@nomicfoundation/hardhat-network-helpers/dist/src/helpers/time/duration")
 
-// TO TEST
-// Testing if PURE functions function correctly
-// 1. calculateClaimableAmount should return the correct claimable amount based on the input
-//    - test for input of daily with input of 100
-//    - test for input of weekly with input of 100
-//    - test for input of monthly with input of 100
-// 2. TO DO: if/else function for inputing claimperiod and setting the next claim period accordingly
-//    -
-// Parent Tests
-// 1. Creating a new token
-//    - Test if the total supply is sent to the parent contract
-//    - Test if the parent is added to the mapping of parent -> token
-//    - Test if it is possible to mint multiple tokens and these are all stored to it's mapping
-// 2. Adding a child
-//  + before each needs a minted token
-//    - Test if a parent can create a new child with a token it hasn't minted
-//    - Test if a child is added to the parentToChildMappingNested with the input given as arguments
-//    - Test if a child is added to the parentToChildMappingNested with the correct: nextclaimperiod + nextclaimamount
-//    - Test if it's possible for a parent to hold multiple children
-//    - Test if the child is added to the childToParentMapping
-// Child Tests
-// 1. Claiming Tokens
-//    -
-//    -
-//    -
-//    -
-//    -
-// 2. Test the setter functions which set the childs claim moment daily, weekly, monthly
-
 describe("Parent Contract", function () {
     let deployer, parent, parent2, child, child2, parentContract, parentConnectedContract, parent2ConnectedContract, childConnectedContract, tokenCreatorContract
     const ONE_DAY_UNIX = 86400 // 1 day in UNIX time (seconds)
     const ONE_WEEK_UNIX = 604800 // 1 week in UNIX time (seconds)
-    const ONE_MONTH_UNIX= 2419200 // 4 weeks in UNIX time (seconds)
-
+    const ONE_MONTH_UNIX = 2419200 // 4 weeks in UNIX time (seconds)
 
     beforeEach(async () => {
         deployer = (await getNamedAccounts()).deployer
@@ -47,14 +17,14 @@ describe("Parent Contract", function () {
         parentContract = await ethers.getContract("ParentContract")
     })
     describe("Pure Functions", async function () {
-        const BASE_AMOUNT = 10000
-        const EXPECTED_RESULT_DAILY = 1285
-        const EXPECTED_RESULT_MONTHLY = 44000
+        const BASE_AMOUNT = ethers.utils.parseEther("1")
+        const EXPECTED_RESULT_DAILY = "128571428571428571"
+        const EXPECTED_RESULT_MONTHLY = "4400000000000000000"
         describe("calculateClaimableAmount", async function () {
             it("for a daily claim period return the correct claimable amount", async function () {
                 const claimableAmount = (await parentContract.calculateClaimableAmount(BASE_AMOUNT, 0)).toString()
 
-                expect(claimableAmount).to.equal(EXPECTED_RESULT_DAILY.toString())
+                expect(claimableAmount).to.equal(EXPECTED_RESULT_DAILY)
             })
             it("for a weekly claim period return the correct claimable amount", async function () {
                 const claimableAmount = (await parentContract.calculateClaimableAmount(BASE_AMOUNT, 1)).toString()
@@ -123,7 +93,7 @@ describe("Parent Contract", function () {
                 const tokenAddress2 = receipt.events[0].address
 
                 // reverts if the parent tries to add a child with a token which has been minted by parent2
-                await expect(parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress2, BASE_AMOUNT)).to.be.revertedWith(`NotOwnerOfToken`)
+                await expect(parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress2, BASE_AMOUNT)).to.be.revertedWith(`ParentContract__NotOwnerOfToken`)
             })
             it("Test if a child is added to the parentToChildMappingNested with the input given as arguments", async function () {
                 await parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress, BASE_AMOUNT)
@@ -165,6 +135,16 @@ describe("Parent Contract", function () {
                 // 1 means the second spot in the enum ClaimPeriod = WEEKLY
                 expect(claimPeriod).to.equal(1)
             })
+            it("should revert incase a parent tries to add a child which has already been added by another parent", async function () {
+                await parentConnectedContract.addChild(CHILD_NAME, child, tokenAddress, BASE_AMOUNT)
+                const createdChild = await parentConnectedContract.parentToChildMappingNested(parent, child)
+
+                const tx = await parent2ConnectedContract.createNewToken(TOTAL_SUPPLY, "TOKEN2", "T2")
+                const receipt = await tx.wait(1)
+                const tokenAddress2 = receipt.events[0].address
+
+                await expect(parent2ConnectedContract.addChild(CHILD_NAME, child, tokenAddress2, BASE_AMOUNT)).to.be.revertedWith("ParentContract__ChildHasAlreadyBeenAddedByAParent")
+            })
         })
     })
     describe("Child Functions", async function () {
@@ -197,7 +177,7 @@ describe("Parent Contract", function () {
             it("reverts when trying to claim when nextClaimPeriod hasn't been reached", async function () {
                 await helpers.time.increase(ONE_DAY_UNIX)
 
-                await expect(childConnectedContract.claim(tokenAddress, tokenAddress)).to.revertedWith("Sorry your claim period is not valid")
+                await expect(childConnectedContract.claim(tokenAddress)).to.revertedWith("ParentContract__ClaimMomentIsNotValid")
             })
             it("reverts when trying to claim a token which isn't owned by their parent", async function () {
                 // mint a token by a parent which isn't the child's parent
@@ -207,33 +187,31 @@ describe("Parent Contract", function () {
 
                 await helpers.time.increase(ONE_WEEK_UNIX)
 
-                await expect(childConnectedContract.claim(tokenAddress2, tokenAddress2)).to.revertedWith("Token is not owned by your parent")
+                await expect(childConnectedContract.claim(tokenAddress2)).to.revertedWith("ParentContract__TokenNotOwnedByParent")
             })
-            // TODO Implement this check in contract
             it("reverts when trying to claim a token which isn't saved as their preference token", async function () {
-                // mint a second token from the child's parent
                 const tx = await parentConnectedContract.createNewToken(TOTAL_SUPPLY, TOKEN_NAME, TOKEN_SYMBOL)
                 const receipt = await tx.wait(1)
                 const tokenAddressNotPrefered = receipt.events[0].address
 
                 await helpers.time.increase(ONE_WEEK_UNIX)
 
-                await expect(childConnectedContract.claim(tokenAddressNotPrefered, tokenAddressNotPrefered)).to.revertedWith("The claimed token is not your selected token")
+                await expect(childConnectedContract.claim(tokenAddressNotPrefered)).to.revertedWith("ParentContract__ClaimedTokenIsNotEqualToPreferedToken")
             })
             it("reverts after trying to claim again after just having claimed", async function () {
                 await helpers.time.increase(ONE_WEEK_UNIX)
-                await childConnectedContract.claim(tokenAddress, tokenAddress);
+                await childConnectedContract.claim(tokenAddress)
 
                 let childsBalance = await tokenCreatorContract.balanceOf(child)
                 let claimableAmount = (await createdChild.claimableAmount).toString()
 
                 expect(childsBalance).to.equal(claimableAmount)
 
-                await expect(childConnectedContract.claim(tokenAddress, tokenAddress)).to.revertedWith("Sorry your claim period is not valid")
+                await expect(childConnectedContract.claim(tokenAddress)).to.revertedWith("ParentContract__ClaimMomentIsNotValid")
             })
             it("claim token when one week has passed", async function () {
                 await helpers.time.increase(ONE_WEEK_UNIX)
-                await childConnectedContract.claim(tokenAddress, tokenAddress)
+                await childConnectedContract.claim(tokenAddress)
 
                 const childsBalance = await tokenCreatorContract.balanceOf(child)
                 const claimableAmount = (await createdChild.claimableAmount).toString()
@@ -270,27 +248,31 @@ describe("Parent Contract", function () {
                 await childConnectedContract.setChildClaimMomentMonthly()
                 await helpers.time.increase(ONE_WEEK_UNIX)
 
-                await expect(childConnectedContract.claim(tokenAddress, tokenAddress)).to.revertedWith("Sorry your claim period is not valid")        
+                await expect(childConnectedContract.claim(tokenAddress)).to.revertedWith("ParentContract__ClaimMomentIsNotValid")
             })
-            it("able to claim after a day after the claim moment has been set to daily", async function () {
+            it("able to claim after a day after the claim moment has been set to daily and receive correct amount", async function () {
                 await childConnectedContract.setChildClaimMomentDaily()
                 await helpers.time.increase(ONE_DAY_UNIX)
 
-                await childConnectedContract.claim(tokenAddress, tokenAddress)
+                await childConnectedContract.claim(tokenAddress)
+
+                const childAfterChange = await parentConnectedContract.parentToChildMappingNested(parent, child)
 
                 const childsBalance = await tokenCreatorContract.balanceOf(child)
-                const claimableAmount = (await createdChild.claimableAmount).toString()
+                const claimableAmount = (await childAfterChange.claimableAmount).toString()
 
                 expect(childsBalance).to.equal(claimableAmount)
             })
-            it("able to claim after a month after the claim moment has been set to monthly", async function () {
+            it("able to claim after a month after the claim moment has been set to monthly and receive correct amount", async function () {
                 await childConnectedContract.setChildClaimMomentMonthly()
                 await helpers.time.increase(ONE_MONTH_UNIX)
 
-                await childConnectedContract.claim(tokenAddress, tokenAddress)
+                await childConnectedContract.claim(tokenAddress)
+
+                const childAfterChange = await parentConnectedContract.parentToChildMappingNested(parent, child)
 
                 const childsBalance = await tokenCreatorContract.balanceOf(child)
-                const claimableAmount = (await createdChild.claimableAmount).toString()
+                const claimableAmount = (await childAfterChange.claimableAmount).toString()
 
                 expect(childsBalance).to.equal(claimableAmount)
             })
