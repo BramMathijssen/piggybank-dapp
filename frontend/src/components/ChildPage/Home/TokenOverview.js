@@ -4,7 +4,6 @@ import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import EthersContext from "../../../context/ethers-context";
 import { truncateAddress } from "../../../helpers/truncateAddress";
-import { weiToEth } from "../../../helpers/weiToEth";
 import { useEvent } from "../../../hooks/useEvent";
 import { ethers } from "ethers";
 
@@ -15,13 +14,11 @@ const TokenOverview = ({ parentAddress, claimed }) => {
     const [tokenBalanceList, setTokenBalanceList] = useState();
     const tokens = useEvent("TokenCreated", ethersCtx.userAddress, parentAddress);
 
-    // possibly move this to an seperate hook
     useEffect(() => {
         const getBalanceOfTokens = async () => {
             if (!ethersCtx.contract) return;
 
             const promises = tokens.map(async (token) => {
-                //const amount = await ethersCtx.contract.getBalanceTest(token.tokenAddress);
                 const amountBN = await ethersCtx.contract.getERC20Balance(token.tokenAddress);
                 const formattedAmount = parseFloat(ethers.utils.formatEther(amountBN));
 

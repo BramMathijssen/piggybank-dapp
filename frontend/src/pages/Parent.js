@@ -7,7 +7,6 @@ import ConnectWallet from "../components/UI/ConnectWallet";
 import { motion } from "framer-motion";
 
 import styles from "./Parent.module.scss";
-import LoadingSpinner from "../components/UI/LoadingSpinner";
 
 const Parent = () => {
     const [home, setHome] = useState(true);
@@ -15,21 +14,18 @@ const Parent = () => {
     const [createToken, setCreateToken] = useState(false);
 
     const setHomePanel = () => {
-        console.log(`setting home panel `);
         setHome(true);
         setAddChild(false);
         setCreateToken(false);
     };
 
     const setAddChildPanel = () => {
-        console.log(`setting add child panel `);
         setHome(false);
         setAddChild(true);
         setCreateToken(false);
     };
 
     const setCreateTokenPanel = (props) => {
-        console.log(`setting create token panel`);
         setHome(false);
         setAddChild(false);
         setCreateToken(true);

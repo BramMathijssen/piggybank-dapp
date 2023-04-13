@@ -17,7 +17,6 @@ const EditClaimPeriod = ({ child, setChanged }) => {
     const ethersCtx = useContext(EthersContext);
 
     const getClaimableAmount = async (claimPeriod) => {
-        console.log(`getting claimable amount`);
         const claimableAmount = await ethersCtx.contract.calculateClaimableAmount(child.baseAmount, claimPeriod);
 
         return claimableAmount;
@@ -59,7 +58,6 @@ const EditClaimPeriod = ({ child, setChanged }) => {
     const setClaimPeriodDaily = async () => {
         try {
             ethersCtx.setLoading(true);
-            console.log(`Creating token`);
             const tx = await ethersCtx.contract.setChildClaimMomentDaily();
             await tx.wait(1);
             ethersCtx.setLoading(false);
@@ -73,7 +71,6 @@ const EditClaimPeriod = ({ child, setChanged }) => {
     const setClaimPeriodWeekly = async () => {
         try {
             ethersCtx.setLoading(true);
-            console.log(`Creating token`);
             const tx = await ethersCtx.contract.setChildClaimMomentWeekly();
             await tx.wait(1);
             ethersCtx.setLoading(false);
@@ -87,7 +84,6 @@ const EditClaimPeriod = ({ child, setChanged }) => {
     const setClaimPeriodMonthly = async () => {
         try {
             ethersCtx.setLoading(true);
-            console.log(`Creating token`);
             const tx = await ethersCtx.contract.setChildClaimMomentMonthly();
             await tx.wait(1);
             ethersCtx.setLoading(false);

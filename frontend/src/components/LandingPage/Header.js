@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <h1 className={styles.title}>Oink Piggybank-crypto</h1>
+        <h1 className={styles.title}>Crypto-Piggybank</h1>
         <h2 className={styles.subtitle}>Crypto piggybank made for children </h2>
         <Link to="/select-user">
           <Button type='confirm' size='large' content='Enter App'/>

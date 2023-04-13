@@ -28,7 +28,6 @@ const CreateTokenForm = ({ setTokenAdded }) => {
             console.log(`something went wrong with your transaction. ${error}`)
             ethersCtx.setLoading(false);
         }
-
     };
 
     return (

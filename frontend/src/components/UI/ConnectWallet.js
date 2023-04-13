@@ -6,10 +6,6 @@ import styles from "./ConnectWallet.module.scss";
 const ConnectWallet = () => {
     const ethersCtx = useContext(EthersContext);
 
-    const clickHandler = (e) => {
-        e.preventDefault();
-        console.log(`clicked`);
-    };
     return (
         <div className={styles.connectWalletContainer}>
             {ethersCtx.userAddress ? (
@@ -21,18 +17,16 @@ const ConnectWallet = () => {
                         </div>
                     </div>
                     <div className={styles.connectContainer}>
-                        <a className={styles.connect} onClick={clickHandler}>
+                        <a className={styles.connect} >
                             Connected
                         </a>
                     </div>
-                    {/* <Button onClick={clickHandler} content="Connected" size="small"></Button> */}
                 </>
             ) : (
                 <div className={styles.unconnectedContainer}>
                     <a className={styles.unconnected} onClick={ethersCtx.onConnect}>
                         Connect
                     </a>
-                    {/* <Button onClick={ethersCtx.onConnect} content="Connect" size="small"></Button> */}
                 </div>
             )}
         </div>

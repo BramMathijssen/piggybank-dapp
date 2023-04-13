@@ -4,7 +4,7 @@ import ChildrenTable from "./ChildrenTable";
 
 import styles from "./ChildrenOverview.module.scss";
 
-const ChildrenOverview = (props) => {
+const ChildrenOverview = () => {
     // we are using context to get children directly from chain instead of from events, since the children data is mutable
     const childCtx = useContext(ChildContext);
     const children = childCtx.children;

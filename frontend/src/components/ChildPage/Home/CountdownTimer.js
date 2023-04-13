@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import ProgressBar from "./ProgressBar";
 
 import styles from "./CountdownTimer.module.scss";
-import ProgressBar from "./ProgressBar";
 
 const CountdownTimer = ({ timeLeft, claimPeriod }) => {
     const [timeRemaining, setTimeRemaining] = useState(timeLeft);

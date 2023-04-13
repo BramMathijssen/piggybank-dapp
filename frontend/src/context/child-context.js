@@ -13,7 +13,6 @@ const ChildContext = React.createContext({
 
 export const ChildContextProvider = (props) => {
     const ethersCtx = useContext(EthersContext);
-    // const seedData = useEvent("ChildAdded", ethersCtx.address, ethersCtx.userAddress); // before refactor
     const [childAddressList, setChildAddressList] = useState();
     const [children, setChildren] = useState();
     const [childAdded, setChildAdded] = useState(false);
@@ -21,7 +20,6 @@ export const ChildContextProvider = (props) => {
 
     // first get all the children's addresses
     useEffect(() => {
-        console.log('getting child addresses')
         try {
             setChildren(seedData);
 
@@ -38,7 +36,6 @@ export const ChildContextProvider = (props) => {
 
     // second use all the children addresses to loop over the parent to child mapping
     useEffect(() => {
-        console.log('getting children from mapping')
         const getChildren = async () => {
             try {
                 let list = [];
@@ -54,37 +51,6 @@ export const ChildContextProvider = (props) => {
 
         getChildren();
     }, [seedData, childAddressList, ethersCtx.userAddress, ethersCtx.contract, childAdded]);
-
-    // with this effect we get the child's parrent address, this way we can get the claim details
-    // for the child claim page
-    // useEffect(() => {
-    //     const getMyParentAndClaim = async () => {
-    //         if (!ethersCtx.contract) return;
-
-    //         const parentAddress = await ethersCtx.contract.childToParentMapping(ethersCtx.userAddress);
-    //         // setParentAddress(parentTx);
-
-    //         const claimTx = await ethersCtx.contract.parentToChildMappingNested(parentAddress, ethersCtx?.userAddress);
-    //         setMyClaim(claimTx);
-
-    //         const currentTime = await ethersCtx.contract.getCurrentTime();
-    //         const leftTime = claimTx.nextClaimPeriod.toNumber() - currentTime.toNumber();
-    //         setTimeLeft(leftTime);
-    //     };
-    //     getMyParentAndClaim();
-    // }, [ethersCtx]);
-
-    console.log(childAddressList);
-
-    console.log(`HERE WE GO`);
-    console.log(children);
-    console.log(`claim momento`);
-
-
-    // if (children) {
-    //     console.log(children[0].nextClaimPeriod.toString());
-    // }
-    //
 
     return (
         <ChildContext.Provider

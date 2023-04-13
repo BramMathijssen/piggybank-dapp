@@ -7,7 +7,6 @@ import { useEvent } from "../../../hooks/useEvent";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import TokenOption from "./TokenOption";
 import { weiToEth } from "../../../helpers/weiToEth";
-import { ethers } from "ethers";
 import LoadingSpinner from "../../UI/LoadingSpinner";
 
 import styles from "./EditTokenPreference.module.scss";
@@ -20,7 +19,6 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     const setNewTokenPreference = async (tokenAddress) => {
         try {
             ethersCtx.setLoading(true);
-            console.log(`Creating token`);
             const tx = await ethersCtx.contract.setChildTokenPreference(tokenAddress);
             await tx.wait(1);
             ethersCtx.setLoading(false);
@@ -34,12 +32,7 @@ const EditTokenPreference = ({ child, parentAddress, setChanged }) => {
     useEffect(() => {
         const getBalanceOfTokens = async () => {
             if (!ethersCtx.contract) return;
-            // const amount = await ethersCtx.contract.getBalanceTest(child.tokenPreference);
             const amount = await ethersCtx.contract.getERC20Balance(child.tokenPreference);
-
-            console.log(`AMOUNT`);
-
-            console.log(ethers.utils.formatEther(amount));
 
             setTokenBalance(amount.toString());
         };

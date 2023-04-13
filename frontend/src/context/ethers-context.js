@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { contractAddresses, parentContractAbi } from "../constants";
-import networksMapping from "../constants/networksMapping";
 import { useNavigate } from "react-router";
 
 const EthersContext = React.createContext({
@@ -30,31 +29,19 @@ export const EthersContextProvider = (props) => {
     const navigate = useNavigate();
 
     const pageReload = () => {
-        console.log(`reloading page`);
         window.location.reload();
-        console.log(`after reload`);
     };
 
-    // const removeGlobalListeners = () => {
-    //     window.ethereum?.removeListener("chainChanged", pageReload);
-    //     window.ethereum?.removeListener("accountsChanged", handleAccount);
-    //   }
 
     useEffect(() => {
         const setGlobalListeners = async () => {
             window.ethereum.on("chainChanged", async function () {
-                console.log(`chain changed`);
                 pageReload();
-                //setTimeout(() => console.log(`timeout yo`), 5000);
-                //connectWalletHandler();
             });
             window.ethereum.on("accountsChanged", async function () {
-                console.log(`account changed`);
-
                 connectWalletHandler();
             });
             window.onload = async () => {
-                console.log(`page loaded`);
                 if (storageContainer) {
                     connectWalletHandler();
                 }
@@ -64,8 +51,6 @@ export const EthersContextProvider = (props) => {
     }, []);
 
     const connectWalletHandler = async () => {
-        console.log(`clicky2`);
-        console.log(contractAddresses[31337]["ParentContract"][0]);
         if (window.ethereum) {
             try {
                 const accounts = await window.ethereum.request({
@@ -76,8 +61,6 @@ export const EthersContextProvider = (props) => {
                 localStorage.setItem("isWalletConnected", true);
                 const storage = localStorage?.getItem("isWalletConnected");
                 setStorageContainer(storage);
-                console.log(contractAddresses);
-                console.log(accounts[0]);
             } catch (error) {
                 console.log(error);
             }
@@ -94,7 +77,6 @@ export const EthersContextProvider = (props) => {
         setSigner(null)
         setChainId(null)
         setContract(null)
-        //window.location.reload();
     };
 
     const updateEthers = async () => {

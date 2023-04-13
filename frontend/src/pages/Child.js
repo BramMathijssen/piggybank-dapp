@@ -11,13 +11,11 @@ const Child = () => {
     const [editClaim, setEditClaim] = useState(false);
 
     const setHomePanel = () => {
-        console.log(`setting home panel `);
         setHome(true);
         setEditClaim(false);
     };
 
     const setEditClaimPanel = () => {
-        console.log(`setting add child panel `);
         setHome(false);
         setEditClaim(true);
     };
