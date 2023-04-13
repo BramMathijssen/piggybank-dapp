@@ -5,7 +5,7 @@ import { jsNumberForAddress } from "react-jazzicon";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import EthersContext from "../../../context/ethers-context";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
-import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { unixToDate } from "../../../helpers/unixToDate";
 import { weiToEth } from "../../../helpers/weiToEth";
 import { useEvent } from "../../../hooks/useEvent";
 import { useEventCustom } from "../../../hooks/useEventCustom";
@@ -38,7 +38,7 @@ const TransactionsTable = ({ parentAddress, claimed }) => {
     };
 
     const claimMomentColumnTemplate = (rowData) => {
-        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData[1].toString());
+        const { formattedDate, formattedTime } = unixToDate(rowData[1].toString());
         return (
             <div className={styles.claimMomentColumn}>
                 <p className={styles.claimDate}>{formattedDate}</p>

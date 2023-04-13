@@ -1,4 +1,4 @@
-export const unixTimestampToReadable = (timestamp) => {
+export const unixToDate = (timestamp) => {
     // Convert UNIX timestamp to milliseconds
     const date = new Date(timestamp * 1000);
 

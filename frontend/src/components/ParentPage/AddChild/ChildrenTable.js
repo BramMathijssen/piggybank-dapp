@@ -4,7 +4,7 @@ import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
 import { getClaimPeriodString } from "../../../helpers/getClaimPeriodString";
-import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { unixToDate } from "../../../helpers/unixToDate";
 import { getNameByAddress, getSymbolByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 
 import styles from "./ChildrenTable.module.scss";
@@ -54,7 +54,7 @@ const Table = ({ children }) => {
     };
 
     const nextClaimColumnTemplate = (rowData) => {
-        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData.nextClaimPeriod);
+        const { formattedDate, formattedTime } = unixToDate(rowData.nextClaimPeriod);
         return (
             <div className={styles.nextClaimColumn}>
                 <span className={styles.claimDate}>{formattedDate}</span>

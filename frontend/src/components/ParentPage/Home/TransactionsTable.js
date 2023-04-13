@@ -3,7 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import Jazzicon from "react-jazzicon/dist/Jazzicon";
 import { jsNumberForAddress } from "react-jazzicon";
-import { unixTimestampToReadable } from "../../../helpers/unixToDate";
+import { unixToDate } from "../../../helpers/unixToDate";
 import { getNameByAddress } from "../../../helpers/getTokenDetailsbyAddress";
 import { useEvent } from "../../../hooks/useEvent";
 import EthersContext from "../../../context/ethers-context";
@@ -33,7 +33,7 @@ const TransactionsTable = ({ transactions }) => {
     };
 
     const claimPeriodColumnTemplate = (rowData) => {
-        const { formattedDate, formattedTime } = unixTimestampToReadable(rowData[1].toString());
+        const { formattedDate, formattedTime } = unixToDate(rowData[1].toString());
         return (
             <div className={styles.claimPeriodColumn}>
                 <p className={styles.dateTime}>
